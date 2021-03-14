@@ -1,46 +1,61 @@
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import logo from './assets/test_logo.png';
+import * as React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Button, SafeAreaView} from 'react-native';
+import logo from './app/assets/test_logo.png';
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import { createStackNavigator } from '@react-navigation/stack';
+// import WelcomeScreen from "./app/assets/screens/placeholder";
+import LoginScreen from "./app/assets/screens/LoginScreen";
+import WelcomeScreen from "./app/assets/screens/WelcomeScreen"
+import RegisterScreen from './app/assets/screens/RegisterScreen';
+import ForgotPasswordScreen from './app/assets/screens/ForgotPasswordScreen';
 
+// -------------------------------- Kyle's changes start here
+
+const Stack = createStackNavigator();
+
+
+const ProfileScreen = ({navigation, route}) => {
+  return <Text>This is {route.params.name}'s profile</Text>;
+};
+
+// -------------------------------- Kyle's changes end here
 
 export default function App() {
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"></link>
+
   return (
-    <View style={styles.container}>
-      <Image source={logo} style={{width: 200, height: 200, alignSelf: 'center'}} />
-      <Text style = {{paddingTop: 10, fontSize:25 , alignSelf: 'center', padding: 20, fontSize: 50}}>Welcome to [app name]</Text>
-      <Text style = {{paddingTop: 20, fontSize:25 , alignSelf: 'flex-start', padding: 20}}>An app to track your mood and health!</Text>
-      <StatusBar style="auto" />
 
-      <TouchableOpacity onPress = {() => alert('You are "BERRY" special <3')} style = {{backgroundColor: "#cc2d3a", width: 140, height: 30, alignSelf: "center", marginTop: 100}}>
-        <Text style = {{fontSize: 20, color: '#fff', alignSelf: 'center'}}>Get Started</Text>
-      </TouchableOpacity>
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{ title: 'Welcome' }}
+      />
 
-    </View>
+      <Stack.Screen 
+      name="Profile" 
+      component={ProfileScreen} />
+
+      <Stack.Screen 
+      name="Login" 
+      component={LoginScreen} />
+
+      <Stack.Screen 
+      name="Register" 
+      component={RegisterScreen} />
+
+      <Stack.Screen 
+      name="Forgot Password" 
+      component={ForgotPasswordScreen} />
+
+    </Stack.Navigator>
+  </NavigationContainer>
+
 
   );
 }
 
-
- /*
-      <p style = {{paddingTop: 10, fontFamily: 'Lobster, cursive', fontSize:25 , alignItems: 'left'}}>Welcome to [app name]</p>
-      <p style = {{paddingBottom: 100}}>An app to track your mood and health routine! doki doki~</p>
-      <button className = "StartButton" style= {{width: 150, height: 40, backgroundColor: "#cc2d3a", alignSelf: 'center'}}>Get Started</button>
-      */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffbfc3',
-    //border: '30, solid, #ffb3cc',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 20,
-    paddingTop: 60
-    //paddingTop: 50,
-    //marginTop: 50,
-    //paddingLeft: 30,
-    //paddingRight: 30
-  },
-});
