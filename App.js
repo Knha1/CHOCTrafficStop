@@ -37,6 +37,14 @@ export default function App() {
       name="Forgot Password" 
       component={ForgotPasswordScreen} />
 
+      <Stack.Screen
+      name="Resource List"
+      component={ResourceListScreen} />
+
+      <Stack.Screen
+      name="Home"
+      component={HomeScreen} />
+
     </Stack.Navigator>
   </NavigationContainer>
   );
