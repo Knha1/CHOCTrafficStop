@@ -28,9 +28,9 @@ function LoginScreen ({navigation}) {
         <View style ={{marginTop: 10, margin:5}}>
         <Button
           title="Login"
-        //   onPress={() =>
-        //     navigation.navigate('Login')
-        //   }
+          onPress={() =>
+            navigation.navigate('Home')
+          }
         />
         </View>
 
