@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button} from 'react-native';
-// import "Register" from 
 
-const LoginScreen = ({navigation}) => {
+function LoginScreen ({navigation}) {
     const [text, setText] = useState('')
     
     return (

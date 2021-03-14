@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert} from 'react-native';
 
-const ForgotPasswordScreen = ({navigation}) => {
+function ForgotPasswordScreen ({navigation}) {
     const [text, setText] = useState('')
     
     return (
@@ -34,7 +34,6 @@ const ForgotPasswordScreen = ({navigation}) => {
         </View>
        </View>
     );
-    
 }
 
 export default ForgotPasswordScreen;

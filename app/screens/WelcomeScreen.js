@@ -2,13 +2,13 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, {useState} from "react";
 import {ImageBackground, Button,StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import logo from "../test_logo.png";
+import logo from "../assets/test_logo.png";
 import { NavigationContainer } from '@react-navigation/native';
 
 function WelcomeScreen({navigation, props}) {
     return (
       <View style={styles.container}>
-        <Image source={logo} style={{width: 200, height: 200, alignSelf: 'center'}} />
+        <Image source={logo} style={{width: 100, height: 100, alignSelf: 'center'}} />
         <Text> </Text>
         <Text style = {{paddingTop: 10, alignSelf: 'center', padding: 20, fontSize: 50}}>Welcome to ConnecTeen</Text>
         <Text style = {{paddingTop: 20, fontSize:25 , alignSelf: 'center', padding: 20}}>An app to track your mood and health!</Text>

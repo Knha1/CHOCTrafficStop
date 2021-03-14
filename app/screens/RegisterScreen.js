@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert} from 'react-native';
 
-const RegisterScreen = ({navigation}) => {
+function RegisterScreen ({navigation}) {
     const [text, setText] = useState('')
     
     return (
@@ -50,7 +50,6 @@ const RegisterScreen = ({navigation}) => {
         </View>
        </View>
     );
-    
 }
 
 export default RegisterScreen;
