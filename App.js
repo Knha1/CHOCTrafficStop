@@ -12,6 +12,8 @@ import LoginScreen from "./app/screens/LoginScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen"
 import RegisterScreen from './app/screens/RegisterScreen';
 import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
+import ResourceListScreen from './app/screens/ResourceListScreen';
+import HomeScreen from './app/screens/HomeScreen';
 
 const Stack = createStackNavigator();
 
