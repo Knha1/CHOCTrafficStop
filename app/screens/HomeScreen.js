@@ -23,6 +23,12 @@ function HomeScreen({ navigation }) {
 						onPress={() => navigation.navigate("Resource List")}
 					/>
 				</View>
+				<View style={styles.buttonSpacing}>
+					<Button
+						title="Settings"
+						onPress={() => navigation.navigate("Settings")}
+					/>
+				</View>
 			</View>
 
 			{/* Emergency Button - with confirmation pop up */}

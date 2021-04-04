@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import colors from "../config/colors";
 
 function LoginScreen ({navigation}) {
     const [text, setText] = useState('')
     
     return (
         <View style={{padding: 10}}>
-        <Text style = {{paddingTop: 10, fontSize:20 , alignSelf: 'center', padding: 20}}>Login</Text>
+        <Text style = {{paddingTop: 10, fontSize:20 , alignSelf: 'center', padding: 20}}>Get Started</Text>
 
         <View
         style={{
@@ -16,39 +17,17 @@ function LoginScreen ({navigation}) {
         }}
         />
 
-        <Text>Username:</Text>
+        <Text>Registration Code: </Text>
         <TextInput 
         style={{height: 40}}
-        placeholder = "Enter a username" />
-        <Text>Password:</Text>
-        <TextInput 
-        style={{height: 40}}
-        placeholder = "Enter a password" />
+        placeholder = "Enter Registration Code" />
+
         
         <View style ={{marginTop: 10, margin:5}}>
         <Button
           title="Login"
           onPress={() =>
             navigation.navigate('Home')
-          }
-        />
-        </View>
-
-        <View style ={{margin:5}}>
-        <Button
-          title="Register"
-          color = "green"
-          onPress={() =>
-            navigation.navigate('Register')
-          }
-        />
-        </View>
-        <View style ={{margin:5}}>
-        <Button
-          title="Forgot Password"
-          color = "red"
-          onPress={() =>
-            navigation.navigate('Forgot Password')
           }
         />
         </View>
