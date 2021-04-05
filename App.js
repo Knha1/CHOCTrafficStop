@@ -10,10 +10,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import WelcomeScreen from "./app/assets/screens/placeholder";
 import LoginScreen from "./app/screens/LoginScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen"
-import RegisterScreen from './app/screens/RegisterScreen';
-import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
+// import RegisterScreen from './app/screens/RegisterScreen';
+// import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 import ResourceListScreen from './app/screens/ResourceListScreen';
 import HomeScreen from './app/screens/HomeScreen';
+import SurveyCategoriesScreen from './app/screens/SurveyCategoriesScreen';
+import YesNoQuestionScreen from './app/screens/YesNoQuestionScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,13 +33,13 @@ export default function App() {
       name="Login" 
       component={LoginScreen} />
 
-      <Stack.Screen 
+      {/* <Stack.Screen 
       name="Register" 
-      component={RegisterScreen} />
+      component={RegisterScreen} /> */}
 
-      <Stack.Screen 
+      {/* <Stack.Screen 
       name="Forgot Password" 
-      component={ForgotPasswordScreen} />
+      component={ForgotPasswordScreen} /> */}
 
       <Stack.Screen
       name="Resource List"
@@ -46,6 +48,14 @@ export default function App() {
       <Stack.Screen
       name="Home"
       component={HomeScreen} />
+
+      <Stack.Screen
+      name="Survey Categories"
+      component={SurveyCategoriesScreen} />
+
+      <Stack.Screen
+      name="YesNo Question"
+      component={YesNoQuestionScreen} />
 
     </Stack.Navigator>
   </NavigationContainer>
