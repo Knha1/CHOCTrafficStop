@@ -9,7 +9,9 @@ function HomeScreen({ navigation }) {
 		<View style={styles.container}>
 			<View style={styles.container}>
 				<View style={styles.buttonSpacing}>
-					<Button title="Take Resource Survey" />
+					<Button title="Take Resource Survey"
+							onPress={() => navigation.navigate("Survey Categories")}
+					/>
 				</View>
 				<View style={styles.buttonSpacing}>
 					<Button
