@@ -1,25 +1,29 @@
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, {useState} from "react";
-import {ImageBackground, Button,StyleSheet, Text, TextInput, View, Image} from 'react-native';
-import logo from "../assets/test_logo.png";
+import {ImageBackground, Button,StyleSheet, TouchableOpacity, Text, TextInput, View, Image} from 'react-native';
+import logo from "../assets/logo_nobg.png";
 import { NavigationContainer } from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 function WelcomeScreen({navigation, props}) {
     return (
       <View style={styles.container}>
-        <Image source={logo} style={{width: 100, height: 100, alignSelf: 'center'}} />
+        <Image source={logo} style={{width: 69, height: 84, alignSelf: 'flex-start'}} />
         <Text> </Text>
-        <Text style = {{color: '#fff', paddingTop: 10, alignSelf: 'center', padding: 20, fontSize:hp('4%'), textAlign: 'center'}}>Welcome to ConnecTeen</Text>
-        <Text style = {{color: '#fff', paddingTop: 20, fontSize:hp('3%') , alignSelf: 'center', padding: 20, textAlign: 'center'}}>An app to track your mood and health!</Text>
+        <Text style = {{color: '#fff', paddingTop: 10, alignSelf: 'flex-start', padding: 10, fontSize:hp('3.5%'), textAlign: 'left'}}>Welcome to{"\n"}ConnecTeen</Text>
+        <Text style = {{color: '#fff', paddingTop: 10, fontSize:hp('2%') , alignSelf: 'flex-start', padding: 10, textAlign: 'left'}}>Get help finding resources, tracking your mood, and more. </Text>
         <Text> </Text>
-        <Button
+        <TouchableOpacity
+          style={styles.button}
+          color="#f2f"
           title="Get Started"
           onPress={() =>
             navigation.navigate('Login')
           }
-        />
+        >
+        <Text style={styles.buttonText}>Get Started</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -27,7 +31,7 @@ function WelcomeScreen({navigation, props}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#0055BE',
+      backgroundColor: '#0066BB',
       //border: '30, solid, #ffb3cc',
       alignItems: 'center',
       justifyContent: 'flex-start',
@@ -40,6 +44,21 @@ function WelcomeScreen({navigation, props}) {
     },
     text: {
       color: '#fff'
+    },
+    button: {
+      position: 'absolute',
+      bottom: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: "#fff",
+      borderRadius: 30,
+      height: 45,
+      width: 340
+    },
+    buttonText: {
+      color: '#000'
+      //alignSelf: 'center',
+      //textAlignVertical: 'center'
     }
   });
 
