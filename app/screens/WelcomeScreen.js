@@ -11,8 +11,8 @@ function WelcomeScreen({navigation, props}) {
       <View style={styles.container}>
         <Image source={logo} style={{width: 100, height: 100, alignSelf: 'center'}} />
         <Text> </Text>
-        <Text style = {{paddingTop: 10, alignSelf: 'center', padding: 20, fontSize:hp('4%'), textAlign: 'center'}}>Welcome to ConnecTeen</Text>
-        <Text style = {{paddingTop: 20, fontSize:hp('3%') , alignSelf: 'center', padding: 20, textAlign: 'center'}}>An app to track your mood and health!</Text>
+        <Text style = {{color: '#fff', paddingTop: 10, alignSelf: 'center', padding: 20, fontSize:hp('4%'), textAlign: 'center'}}>Welcome to ConnecTeen</Text>
+        <Text style = {{color: '#fff', paddingTop: 20, fontSize:hp('3%') , alignSelf: 'center', padding: 20, textAlign: 'center'}}>An app to track your mood and health!</Text>
         <Text> </Text>
         <Button
           title="Get Started"
@@ -27,7 +27,7 @@ function WelcomeScreen({navigation, props}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#0055BE',
       //border: '30, solid, #ffb3cc',
       alignItems: 'center',
       justifyContent: 'flex-start',
@@ -38,6 +38,9 @@ function WelcomeScreen({navigation, props}) {
       //paddingLeft: 30,
       //paddingRight: 30
     },
+    text: {
+      color: '#fff'
+    }
   });
 
   export default WelcomeScreen;
