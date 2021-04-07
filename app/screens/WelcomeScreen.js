@@ -5,6 +5,7 @@ import {ImageBackground, Button,StyleSheet, TouchableOpacity, Text, TextInput, V
 import logo from "../assets/logo_nobg.png";
 import { NavigationContainer } from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { processFontFamily } from 'expo-font';
 
 function WelcomeScreen({navigation, props}) {
     return (
@@ -44,6 +45,7 @@ function WelcomeScreen({navigation, props}) {
     },
     text: {
       color: '#fff'
+      
     },
     button: {
       position: 'absolute',
