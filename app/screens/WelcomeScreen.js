@@ -45,7 +45,6 @@ function WelcomeScreen({navigation, props}) {
     },
     text: {
       color: '#fff'
-      
     },
     button: {
       position: 'absolute',
