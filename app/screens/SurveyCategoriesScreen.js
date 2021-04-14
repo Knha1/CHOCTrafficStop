@@ -18,8 +18,8 @@ function SurveyCategoriesScreen ({navigation}) {
         <View style={styles.base}>
         <ImageBackground source = {bg} style={{borderTopRightRadius: 60, borderTopLeftRadius: 60, overflow: 'hidden', resizeMode: "stretch"}}>
           <Text style = {{paddingTop: 10, fontSize:22 , alignSelf: 'center', padding: 20, color: '#F1F2F2'}}>What resources do you need?</Text>
-          <Text style = {{paddingTop: 10, fontSize:14 , alignSelf: 'left', padding: 20, color: '#F1F2F2'}}>Please select one of the following survey categories that best describes the kind of resources you are looking for.</Text>
-          <Text style = {{paddingTop: 10, fontSize:14 , alignSelf: 'left', padding: 20, color: '#F1F2F2', textDecorationLine: "underline"}}>Or, you can see your past resources here.</Text>
+          <Text style = {{paddingTop: 10, fontSize:14 , alignSelf: 'flex-start', padding: 20, color: '#F1F2F2'}}>Please select one of the following survey categories that best describes the kind of resources you are looking for.</Text>
+          <Text style = {{paddingTop: 10, fontSize:14 , alignSelf: 'flex-start', padding: 20, color: '#F1F2F2', textDecorationLine: "underline"}}>Or, you can see your past resources here.</Text>
 
           
           <View style={styles.row}>
