@@ -12,13 +12,12 @@ function YesNoQuestionScreen ({navigation}) {
         <View style={styles.bottomContainer}>
 
         <Text style = {styles.text}>1. Do you have a safe place to stay?</Text>
-              <TouchableHighlight onPress={() => navigation.navigate("Resource List")} style={styles.button}>
+              <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
                 <Text style= {styles.buttonText}>Yes</Text>
               </TouchableHighlight> 
-              <TouchableHighlight onPress={() => navigation.navigate("Resource List")} style={styles.button}>
+              <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
                   <Text style= {styles.buttonText}>No</Text>
               </TouchableHighlight> 
-
         </View>
         </View>
     );
