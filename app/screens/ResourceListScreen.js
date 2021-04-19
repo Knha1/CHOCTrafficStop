@@ -3,6 +3,16 @@ import { Text, StyleSheet, SectionList, View } from "react-native";
 
 import colors from "../config/colors";
 
+var sections = [
+	{ title: "Sleep", data: ["LINK 1", "LINK 2"] },
+	{ title: "Coping", data: ["LINK 1", "LINK 2", "LINK 3"] },
+	{ title: "Mindfulness", data: ["LINK 1", "LINK 2", "LINK 3"] },
+	{ title: "Relationships", data: ["LINK 1", "LINK 2", "LINK 3"] },
+	{ title: "Health / Wellness", data: ["LINK 1", "LINK 2", "LINK 3"] },
+	{ title: "Food / Fitness", data: ["LINK 1", "LINK 2", "LINK 3"] },
+	{ title: "Other", data: ["LINK 1", "LINK 2", "LINK 3"] },
+]
+
 function ResourceListScreen({ navigation }) {
 	return (
 		<View style={styles.container}>

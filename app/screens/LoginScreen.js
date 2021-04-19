@@ -9,8 +9,6 @@ function LoginScreen ({navigation}) {
         <KeyboardAvoidingView
         style={styles.container}
         behavior = "height">
-        
-
         <View style={styles.bottomContainer}>
         <Text style = {{color: '#003C98', paddingTop: 40, fontSize:20 , alignSelf: 'flex-start', paddingLeft: 36}}>Get Started</Text>
           <TextInput 
