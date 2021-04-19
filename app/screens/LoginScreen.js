@@ -46,6 +46,9 @@ function LoginScreen({ navigation }) {
 					title="Login"
 					onPress={() => {
 						var regCode = text.toUpperCase();
+						if (regCode.length == 0) {
+							regCode = "GUEST";
+						}
 
 						// Grab the num_patients count on DB
 						firebase
