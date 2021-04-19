@@ -31,6 +31,16 @@ function LoginScreen ({navigation}) {
           }
         />
         </View>
+
+        <View style ={{marginTop: 10, margin:5}}>
+        <Button
+          title="Login as Admin User"
+          color="green"
+          onPress={() =>
+            navigation.navigate('Admin Home')
+          }
+        />
+        </View>
        </View>
     );
     

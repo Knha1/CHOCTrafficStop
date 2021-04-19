@@ -19,6 +19,11 @@ import { Settings } from "react-native";
 import ResourceRecommendedScreen from "./app/screens/ResourceRecommendedScreen";
 import SurveyCategoriesScreen from "./app/screens/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/YesNoQuestionScreen";
+import AdminHomeScreen from "./app/screens/AdminHomeScreen";
+import EditResourcesScreen from "./app/screens/ExportDataScreen";
+import ExportDataScreen from "./app/screens/ExportDataScreen";
+import ViewResourceScreen from "./app/screens/ViewResourceScreen";
+import StatisticsDetailsScreen from "./app/screens/StatisticsDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +32,7 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen
-					name="Welcome"
+					name="Welcome"	
 					component={WelcomeScreen}
 					options={{ title: "Welcome" }}
 				/>
@@ -56,6 +61,23 @@ export default function App() {
 				<Stack.Screen
 					name="Survey Categories"
 					component={SurveyCategoriesScreen}
+				/>
+				<Stack.Screen
+					name="Admin Home"
+					component={AdminHomeScreen}
+				/>
+				<Stack.Screen
+					name="Export Data"
+					component={ExportDataScreen}
+				/>
+				<Stack.Screen
+					name="View Resource"
+					component={ViewResourceScreen}
+				/>
+
+				<Stack.Screen
+					name="Statistics Details"
+					component={StatisticsDetailsScreen}
 				/>
 
 				<Stack.Screen name="YesNo Question" component={YesNoQuestionScreen} />
