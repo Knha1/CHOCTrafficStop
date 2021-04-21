@@ -23,7 +23,7 @@ function SurveyCategoriesScreen ({navigation}) {
 
           
           <View style={styles.row}>
-            <TouchableOpacity onPress={() => navigation.navigate('YesNo Question')} style={styles.card}>
+            <TouchableOpacity onPress={() => navigation.navigate('YesNo Question')} style={[styles.card, {flexDirection: "column"}]}>
               <Image source={safetySecurity} style={styles.icon}/>
               <Text style={{alignSelf: 'center', textAlign: 'center'}}>Safety and Security</Text>
             </TouchableOpacity>
@@ -42,7 +42,6 @@ function SurveyCategoriesScreen ({navigation}) {
               <Image source={physical} style={styles.icon}/>
               <Text style={{alignSelf: 'center', textAlign: 'center'}}>Physical Health and Wellbeing</Text>
             </TouchableOpacity>
-          
           
             <TouchableOpacity onPress={() => navigation.navigate('YesNo Question')} style={[styles.card, {flexDirection: "column"}]}>
               <Image source={community} style={styles.icon}/>
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
 	},
   card:{
     backgroundColor: '#F1F2F2',
-    width: "48%", 
+    width: "45%", 
     height: "30%", 
     alignSelf: 'flex-start',
     marginBottom: 10,
@@ -123,6 +122,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "space-evenly"
   }
 });
 
