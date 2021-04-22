@@ -44,24 +44,20 @@ function HomeScreen({ navigation }) {
 			</View>
 
 			<Modal animationType="none" visible={modalVisible} onRequestClose={() => {setModalVisible(!modalVisible);}}>
-				<View >
-					<View style={[styles.emergencyConfirm, {paddingBottom:40}]}>
-						<Text style={{marginBottom: 10}}>Warning!</Text>
-						<Text style={{marginBottom: 20}}>This button is intended for use ONLY in case of an emergency. Are you sure you want to call 911?</Text>
-						<View style={{flexDirection: "row"}}>
-							<TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={ {height: "80%", width: "90%", backgroundColor: "D9D9D9"}}>
-								<Text>Cancel</Text>
+				<View style={[styles.emergencyConfirm, {paddingBottom:20}]}>
+					<Text style={{textAlign: "center", marginBottom: 10, color: "#9C0000", fontWeight: 'bold', fontSize: 24}}>Warning!</Text>
+					<Text style={{textAlign: "center", marginBottom: 20}}>This button is intended for use ONLY in case of an emergency. Are you sure you want to call 911?</Text>
+						<View style={{flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap" }}>
+							<TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={{height: "100%", width: "45%", backgroundColor: "#D9D9D9", borderRadius: 20, padding: 4, textAlign: "center"}}>
+								<Text style={{color: "black", textAlign: "center"}}>Cancel</Text>
 							</TouchableOpacity>
-							<TouchableOpacity style={{backgroundColor: "#A32E2E", height: "80%", width: "90%", alignItems: "center"}}>
-								<Text >Call 911</Text>
+							<TouchableOpacity style={{backgroundColor: "#A32E2E", height: "100%", width: "45%", alignItems: "center", borderRadius: 20, padding:4 }}>
+								<Text style={{color: "white", textAlign: "center"}} >Call 911</Text>
 							</TouchableOpacity>
 						</View>
-					</View>
+
 				</View>
 			</Modal> 
-
-			
-	
 
 		</ImageBackground>
 
@@ -138,15 +134,18 @@ const styles = StyleSheet.create({
 	emergency: {
 		flex: 1,
 		justifyContent: "flex-end",
-		marginBottom: 36
+		marginBottom: 50
 	},
 	emergencyConfirm: {
 		backgroundColor: "white",
 		borderRadius: 20,
-		padding: 10,
-		alignItems: "center",
+		padding: 35,
+		margin: "10%",
+		marginVertical: "85%",
 		textAlign: "center",
-		alignContent: "center",
+		justifyContent: "center",
+		alignItems: "center",
+		flex: 1, 
 		shadowColor: "#000",
 		shadowOffset: {width: 0,height: 2,},
 		shadowOpacity: 0.25,

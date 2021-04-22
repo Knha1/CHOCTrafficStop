@@ -98,10 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 2,
     padding: 25,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderRadius: 20
   },
   cardText:{
     color: '#F1F2F2'
