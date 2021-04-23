@@ -9,15 +9,26 @@ function YesNoQuestionScreen ({navigation}) {
     return (
         <View style = {styles.container}>
           <Text style={styles.topText}>Safety and Security Survey</Text>
+          <View style={{borderBottomColor: '#FFF', borderBottomWidth: 1}}></View>
         <View style={styles.bottomContainer}>
-
+        <View>
         <Text style = {styles.text}>1. Do you have a safe place to stay?</Text>
               <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
                 <Text style= {styles.buttonText}>Yes</Text>
               </TouchableHighlight> 
               <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
                   <Text style= {styles.buttonText}>No</Text>
+              </TouchableHighlight>
+        </View>
+        <View style={{top: 50}}>
+        <Text style = {styles.text}>2. Do you need safety planning?</Text>
+              <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
+                <Text style= {styles.buttonText}>Yes</Text>
               </TouchableHighlight> 
+              <TouchableHighlight underlayColor = "#A6E1FF" onPress={() => navigation.navigate("Resource List")} style={styles.button}>
+                  <Text style= {styles.buttonText}>No</Text>
+              </TouchableHighlight>
+          </View>
         </View>
         </View>
     );
@@ -37,7 +48,8 @@ var styles = StyleSheet.create({
       fontSize: 20,
       color: "#FFF",
       bottom: 70,
-      alignSelf: "center"
+      alignSelf: "center",
+      textAlign: 'center'
     },
     text: {
       color: "#003C98",
