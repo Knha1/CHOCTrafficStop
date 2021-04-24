@@ -12,12 +12,12 @@ import {
 } from "react-native";
 // import { Colors } from "react-native/Libraries/NewAppScreen";
 import colors from "../../config/colors";
-import safetySecurity from "../assets/SafetySecurityIcon.png";
-import relationshipsSupport from "../assets/RelationshipSupportIcon.png";
-import mentalHealth from "../assets/MentalHealthIcon.png";
-import physical from "../assets/PhysicalHealthWellbeingIcon.png";
-import community from "../assets/CommunityIcon.png";
-import bg from "../assets/background.png";
+import safetySecurity from "assets/SafetySecurityIcon.png";
+import relationshipsSupport from "assets/RelationshipSupportIcon.png";
+import mentalHealth from "assets/MentalHealthIcon.png";
+import physical from "assets/PhysicalHealthWellbeingIcon.png";
+import community from "assets/CommunityIcon.png";
+import bg from "assets/background.png";
 
 function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
