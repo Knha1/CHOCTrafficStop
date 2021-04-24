@@ -1,17 +1,18 @@
+import * as React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./app/screens/LoginScreen";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
-import ResourceListScreen from "./app/screens/ResourceListScreen";
-import HomeScreen from "./app/screens/HomeScreen";
-import SettingsScreen from "./app/screens/SettingsScreen";
 import { Settings } from "react-native";
-import ResourceRecommendedScreen from "./app/screens/ResourceRecommendedScreen";
-import SurveyCategoriesScreen from "./app/screens/SurveyCategoriesScreen";
-import YesNoQuestionScreen from "./app/screens/YesNoQuestionScreen";
 import { firebase } from "./app/firebase/config";
+// SCREEN IMPORTS
+import LoginScreen from "./app/screens/patient/LoginScreen";
+import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
+import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
+import HomeScreen from "./app/screens/patient/HomeScreen";
+import SettingsScreen from "./app/screens/patient/SettingsScreen";
+import ResourceRecommendedScreen from "./app/screens/patient/ResourceRecommendedScreen";
+import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
+import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
 
 const Stack = createStackNavigator();
 

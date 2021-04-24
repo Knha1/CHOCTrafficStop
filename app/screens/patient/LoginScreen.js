@@ -10,9 +10,9 @@ import {
 	Button,
 	KeyboardAvoidingView,
 } from "react-native";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
-import { firebase } from "../firebase/config";
+import { firebase } from "../../firebase/config";
 
 function LoginScreen({ navigation }) {
 	const [text, setText] = useState("");

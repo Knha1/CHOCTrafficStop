@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, SectionList, View } from "react-native";
 
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
 function ResourceRecommendedScreen({ navigation }) {
 	return (
