@@ -20,12 +20,10 @@ import ResourceRecommendedScreen from "./app/screens/ResourceRecommendedScreen";
 import SurveyCategoriesScreen from "./app/screens/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/YesNoQuestionScreen";
 import { firebase } from "./app/firebase/config";
-import { LogBox } from "react-native"; // REMOVE THIS -- ONLY FOR DEBUG
 
 const Stack = createStackNavigator();
 
 export default function App() {
-	LogBox.ignoreLogs(["Setting a timer"]); // REMOVE THIS -- ONLY FOR DEBUG
 	// Get resources from DB, declare as global
 	global.resources = null;
 	firebase
