@@ -1,7 +1,9 @@
+<<<<<<< HEAD
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, Rectangle, TouchableOpacity, TextInput, View, Button, KeyboardAvoidingView} from 'react-native';
 import colors from "../config/colors";
 import { LinearGradient } from 'expo-linear-gradient';
+import { firebase } from "../firebase/config";
 
 function LoginScreen ({navigation}) {
     const [text, setText] = useState('')
@@ -21,12 +23,49 @@ function LoginScreen ({navigation}) {
           <TextInput 
             style={{margin: 40, padding: 5, paddingLeft: 15, borderWidth: 1.0, borderColor: '#D1D1D1'}}
             autoCapitalize="characters"
-            placeholder = "Enter Registration Code (Optional)" />
+            placeholder = "Enter Registration Code (Optional)" 
+			onChangeText={(text) => setText(text)}/>
           <TouchableOpacity
             style={styles.button}
             title="Login"
-            onPress={() =>
-              navigation.navigate('Home')}>
+            onPress={() => {
+				var regCode = text.toUpperCase();
+						if (regCode.length == 0) {
+							regCode = "GUEST";
+						}
+
+						// Grab the num_patients count on DB
+						firebase
+							.database()
+							.ref()
+							.child("patient")
+							.child("num_patients")
+							.get()
+							.then((snapshot) => {
+								if (snapshot.exists()) {
+									var newPatientId = snapshot.val() + 1;
+									// Update the num_patients count on DB
+									firebase
+										.database()
+										.ref()
+										.child("patient/num_patients")
+										.set(newPatientId);
+
+									// Create a new patient w/ reg_code and patient_id on DB
+									firebase
+										.database()
+										.ref()
+										.child("patient/" + newPatientId)
+										.set({ patient_id: newPatientId, reg_code: regCode });
+								} else {
+									console.log(
+										"No /'num_patients/' variable under /'patient/' exists in the database"
+									);
+								}
+							});
+				navigation.navigate('Home')}
+			}
+              >
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
 
@@ -79,3 +118,4 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
