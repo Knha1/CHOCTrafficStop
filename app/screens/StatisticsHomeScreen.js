@@ -49,7 +49,7 @@ function StatisticsHomeScreen({ navigation }) {
           title="More Details"
 		  color = "blue"
           onPress={() =>
-            navigation.navigate('View Resource')
+            navigation.navigate('Statistics List')
           }
         />
 		</View>
