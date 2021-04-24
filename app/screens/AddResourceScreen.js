@@ -37,7 +37,7 @@ function AddResourceScreen({ navigation }) {
           title="Add Resource"
 		  color = "red"
           onPress={() =>
-            navigation.navigate('Statistics Details')
+            navigation.navigate('Admin Home')
           }
         />
         

@@ -44,18 +44,7 @@ function StatisticsDetailsScreen({ navigation }) {
           }
         />
 		</View>
-        
-		<View style={styles.buttonSpacing}>
-		<Button
-          title="Add Resource +"
-		  color = "red"
-          onPress={() =>
-            navigation.navigate('Add Resource')
-          }
-        />
-		</View>
-		
-        
+	
         </View>
        </View>
     );

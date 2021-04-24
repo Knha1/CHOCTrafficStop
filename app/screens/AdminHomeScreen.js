@@ -24,6 +24,16 @@ function AdminHomeScreen({ navigation }) {
 						title="Export Data"
 						onPress={() => navigation.navigate("Export Data")}
 					/>
+
+				<View style={styles.buttonSpacing}>
+					<Button
+						title="Add Resource +"
+						color = "red"
+						onPress={() =>
+							navigation.navigate('Add Resource')
+						}
+						/>
+					</View>
 				</View>
 			</View>
 		</View>
