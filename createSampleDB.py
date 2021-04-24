@@ -98,6 +98,7 @@ q1['category'] = 'Mental Health'
 q1['order'] = 1
 q1['text'] = 'Are you in crisis or distress where you feel like hurting yourself?'
 q1['type'] = 'Yes or No'
+q1['answer_choices'] = ''
 
 q2['question_id'] = 2
 q2['category'] = 'Physical Health & Wellbeing'
