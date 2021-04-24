@@ -1,17 +1,9 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-// import { registerRootComponent } from 'expo';
-// import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
-// import { StyleSheet, Text, View, Image, TouchableOpacity, Button, SafeAreaView} from 'react-native';
-// import logo from './app/assets/test_logo.png';
-// import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
 import { createStackNavigator } from "@react-navigation/stack";
-// import WelcomeScreen from "./app/assets/screens/placeholder";
 import LoginScreen from "./app/screens/LoginScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
-// import RegisterScreen from './app/screens/RegisterScreen';
-// import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 import ResourceListScreen from "./app/screens/ResourceListScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import SettingsScreen from "./app/screens/SettingsScreen";
@@ -101,14 +93,6 @@ export default function App() {
 				/>
 
 				<Stack.Screen name="Login" component={LoginScreen} />
-
-				{/* <Stack.Screen 
-      name="Register" 
-      component={RegisterScreen} /> */}
-
-				{/* <Stack.Screen 
-      name="Forgot Password" 
-      component={ForgotPasswordScreen} /> */}
 
 				<Stack.Screen name="Resource List" component={ResourceListScreen} />
 
