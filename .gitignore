@@ -8,6 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+testdata.json
+ignoreTimerWarn.js
 
 # macOS
 .DS_Store
