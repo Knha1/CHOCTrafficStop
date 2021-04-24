@@ -1,11 +1,18 @@
 import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, Rectangle, TouchableOpacity, TextInput, View, Button, KeyboardAvoidingView} from 'react-native';
 import colors from "../config/colors";
+import { LinearGradient } from 'expo-linear-gradient';
 
 function LoginScreen ({navigation}) {
     const [text, setText] = useState('')
     
     return (
+      <LinearGradient 
+          colors= {['#0658BC', '#489CAB']}
+          locations={[0, 0.9]}
+          start= {{x: 0, y: 0 }}
+          end = {{ x: 1, y: 1 }}
+          style={{position: 'absolute', top:0, bottom:0, left:0, right:0}}>
         <KeyboardAvoidingView
         style={styles.container}
         behavior = "height">
@@ -29,7 +36,10 @@ function LoginScreen ({navigation}) {
             Log In as Admin User
           </Text>
         </View>
+        
         </KeyboardAvoidingView>
+        </LinearGradient>
+       
        
     );
     
@@ -38,21 +48,16 @@ function LoginScreen ({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0066BB',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 0,
-    paddingTop: 200
+    justifyContent: 'flex-start'
   },
   bottomContainer: {
-    //flexDirection: 'row',
-    flex: 1,
     alignSelf: 'stretch',
+    flex: 1,
+    top: 180,
     backgroundColor: '#fff',
     borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    
-    //width: 300,
+    borderTopLeftRadius: 30
   },
   text: {
     color: "#003C98"
