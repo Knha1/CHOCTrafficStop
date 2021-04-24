@@ -6,15 +6,21 @@ import logo from "../assets/logo_nobg.png";
 import { NavigationContainer } from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { processFontFamily } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
 
 function WelcomeScreen({navigation, props}) {
     return (
       <View style={styles.container}>
-        <Image source={logo} style={{width: 69, height: 84, alignSelf: 'flex-start'}} />
-        <Text> </Text>
-        <Text style = {{color: '#fff', paddingTop: 10, alignSelf: 'flex-start', padding: 10, fontSize:hp('3.5%'), textAlign: 'left'}}>Welcome to{"\n"}ConnecTeen</Text>
-        <Text style = {{color: '#fff', paddingTop: 10, fontSize:hp('2%') , alignSelf: 'flex-start', padding: 10, textAlign: 'left'}}>Get help finding resources, tracking your mood, and more. </Text>
-        <Text> </Text>
+        <LinearGradient 
+        colors= {['#0658BC', '#489CAB']}
+        locations={[0, 0.9]}
+        start= {{x: 0, y: 0 }}
+        end = {{ x: 1, y: 1 }}
+        style={{position: 'absolute', top:0, bottom:0, left:0, right:0}}>
+        <Image source={logo} style={styles.image}/>
+        <Text></Text>
+        <Text style = {{color: '#fff', top: 165, left: 34, fontSize:hp('3.5%'), textAlign: 'left'}}>Welcome to{"\n"}ConnecTeen</Text>
+        <Text style = {{color: '#fff', top: 180, left: 34, fontSize:hp('2%'), textAlign: 'left', width: 250}}>Get help finding resources, tracking your mood, and more. </Text>
         <TouchableOpacity
           style={styles.button}
           color="#f2f"
@@ -25,6 +31,7 @@ function WelcomeScreen({navigation, props}) {
         >
         <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
+       </LinearGradient>
       </View>
     );
   }
@@ -32,34 +39,35 @@ function WelcomeScreen({navigation, props}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#0066BB',
-      //border: '30, solid, #ffb3cc',
       alignItems: 'center',
       justifyContent: 'flex-start',
       padding: 20,
       paddingTop: 60
-      //paddingTop: 50,
-      //marginTop: 50,
-      //paddingLeft: 30,
-      //paddingRight: 30
     },
     text: {
-      color: '#fff'
+      color: '#fff',
+      paddingLeft: 20
     },
     button: {
       position: 'absolute',
       bottom: 50,
       alignItems: 'center',
+      alignSelf: 'center',
       justifyContent: 'center',
       backgroundColor: "#fff",
       borderRadius: 30,
       height: 45,
       width: 340
     },
+    image: {
+      width: 69,
+      height: 84,
+      position: 'absolute',
+      top: 85,
+      left: 34
+    },
     buttonText: {
-      color: '#000'
-      //alignSelf: 'center',
-      //textAlignVertical: 'center'
+      color: '#003C98'
     }
   });
 
