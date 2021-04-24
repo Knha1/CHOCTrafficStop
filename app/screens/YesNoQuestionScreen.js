@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {ImageBackground, SimpleSurvey, StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Icon, TouchableHighlight, Image} from 'react-native';
+
 import check from "../assets/check.png";
 import close from "../assets/close.png";
 
@@ -9,7 +10,8 @@ function YesNoQuestionScreen ({navigation}) {
     return (
         <View style = {styles.container}>
           <Text style={styles.topText}>Safety and Security Survey</Text>
-          <View style={{borderBottomColor: '#FFF', borderBottomWidth: 1}}></View>
+          <View style={styles.rectangle}></View>
+          <Text style={styles.skipToResultsText}>Skip to Results?</Text>
         <View style={styles.bottomContainer}>
         <View>
         <Text style = {styles.text}>1. Do you have a safe place to stay?</Text>
@@ -44,12 +46,28 @@ var styles = StyleSheet.create({
       padding: 0,
       paddingTop: 100
     },
+    skipToResultsText: {
+      color: "#CAEDFF",
+      fontSize: 14,
+      position: 'absolute',
+      top: 96,
+      paddingBottom: 100
+    },
+    rectangle: {
+      height: 4,
+      width: 320,
+      borderRadius: 10,
+      position: "absolute",
+      top: 80,
+      backgroundColor: "#FFF"
+    },
     topText: {
       fontSize: 20,
       color: "#FFF",
       bottom: 70,
       alignSelf: "center",
-      textAlign: 'center'
+      textAlign: 'center',
+      alignItems: 'center'
     },
     text: {
       color: "#003C98",
@@ -77,10 +95,6 @@ var styles = StyleSheet.create({
       backgroundColor: '#fff',
       borderTopRightRadius: 30,
       borderTopLeftRadius: 30,
-    },
-    image: {
-      height: 20,
-      width: 20
     },
     buttonText: {
       color: "#000",
