@@ -25,6 +25,7 @@ import ExportDataScreen from "./app/screens/ExportDataScreen";
 import ViewResourceScreen from "./app/screens/ViewResourceScreen";
 import StatisticsDetailsScreen from "./app/screens/StatisticsDetailsScreen";
 import AddResourceScreen from "./app/screens/AddResourceScreen";
+import StatisticsHomeScreen from "./app/screens/StatisticsHomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,11 @@ export default function App() {
 				<Stack.Screen
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
+				/>
+
+				<Stack.Screen
+					name="Statistics Home"
+					component={StatisticsHomeScreen}
 				/>
 
 				<Stack.Screen

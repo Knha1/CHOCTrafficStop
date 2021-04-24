@@ -10,7 +10,7 @@ function AdminHomeScreen({ navigation }) {
 			<View style={styles.container}>
 				<View style={styles.buttonSpacing}>
 					<Button title="View Statistics"
-							onPress={() => navigation.navigate("View Statistics")}
+							onPress={() => navigation.navigate("Statistics Home")}
 					/>
 				</View>
 				<View style={styles.buttonSpacing}>
