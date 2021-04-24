@@ -4,10 +4,10 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../config/colors";
 
-function StatisticsDetailsScreen({ navigation }) {
+function AddResourceScreen({ navigation }) {
 	return (
         <View style={{padding: 10}}>
-        <Text style = {{paddingTop: 10, fontSize:20 , alignSelf: 'center', padding: 20}}>Example Resource Name</Text>
+        <Text style = {{paddingTop: 10, fontSize:20 , alignSelf: 'center', padding: 20}}>Add a Resource</Text>
 
         <View
         style={{
@@ -19,42 +19,27 @@ function StatisticsDetailsScreen({ navigation }) {
 
         <View style ={{marginTop: 10, margin:5}}>
 
-        <Text> Most Viewed: 35 times </Text>
-
-        <View style ={{marginTop: 10, margin:5}}></View>
-
-        <Text> Least Viewed: 12 times </Text>   
-
-        <View style ={{marginTop: 10, margin:5}}></View>
-
-        <Text> Current views for today: 14 times </Text>   
-
-        <View style ={{marginTop: 10, margin:5}}></View>
-
-        <Text> Total times accessed: 264 times </Text>   
-
-        <View style ={{marginTop: 10, margin:5}}/>
         
-		<View style={styles.buttonSpacing}>
+        <form>
+            <Text>Resource Name: </Text>
+            <input type="text"></input> <br></br><br></br>
+            <Text>Address: </Text>
+            <input type="text"></input> <br></br><br></br>
+            <Text>Hours: </Text>
+            <input type="text"></input> <br></br><br></br>
+            <Text>Phone Number: </Text>
+            <input type="text"></input> <br></br><br></br>
+            <Text>Website: </Text>
+            <input type="text"></input> <br></br><br></br>
+        </form>
+
 		<Button
-          title="View Resource ->"
-		  color = "blue"
-          onPress={() =>
-            navigation.navigate('View Resource')
-          }
-        />
-		</View>
-        
-		<View style={styles.buttonSpacing}>
-		<Button
-          title="Add Resource +"
+          title="Add Resource"
 		  color = "red"
           onPress={() =>
-            navigation.navigate('Add Resource')
+            navigation.navigate('Statistics Details')
           }
         />
-		</View>
-		
         
         </View>
        </View>
@@ -97,4 +82,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default StatisticsDetailsScreen;
+export default AddResourceScreen;

@@ -24,6 +24,7 @@ import EditResourcesScreen from "./app/screens/ExportDataScreen";
 import ExportDataScreen from "./app/screens/ExportDataScreen";
 import ViewResourceScreen from "./app/screens/ViewResourceScreen";
 import StatisticsDetailsScreen from "./app/screens/StatisticsDetailsScreen";
+import AddResourceScreen from "./app/screens/AddResourceScreen";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,11 @@ export default function App() {
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
 				/>
+
+				<Stack.Screen
+					name="Add Resource"
+					component={AddResourceScreen}
+					/>
 
 				<Stack.Screen name="YesNo Question" component={YesNoQuestionScreen} />
 			</Stack.Navigator>
