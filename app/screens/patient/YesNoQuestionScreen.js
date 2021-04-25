@@ -13,8 +13,8 @@ import {
 	Image,
 } from "react-native";
 
-import check from "assets/check.png";
-import close from "assets/close.png";
+import check from "../../assets/check.png";
+import close from "../../assets/close.png";
 
 function YesNoQuestionScreen({ navigation }) {
 	const [text, setText] = useState("");
