@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal} from "react-native";
+import { Text, View, StyleSheet, Button, Modal, TextInput} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
@@ -19,19 +19,27 @@ function AddResourceScreen({ navigation }) {
 
         <View style ={{marginTop: 10, margin:5}}>
 
-        
-        <form>
-            <Text>Resource Name: </Text>
-            <input type="text"></input> <br></br><br></br>
-            <Text>Address: </Text>
-            <input type="text"></input> <br></br><br></br>
-            <Text>Hours: </Text>
-            <input type="text"></input> <br></br><br></br>
-            <Text>Phone Number: </Text>
-            <input type="text"></input> <br></br><br></br>
-            <Text>Website: </Text>
-            <input type="text"></input> <br></br><br></br>
-        </form>
+
+		<Text>Name:</Text>
+        <TextInput 
+        style={{height: 40}}
+        placeholder = "Enter a name" />
+        <Text>Address:</Text>
+        <TextInput 
+        style={{height: 40}}
+        placeholder = "Enter an address" />
+        <Text>Hours:</Text>
+        <TextInput 
+        style={{height: 40}}
+        placeholder = "Enter the hours" />
+        <Text>Phone Number:</Text>
+        <TextInput 
+        style={{height: 40}}        
+        placeholder = "Enter a phone number" />
+        <Text>Website:</Text>
+        <TextInput 
+        style={{height: 40}}        
+        placeholder = "Enter a website" />
 
 		<Button
           title="Add Resource"
