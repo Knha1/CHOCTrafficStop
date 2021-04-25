@@ -13,14 +13,14 @@ import SettingsScreen from "./app/screens/patient/SettingsScreen";
 import ResourceRecommendedScreen from "./app/screens/patient/ResourceRecommendedScreen";
 import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
-// SCREEN IMPORTS -- ADMIN 
-import AdminHomeScreen from "./app/screens/AdminHomeScreen";
-import EditResourcesScreen from "./app/screens/ExportDataScreen";
-import ExportDataScreen from "./app/screens/ExportDataScreen";
-import ViewResourceScreen from "./app/screens/ViewResourceScreen";
-import StatisticsDetailsScreen from "./app/screens/StatisticsDetailsScreen";
-import AddResourceScreen from "./app/screens/AddResourceScreen";
-import StatisticsHomeScreen from "./app/screens/StatisticsHomeScreen";
+// SCREEN IMPORTS -- ADMIN
+import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
+import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
+import ExportDataScreen from "./app/screens/admin/ExportDataScreen";
+import ViewResourceScreen from "./app/screens/admin/ViewResourceScreen";
+import StatisticsDetailsScreen from "./app/screens/admin/StatisticsDetailsScreen";
+import AddResourceScreen from "./app/screens/admin/AddResourceScreen";
+import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -96,7 +96,7 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen
-					name="Welcome"	
+					name="Welcome"
 					component={WelcomeScreen}
 					options={{ title: "Welcome" }}
 				/>
@@ -118,33 +118,18 @@ export default function App() {
 					name="Survey Categories"
 					component={SurveyCategoriesScreen}
 				/>
-				<Stack.Screen
-					name="Admin Home"
-					component={AdminHomeScreen}
-				/>
-				<Stack.Screen
-					name="Export Data"
-					component={ExportDataScreen}
-				/>
-				<Stack.Screen
-					name="View Resource"
-					component={ViewResourceScreen}
-				/>
+				<Stack.Screen name="Admin Home" component={AdminHomeScreen} />
+				<Stack.Screen name="Export Data" component={ExportDataScreen} />
+				<Stack.Screen name="View Resource" component={ViewResourceScreen} />
 
 				<Stack.Screen
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
 				/>
 
-				<Stack.Screen
-					name="Statistics Home"
-					component={StatisticsHomeScreen}
-				/>
+				<Stack.Screen name="Statistics Home" component={StatisticsHomeScreen} />
 
-				<Stack.Screen
-					name="Add Resource"
-					component={AddResourceScreen}
-					/>
+				<Stack.Screen name="Add Resource" component={AddResourceScreen} />
 
 				<Stack.Screen name="YesNo Question" component={YesNoQuestionScreen} />
 			</Stack.Navigator>
