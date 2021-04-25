@@ -22,15 +22,15 @@ function AddResourceScreen({ navigation }) {
         
         <form>
             <Text>Resource Name: </Text>
-            <input type="text"></input> <br></br><br></br>
+            <input type="text"></input> <br/><br/>
             <Text>Address: </Text>
-            <input type="text"></input> <br></br><br></br>
+            <input type="text"></input> <br/><br/>
             <Text>Hours: </Text>
-            <input type="text"></input> <br></br><br></br>
+            <input type="text"></input> <br/><br/>
             <Text>Phone Number: </Text>
-            <input type="text"></input> <br></br><br></br>
+            <input type="text"></input> <br/><br/>
             <Text>Website: </Text>
-            <input type="text"></input> <br></br><br></br>
+            <input type="text"></input> <br/><br/>
         </form>
 
 		<Button
