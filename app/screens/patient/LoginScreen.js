@@ -97,7 +97,7 @@ function LoginScreen({ navigation }) {
 					{/* NAVIGATE TO ADMIN LOG IN PAGE */}
 					<Text
 						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
-						onPress={() => navigation.navigate("Home")}
+						onPress={() => navigation.navigate("Admin Home")}
 					>
 						Log In as Admin User
 					</Text>
