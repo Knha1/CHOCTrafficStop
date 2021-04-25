@@ -11,7 +11,7 @@ import {
 	View,
 	Image,
 } from "react-native";
-import logo from "assets/logo_nobg.png";
+import logo from "../../assets/logo_nobg.png";
 import { NavigationContainer } from "@react-navigation/native";
 import {
 	widthPercentageToDP as wp,

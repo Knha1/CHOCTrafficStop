@@ -10,11 +10,11 @@ import {
 	ImageBackground,
 } from "react-native";
 import colors from "../../config/colors";
-import callCenter from "assets/call-center1.png";
-import charity from "assets/charity1.png";
-import schedule from "assets/schedule1.png";
-import bg from "assets/background.png";
-import cog from "assets/settings1.png";
+import callCenter from "../../assets/call-center1.png";
+import charity from "../../assets/charity1.png";
+import schedule from "../../assets/schedule1.png";
+import bg from "../../assets/background.png";
+import cog from "../../assets/settings1.png";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
