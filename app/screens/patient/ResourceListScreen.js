@@ -11,52 +11,92 @@ import {
 
 import colors from "../../config/colors";
 
-var sections = [
-	{
-		title: "Sleep",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	},
-	{
-		title: "Coping",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	},
-	{
-		title: "Mindfulness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Relationships",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	},
-	{
-		title: "Health / Wellness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Food / Fitness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Other",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-];
+// Sort resources by category
+var sortedResources = global.resources.sort((a, b) =>
+	a.category > b.category ? 1 : -1
+);
+
+var currentCategory = sortedResources[0].category;
+var sections = []; // TODO: rename later
+
+// Sections2 index tracker
+var index = 0;
+// Creating new object
+sections.push({
+	title: sortedResources[0].category,
+	innerData: [],
+});
+
+for (var i = 0; i < sortedResources.length; i++) {
+	// If there's a new category, push a new category title + innerData
+	if (sortedResources[i].category != currentCategory) {
+		index++;
+		currentCategory = sortedResources[i].category;
+		sections.push({
+			title: sortedResources[i].category,
+			innerData: [],
+		});
+	}
+	// If in current category, add to innerData
+	else {
+		// Test print
+		console.log("NAME: " + sortedResources[i].name);
+
+		sections[index].innerData.push({
+			name: sortedResources[i].name,
+			description: sortedResources[i].description,
+		});
+	}
+}
+// console.log("OUR WORK");
+console.log(sections);
+
+// var sections2 = [
+// 	{
+// 		title: "Sleep",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Coping",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Mindfulness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Relationships",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Health / Wellness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Food / Fitness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Other",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -104,7 +144,7 @@ function ResourceListScreen({ navigation }) {
 											onPress={() => navigation.navigate("Resource Details")}
 										>
 											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>Info about Resource</Text>
+											<Text>{innerData.description}</Text>
 										</TouchableOpacity>
 									</View>
 								)}
