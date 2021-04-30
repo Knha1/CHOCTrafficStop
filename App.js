@@ -26,7 +26,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
 	// Get resources from DB, declare as global
-	global.resources = null;
+	global.resources = "";
 	firebase
 		.database()
 		.ref()
@@ -61,7 +61,7 @@ export default function App() {
 		.catch((err) => console.log(err));
 
 	// Get questions from DB, declare as global
-	global.questions = null;
+	global.questions = "";
 	firebase
 		.database()
 		.ref()
