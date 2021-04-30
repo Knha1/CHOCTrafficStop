@@ -98,40 +98,89 @@ export default function App() {
 				<Stack.Screen
 					name="Welcome"
 					component={WelcomeScreen}
-					options={{ title: "Welcome" }}
+					options={{ headerShown: false }}
 				/>
 
-				<Stack.Screen name="Login" component={LoginScreen} />
+				<Stack.Screen
+					name="Login"
+					component={LoginScreen}
+					options={{ headerShown: false }}
+				/>
 
-				<Stack.Screen name="Resource List" component={ResourceListScreen} />
+				<Stack.Screen
+					name="Resource List"
+					component={ResourceListScreen}
+					options={{ headerShown: false }}
+				/>
 
-				<Stack.Screen name="Home" component={HomeScreen} />
+				<Stack.Screen
+					name="Home"
+					component={HomeScreen}
+					options={{ headerShown: false }}
+				/>
 
-				<Stack.Screen name="Settings" component={SettingsScreen} />
+				<Stack.Screen
+					name="Settings"
+					component={SettingsScreen}
+					options={{ headerShown: false }}
+				/>
 
 				<Stack.Screen
 					name="Recommended"
 					component={ResourceRecommendedScreen}
+					options={{ headerShown: false }}
 				/>
+
+				{/* <Stack.Screen
+					name="Resource Details"
+					component={ResourceDetailScreen}
+					options={{ headerShown: false }}
+				/> */}
 
 				<Stack.Screen
 					name="Survey Categories"
 					component={SurveyCategoriesScreen}
+					options={{ headerShown: false }}
 				/>
-				<Stack.Screen name="Admin Home" component={AdminHomeScreen} />
-				<Stack.Screen name="Export Data" component={ExportDataScreen} />
-				<Stack.Screen name="View Resource" component={ViewResourceScreen} />
+				<Stack.Screen
+					name="Admin Home"
+					component={AdminHomeScreen}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Export Data"
+					component={ExportDataScreen}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="View Resource"
+					component={ViewResourceScreen}
+					options={{ headerShown: false }}
+				/>
 
 				<Stack.Screen
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
+					options={{ headerShown: false }}
 				/>
 
-				<Stack.Screen name="Statistics Home" component={StatisticsHomeScreen} />
+				<Stack.Screen
+					name="Statistics Home"
+					component={StatisticsHomeScreen}
+					options={{ headerShown: false }}
+				/>
 
-				<Stack.Screen name="Add Resource" component={AddResourceScreen} />
+				<Stack.Screen
+					name="Add Resource"
+					component={AddResourceScreen}
+					options={{ headerShown: false }}
+				/>
 
-				<Stack.Screen name="YesNo Question" component={YesNoQuestionScreen} />
+				<Stack.Screen
+					name="YesNo Question"
+					component={YesNoQuestionScreen}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
