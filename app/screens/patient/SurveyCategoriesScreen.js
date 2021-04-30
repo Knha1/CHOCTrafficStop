@@ -31,6 +31,7 @@ function SurveyCategoriesScreen({ navigation }) {
 					borderTopLeftRadius: 60,
 					overflow: "hidden",
 					resizeMode: "stretch",
+					height: "100%"
 				}}
 			>
 				<Text
@@ -176,7 +177,6 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 60,
 		borderTopLeftRadius: 60,
 		height: "100%",
-		//backgroundColor: `#0E4C9C`,
 	},
 	icon: {
 		resizeMode: "contain",

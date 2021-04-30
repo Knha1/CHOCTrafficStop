@@ -27,7 +27,7 @@ function HomeScreen({ navigation }) {
 					borderTopLeftRadius: 60,
 					overflow: "hidden",
 					resizeMode: "stretch",
-					height: "100%",
+					height: "100%"
 				}}
 			>
 				<View style={{ height: "70%", padding: 20, alignItems: "center" }}>
@@ -152,65 +152,7 @@ function HomeScreen({ navigation }) {
 				</Modal>
 			</ImageBackground>
 
-			{/* 
-			<View style={styles.container}>
-				<View style={styles.button}>
-					<TouchableOpacity onPress={() => navigation.navigate("Survey Categories")} styles={[styles.button,{flexDirection: "row"}]}>
-						<Text styles={styles.button}> Take Resource Survey</Text>
-						<Image source={callCenter} style={styles.icon}/>
-					</TouchableOpacity>
-				
-					<TouchableOpacity onPress={() => navigation.navigate("Resource List")} styles={styles.button}>
-						<Text styles={styles.button}>See Past Resources</Text>
-						<Image source={schedule} style={styles.icon}/>
-					</TouchableOpacity>
-				
-					<TouchableOpacity onPress={() => navigation.navigate("Resource List")} styles={styles.button}>
-						<Text styles={styles.button}>View All Resoures</Text>
-						<Image source={charity} style={styles.icon}/>
-					</TouchableOpacity>
-				
-					<TouchableOpacity onPress={() => navigation.navigate("Settings")} styles={styles.button}>
-						<Text>Settings</Text>
-					</TouchableOpacity>
-					
-				</View>
-			</View> */}
-
-			{/* Emergency Button - with confirmation pop up */}
-			{/* <View style={styles.emergency}>
-				<Button
-					title="EMERGENCY 911"
-					color="red"
-					onPress={() => setModalVisible(true)}
-				/>
-			</View> */}
-			{/* Emergency Confirmation Pop-Up */}
-			{/* <Modal
-				animationType="none"
-				visible={modalVisible}
-				onRequestClose={() => {
-					setModalVisible(!modalVisible);
-				}}
-			>
-				<View style={styles.container}>
-					<View style={styles.emergencyConfirm}>
-						<Text>Are you sure you want to call 911?</Text>
-						<View style={styles.emergencyChoice}>
-							<View style={styles.buttonSpacing}>
-								<Button
-									title="NO"
-									color="red"
-									onPress={() => setModalVisible(!modalVisible)}
-								/>
-							</View>
-							<View style={styles.buttonSpacing}>
-								<Button title="YES" />
-							</View>
-						</View>
-					</View>
-				</View>
-			</Modal> */}
+			
 		</View>
 	);
 }
