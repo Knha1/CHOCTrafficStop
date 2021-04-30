@@ -62,7 +62,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-const App = () => {
+function ResourceListScreen({ navigation }) {
 	const renderItem = ({ sections }) => {
 		return (
 			<Item
@@ -99,7 +99,10 @@ const App = () => {
 								keyExtractor={(item, index) => index.toString()}
 								renderItem={({ item: innerData, index }) => (
 									<View style={styles.cards}>
-										<TouchableOpacity style={styles.links}>
+										<TouchableOpacity
+											style={styles.links}
+											onPress={() => navigation.navigate("Resource Details")}
+										>
 											<Text style={styles.resourceTitle}>{innerData.name}</Text>
 											<Text>Info about Resource</Text>
 										</TouchableOpacity>
@@ -112,7 +115,7 @@ const App = () => {
 			/>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {
@@ -185,4 +188,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default App;
+export default ResourceListScreen;
