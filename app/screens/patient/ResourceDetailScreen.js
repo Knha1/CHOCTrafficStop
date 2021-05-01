@@ -16,23 +16,45 @@ import {
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
 
-function ResourceDetailScreen({ navigation }) {
+function ResourceDetailScreen({ route, navigation }) {
+	var resource = route.params;
+	const resource_id = resource["resource_id"];
+
+	for (var i = 0; i < global.resources.length; i++) {
+		if (global.resources[i].resource_id == resource_id) {
+			var current_resource = global.resources[i];
+			break;
+		}
+	}
+
+	console.log(current_resource);
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.topText}>Resource Details</Text>
 			<View style={styles.rectangle}></View>
 			<View style={styles.bottomContainer}>
 				<View>
-					<Text style={styles.text}>Getting Enough Sleep</Text>
-					<Text style={styles.text2}>Type: Sleep</Text>
+					<Text style={styles.text}>{current_resource["title"]}</Text>
 					<Text style={styles.text2}>
-						Description: Tips for getting enough sleep
+						Category: {current_resource["category"]}
+					</Text>
+					<Text style={styles.text2}>
+						Description: {current_resource["description"]}
 					</Text>
 					<Text style={styles.text2}>Organization: CHOC</Text>
-					<Text style={styles.text2}>Availability: 24/7; Online Resource</Text>
-					<Text style={styles.text2}>Phone Number: n/a</Text>
-					<Text style={styles.text2}>Address: n/a</Text>
-					<Text style={styles.text2}>Website: -URL HERE-</Text>
+					<Text style={styles.text2}>
+						Availability: {current_resource["availability"]}
+					</Text>
+					<Text style={styles.text2}>
+						Phone Number: {current_resource["phone_num"]}
+					</Text>
+					<Text style={styles.text2}>
+						Address: {current_resource["address"]}
+					</Text>
+					<Text style={styles.text2}>
+						Website: {current_resource["website"]}
+					</Text>
 				</View>
 			</View>
 		</View>
