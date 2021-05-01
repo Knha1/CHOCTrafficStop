@@ -92,6 +92,9 @@ export default function App() {
 				});
 
 				global.resources = tempResources;
+				// TODO: Store resources in Async Storage
+
+				// TESTING INPUT / OUTPUT
 				storeData(tempResources, "resources");
 				console.log(readData("resources"));
 			} else {
@@ -125,6 +128,8 @@ export default function App() {
 				});
 
 				global.questions = tempQuestions;
+
+				// TODO: Store questions in Async Storage
 			} else {
 				console.log("'question' data retrieval from DB was unsuccessful.");
 			}
