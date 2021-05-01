@@ -19,18 +19,16 @@ import cog from "../../assets/settings1.png";
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	return (
-		<View style={[styles.base]}>
+		<View style={[styles.container]}>
 			<ImageBackground
 				source={bg}
 				style={{
-					borderTopRightRadius: 60,
-					borderTopLeftRadius: 60,
 					overflow: "hidden",
 					resizeMode: "stretch",
 					height: "100%"
 				}}
 			>
-				<View style={{ height: "70%", padding: 20, alignItems: "center" }}>
+				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
 						style={styles.card}
@@ -62,14 +60,13 @@ function HomeScreen({ navigation }) {
 						<Text style={styles.buttonText}>Settings</Text>
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
-				</View>
 
-				<View style={styles.emergency}>
 					<Text
-						style={{ color: "#F1F2F2", textAlign: "center", marginBottom: 10 }}
+						style={{ color: "black", textAlign: "center", marginBottom: 10, width: "80%", position: "absolute", bottom: "10%"}}
 					>
 						This button is intended for use ONLY in case of an emergency.
 					</Text>
+
 					<TouchableOpacity
 						onPress={() => setModalVisible(true)}
 						style={{
@@ -78,24 +75,31 @@ function HomeScreen({ navigation }) {
 							backgroundColor: "#A32E2E",
 							width: "80%",
 							padding: 10,
-							borderTopRightRadius: 20,
-							borderTopLeftRadius: 20,
-							borderBottomRightRadius: 20,
-							borderBottomLeftRadius: 20,
-						}}
+							borderRadius: 20,
+							position: "absolute",
+							bottom: "5%",
+							shadowColor: "#000",
+							shadowOffset: { width: 0, height: 2 },
+							shadowOpacity: 0.25,
+							shadowRadius: 4,
+							}}
 					>
 						<Text style={{ color: "white" }}>EMERGENCY 911</Text>
 					</TouchableOpacity>
 				</View>
 
+
+
 				<Modal
 					animationType="none"
 					visible={modalVisible}
+					transparent = {true}
 					onRequestClose={() => {
 						setModalVisible(!modalVisible);
 					}}
 				>
-					<View style={[styles.emergencyConfirm, { paddingBottom: 20 }]}>
+					<View style={[styles.container, {backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: "center"}]}>
+						<View style={styles.emergencyConfirm}>
 						<Text
 							style={{
 								textAlign: "center",
@@ -107,46 +111,39 @@ function HomeScreen({ navigation }) {
 						>
 							Warning!
 						</Text>
-						<Text style={{ textAlign: "center", marginBottom: 20 }}>
-							This button is intended for use ONLY in case of an emergency. Are
-							you sure you want to call 911?
+						<Text style={{ textAlign: "center", marginBottom: 20, marginHorizontal: "10%"}}>
+							This button is intended for use ONLY in case of an emergency. If you are in immediate danger and you require immediate help call 911
 						</Text>
-						<View
-							style={{
-								flexDirection: "row",
-								justifyContent: "space-evenly",
-								flexWrap: "wrap",
-							}}
-						>
-							<TouchableOpacity
-								onPress={() => setModalVisible(!modalVisible)}
-								style={{
-									height: "100%",
-									width: "45%",
-									backgroundColor: "#D9D9D9",
-									borderRadius: 20,
-									padding: 4,
-									textAlign: "center",
-								}}
-							>
-								<Text style={{ color: "black", textAlign: "center" }}>
-									Cancel
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={{
-									backgroundColor: "#A32E2E",
-									height: "100%",
-									width: "45%",
-									alignItems: "center",
-									borderRadius: 20,
-									padding: 4,
-								}}
-							>
-								<Text style={{ color: "white", textAlign: "center" }}>
-									Call 911
-								</Text>
-							</TouchableOpacity>
+							<View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+								<TouchableOpacity
+									onPress={() => setModalVisible(!modalVisible)}
+									style={{
+										width: "40%",
+										backgroundColor: "#D9D9D9",
+										borderRadius: 20,
+										padding: 10,
+										textAlign: "center",
+									}}
+								>
+									<Text style={{ color: "black", textAlign: "center" }}>
+										Cancel
+									</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+									style={{
+										backgroundColor: "#A32E2E",
+										width: "40%",
+										alignItems: "center",
+										borderRadius: 20,
+										padding: 10,
+									}}
+								>
+									<Text style={{ color: "white", textAlign: "center" }}>
+										Call 911
+									</Text>
+								</TouchableOpacity>
+							</View>
+						
 						</View>
 					</View>
 				</Modal>
@@ -160,30 +157,22 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.bg,
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "flex-start",
 	},
 	emergency: {
 		flex: 1,
 		justifyContent: "flex-end",
-		marginBottom: 50,
+		//marginBottom: 50,
+		paddingBottom: 50,
+		backgroundColor: "white",
 	},
 	emergencyConfirm: {
 		backgroundColor: "white",
 		borderRadius: 20,
-		padding: 35,
-		margin: "10%",
-		marginVertical: "85%",
-		textAlign: "center",
-		justifyContent: "center",
-		alignItems: "center",
-		flex: 1,
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
+		marginHorizontal: "5%",
+		paddingVertical: "5%"
+		
 	},
 	buttonSpacing: {
 		margin: 5,
@@ -203,9 +192,12 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 	},
 	base: {
-		height: "100%",
-		borderTopRightRadius: 60,
-		borderTopLeftRadius: 60,
+		marginTop: "20%",
+		backgroundColor: '#F1F2F2',
+		borderTopRightRadius: 30,
+		borderTopLeftRadius: 30,
+		alignSelf: "stretch",
+		flex: 1
 	},
 	icon: {
 		resizeMode: "contain",
@@ -213,17 +205,18 @@ const styles = StyleSheet.create({
 		height: "50%",
 	},
 	card: {
-		backgroundColor: "#F1F2F2",
+		backgroundColor: "white",
 		width: "80%",
-		height: "15%",
-		borderTopRightRadius: 20,
-		borderTopLeftRadius: 20,
-		borderBottomRightRadius: 20,
-		borderBottomLeftRadius: 20,
+		height: "10%",
+		borderRadius: 20,
 		marginBottom: 20,
 		alignItems: "center",
 		justifyContent: "space-between",
 		flexDirection: "row",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
 	},
 });
 
