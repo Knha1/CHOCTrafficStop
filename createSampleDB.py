@@ -46,42 +46,42 @@ reso1['availability'] = '24/7 (Online Resource)'
 reso1['description'] = 'Describes how much sleep teens should be getting'
 reso1['organization'] = 'CHOC'
 reso1['website'] = 'https://kidshealth.org/CHOC/en/teens/how-much-sleep.html'
-reso1['phone_num'] = ''
-reso1['address'] = ''
-reso1['email'] = ''
+reso1['phone_num'] = '###-###-###1'
+reso1['address'] = 'Addy1'
+reso1['email'] = 'email1'
 
 reso2['resource_id'] = 2
 reso2['name'] = '5 Ideas for Better Sleep'
 reso2['category'] = 'Sleep'
 reso2['availability'] = '24/7 (Online Resource)'
-reso2['description'] = 'Sample description'
+reso2['description'] = 'Sample description2'
 reso2['organization'] = 'CHOC'
 reso2['website'] = 'https://kidshealth.org/CHOC/en/teens/tips-sleep.html'
-reso2['phone_num'] = ''
-reso2['address'] = ''
-reso2['email'] = ''
+reso2['phone_num'] = '###-###-###2'
+reso2['address'] = 'addy2'
+reso2['email'] = 'email2'
 
 reso3['resource_id'] = 3
 reso3['name'] = 'Healthy Relationships with Food & Exercise'
 reso3['category'] = 'Food / Fitness'
 reso3['availability'] = '24/7 (Online Resource)'
-reso3['description'] = 'Sample description'
+reso3['description'] = 'Sample description3'
 reso3['organization'] = 'CHOC'
 reso3['website'] = 'https://kidshealth.org/CHOC/en/teens/food-fitness'
-reso3['phone_num'] = ''
-reso3['address'] = ''
-reso3['email'] = ''
+reso3['phone_num'] = '###-###-###3'
+reso3['address'] = 'email3'
+reso3['email'] = 'email3'
 
 reso4['resource_id'] = 4
 reso4['name'] = 'Safety Planning'
 reso4['category'] = 'Safety'
 reso4['availability'] = 'Monday – Friday (12:00PM – 8:00PM)\nSaturday (12:00PM – 4:00PM)'
-reso4['description'] = 'Sample description'
+reso4['description'] = 'Sample description4'
 reso4['organization'] = 'Project Choice'
 reso4['website'] = 'https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/'
 reso4['phone_num'] = '714-619-0258'
 reso4['address'] = '1575 E. 17th Street\nSanta Ana CA 92705'
-reso4['email'] = ''
+reso4['email'] = "email4"
 
 reso[1] = reso1
 reso[2] = reso2
@@ -114,6 +114,12 @@ ac = {
 }
 q2['answer_choices'] = ac
 
+q3['question_id'] = 3
+q3['category'] = 'Safety and Security'
+q3['order'] = 5
+q3['text'] = 'What is your level of stress?'
+q3['type'] = 'Likert Scale (Standard)'
+q3['answer_choices'] = ''
 
 questions[1] = q1
 questions[2] = q2
