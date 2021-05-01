@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
 	// Get resources from DB, declare as global
-	global.resources = "";
+	global.resources = [];
 	firebase
 		.database()
 		.ref()
@@ -42,7 +42,7 @@ export default function App() {
 					if (!Number.isInteger(child.val())) {
 						tempResources.push({
 							resource_id: child.val().resource_id,
-							name: child.val().address,
+							name: child.val().name,
 							description: child.val().description,
 							category: child.val().category,
 							organization: child.val().organization,
