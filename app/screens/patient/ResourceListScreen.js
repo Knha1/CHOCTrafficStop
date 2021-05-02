@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import {
 	Text,
 	SafeAreaView,
@@ -10,105 +11,158 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
+import DataHandler from "../../utils/DataHandler";
 
-// while (global.resources == undefined) {
-// 	console.log("STALLING");
-// }
+// var resources = "";
 
-if (global.resources != undefined) {
-	// Sort resources by category
-	var sortedResources = global.resources.sort((a, b) =>
-		a.category > b.category ? 1 : -1
-	);
+// if (resources == undefined) {
+// 	// Sort resources by category
+// 	var sortedResources = resources.sort((a, b) =>
+// 		a.category > b.category ? 1 : -1
+// 	);
 
-	var currentCategory = sortedResources[0].category;
-	var sections = []; // TODO: rename later
+// 	var currentCategory = sortedResources[0].category;
+// 	var sections = []; // TODO: rename later
 
-	// Sections2 index tracker
-	var index = 0;
-	// Creating new object
-	sections.push({
-		title: sortedResources[0].category,
-		innerData: [],
-	});
+// 	// Sections2 index tracker
+// 	var index = 0;
+// 	// Creating new object
+// 	sections.push({
+// 		title: sortedResources[0].category,
+// 		innerData: [],
+// 	});
 
-	for (var i = 0; i < sortedResources.length; i++) {
-		// If there's a new category, push a new category title + innerData
-		if (sortedResources[i].category != currentCategory) {
-			index++;
-			currentCategory = sortedResources[i].category;
-			sections.push({
-				title: sortedResources[i].category,
-				innerData: [],
-			});
-		}
-		// If in current category, add to innerData
-		else {
-			// Test print
-			console.log("NAME: " + sortedResources[i].name);
+// 	for (var i = 0; i < sortedResources.length; i++) {
+// 		// If there's a new category, push a new category title + innerData
+// 		if (sortedResources[i].category != currentCategory) {
+// 			index++;
+// 			currentCategory = sortedResources[i].category;
+// 			sections.push({
+// 				title: sortedResources[i].category,
+// 				innerData: [],
+// 			});
+// 		}
+// 		// If in current category, add to innerData
+// 		else {
+// 			// Test print
+// 			console.log("NAME: " + sortedResources[i].name);
 
-			sections[index].innerData.push({
-				name: sortedResources[i].name,
-				description: sortedResources[i].description,
-				resource_id: sortedResources[i].resource_id,
-			});
-		}
-	}
-	// console.log("OUR WORK");
-	console.log(sections);
+// 			sections[index].innerData.push({
+// 				name: sortedResources[i].name,
+// 				description: sortedResources[i].description,
+// 				resource_id: sortedResources[i].resource_id,
+// 			});
+// 		}
+// 	}
+// 	// console.log("OUR WORK");
+// 	// console.log(sections);
 
-	// var sections2 = [
-	// 	{
-	// 		title: "Sleep",
-	// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	// 	},
-	// 	{
-	// 		title: "Coping",
-	// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	// 	},
-	// 	{
-	// 		title: "Mindfulness",
-	// 		innerData: [
-	// 			{ name: "RESOURCE 1" },
-	// 			{ name: "RESOURCE 2" },
-	// 			{ name: "RESOURCE 3" },
-	// 		],
-	// 	},
-	// 	{
-	// 		title: "Relationships",
-	// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-	// 	},
-	// 	{
-	// 		title: "Health / Wellness",
-	// 		innerData: [
-	// 			{ name: "RESOURCE 1" },
-	// 			{ name: "RESOURCE 2" },
-	// 			{ name: "RESOURCE 3" },
-	// 		],
-	// 	},
-	// 	{
-	// 		title: "Food / Fitness",
-	// 		innerData: [
-	// 			{ name: "RESOURCE 1" },
-	// 			{ name: "RESOURCE 2" },
-	// 			{ name: "RESOURCE 3" },
-	// 		],
-	// 	},
-	// 	{
-	// 		title: "Other",
-	// 		innerData: [
-	// 			{ name: "RESOURCE 1" },
-	// 			{ name: "RESOURCE 2" },
-	// 			{ name: "RESOURCE 3" },
-	// 		],
-	// 	},
-	// ];
-}
+// ===== ANGIE'S SECTIONS =====
+// var sections2 = [
+// 	{
+// 		title: "Sleep",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Coping",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Mindfulness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Relationships",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Health / Wellness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Food / Fitness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Other",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// ];
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
 function ResourceListScreen({ navigation }) {
+	// State variable to show loading screen if resources aren't loaded yet
+	const [isLoading, setIsLoading] = useState(true);
+	var resources = [];
+	var sections = []; // TODO: rename later?
+
+	// Read in resources locally and display it
+	useEffect(() => {
+		DataHandler.readData("resources").then(
+			function (value) {
+				resources = JSON.parse(value);
+
+				// Sort resources by category
+				var sortedResources = resources.sort((a, b) =>
+					a.category > b.category ? 1 : -1
+				);
+
+				var currentCategory = sortedResources[0].category;
+
+				// Sections2 index tracker
+				var index = 0;
+				// Creating new object
+				sections.push({
+					title: sortedResources[0].category,
+					innerData: [],
+				});
+
+				for (var i = 0; i < sortedResources.length; i++) {
+					// If there's a new category, push a new category title + innerData
+					if (sortedResources[i].category != currentCategory) {
+						index++;
+						currentCategory = sortedResources[i].category;
+						sections.push({
+							title: sortedResources[i].category,
+							innerData: [],
+						});
+					}
+					// If in current category, add to innerData
+					else {
+						sections[index].innerData.push({
+							name: sortedResources[i].name,
+							description: sortedResources[i].description,
+							resource_id: sortedResources[i].resource_id,
+						});
+					}
+				}
+				setIsLoading(false);
+				console.log(resources);
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+	});
+
 	const renderItem = ({ sections }) => {
 		return (
 			<Item
@@ -117,6 +171,16 @@ function ResourceListScreen({ navigation }) {
 			/>
 		);
 	};
+
+	// Display loading if resources aren't loaded yet
+	// TODO: currently not displaying loading at all
+	if (isLoading) {
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+	}
 
 	return (
 		<View>
