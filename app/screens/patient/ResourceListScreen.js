@@ -127,16 +127,16 @@ function ResourceListScreen({ navigation }) {
 
 				var currentCategory = sortedResources[0].category;
 
-				// Sections2 index tracker
+				// Index tracker for each category within 'sections'
 				var index = 0;
-				// Creating new object
+				// Create initial object for sections
 				sections.push({
 					title: sortedResources[0].category,
 					innerData: [],
 				});
 
 				for (var i = 0; i < sortedResources.length; i++) {
-					// If there's a new category, push a new category title + innerData
+					// If there's a new category, push a new category title + empty innerData
 					if (sortedResources[i].category != currentCategory) {
 						index++;
 						currentCategory = sortedResources[i].category;
@@ -145,17 +145,14 @@ function ResourceListScreen({ navigation }) {
 							innerData: [],
 						});
 					}
-					// If in current category, add to innerData
-					else {
-						sections[index].innerData.push({
-							name: sortedResources[i].name,
-							description: sortedResources[i].description,
-							resource_id: sortedResources[i].resource_id,
-						});
-					}
+					// Add to innerData for all resources
+					sections[index].innerData.push({
+						name: sortedResources[i].name,
+						description: sortedResources[i].description,
+						resource_id: sortedResources[i].resource_id,
+					});
 				}
 				setIsLoading(false);
-				console.log(resources);
 			},
 			function (err) {
 				console.log(err);
