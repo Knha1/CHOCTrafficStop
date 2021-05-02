@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Settings } from "react-native";
 import { firebase } from "./app/firebase/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import DataHandler from "./app/utils/DataHandler";
 // SCREEN IMPORTS -- PATIENT
 import LoginScreen from "./app/screens/patient/LoginScreen";
 import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
@@ -26,45 +26,8 @@ import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 
 const Stack = createStackNavigator();
 
-/**
- * Stores data using ASyncStorage
- *
- * @param {object} data
- * @param {string} key
- */
-const storeData = async (data, key) => {
-	// TODO: Handle patient_id and reg_code differently, don't need to stringify?
-	try {
-		await AsyncStorage.setItem(key, JSON.stringify(resources));
-	} catch (err) {
-		console.log("storeData() Error for key: " + key);
-		console.log(err);
-	}
-};
-
-/**
- * Reads data from AsyncStorage from specified key
- */
-const readData = async (key) => {
-	// TODO: Handle patient_id and reg_code differently, don't need to parse?
-	try {
-		const jsonValue = await AsyncStorage.getItem(key);
-		if (jsonValue != null) {
-			console.log("INSIDE FUNCTION: \n", JSON.parse(jsonValue));
-			return JSON.parse(jsonValue);
-		} else {
-			console.log("Key doesn't exist in AsyncStorage, returning null.");
-			return null;
-		}
-	} catch (err) {
-		console.log("readData() Error for key: " + key);
-		console.log(err);
-	}
-};
-
 export default function App() {
-	// Get resources from DB, declare as global
-	global.resources = [];
+	// Get resources from DB and store locally
 	firebase
 		.database()
 		.ref()
@@ -90,20 +53,14 @@ export default function App() {
 						});
 					}
 				});
-
-				global.resources = tempResources;
-				// TODO: Store resources in Async Storage
-
-				// TESTING INPUT / OUTPUT
-				storeData(tempResources, "resources");
-				console.log(readData("resources"));
+				DataHandler.storeData("resources", tempResources);
 			} else {
 				console.log("'resource' data retrieval from DB was unsuccessful.");
 			}
 		})
 		.catch((err) => console.log(err));
-	// Get questions from DB, declare as global
-	global.questions = "";
+
+	// Get questions from DB and store locally
 	firebase
 		.database()
 		.ref()
@@ -126,10 +83,7 @@ export default function App() {
 						});
 					}
 				});
-
-				global.questions = tempQuestions;
-
-				// TODO: Store questions in Async Storage
+				DataHandler.storeData("questions", tempQuestions);
 			} else {
 				console.log("'question' data retrieval from DB was unsuccessful.");
 			}
