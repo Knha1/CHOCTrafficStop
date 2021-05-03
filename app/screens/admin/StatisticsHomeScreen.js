@@ -4,6 +4,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
+import PureChart from 'react-native-pure-chart';
 
 function StatisticsHomeScreen({ navigation }) {
 	return (
@@ -17,7 +18,25 @@ function StatisticsHomeScreen({ navigation }) {
 				}}>
 
 				<Text style = {{marginTop: "5%", fontSize:20 , alignSelf: 'center', padding: 20, color: 'white', fontWeight: "bold"}}>Resources Accessed</Text>
-				<Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text>
+				{/* <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text> */}
+				<View style={{alignItems: "center"}}>
+				<PureChart  data={[
+					{
+					value: 50,
+					label: 'resource1',
+					color: '#56E9CE',
+					}, {
+					value: 40,
+					label: 'resource2',
+					color: '#9B3DE5'
+					}, {
+					value: 25,
+					label: 'resource3',
+					color: '#2641CE'
+					}
+				
+				]} type='pie' />
+				</View>
 				
 
 				<View style={styles.base}>
@@ -143,7 +162,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "45%",
+		marginTop: "4%",
 		backgroundColor: 'white',
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
