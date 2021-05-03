@@ -13,14 +13,19 @@ import {
 	Image,
 } from "react-native";
 
+
 import check from "../../assets/check.png";
 import close from "../../assets/close.png";
 
 function YesNoQuestionScreen({ navigation }) {
 	const [text, setText] = useState("");
 
+	
+
 	return (
+		
 		<View style={styles.container}>
+			
 			<Text style={styles.topText}>Safety and Security Survey</Text>
 			<View style={styles.rectangle}></View>
 			<Text style={styles.skipToResultsText}>Skip to Results?</Text>
@@ -59,6 +64,11 @@ function YesNoQuestionScreen({ navigation }) {
 						<Text style={styles.buttonText}>No</Text>
 					</TouchableHighlight>
 				</View>
+				<View style={{ top: 100 }}>
+					
+					<Text style={styles.text}>3. Example Likert Scale Question</Text>
+					
+				</View>
 			</View>
 		</View>
 	);
@@ -77,7 +87,7 @@ var styles = StyleSheet.create({
 		color: "#CAEDFF",
 		fontSize: 14,
 		position: "absolute",
-		top: 96,
+		top: 130,
 		paddingBottom: 100,
 	},
 	rectangle: {
@@ -85,8 +95,9 @@ var styles = StyleSheet.create({
 		width: 320,
 		borderRadius: 10,
 		position: "absolute",
-		top: 80,
+		top: 115,
 		backgroundColor: "#FFF",
+		
 	},
 	topText: {
 		fontSize: 20,
@@ -95,6 +106,7 @@ var styles = StyleSheet.create({
 		alignSelf: "center",
 		textAlign: "center",
 		alignItems: "center",
+		paddingTop: 40
 	},
 	text: {
 		color: "#003C98",
