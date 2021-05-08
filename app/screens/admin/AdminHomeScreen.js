@@ -21,6 +21,7 @@ function AdminHomeScreen({ navigation }) {
 					width: "100%"
 				}}
 			>
+				<Button title="Back" onClick={() => this.props.navigation.goBack()} />
 				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Home")}

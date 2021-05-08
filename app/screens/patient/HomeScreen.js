@@ -28,6 +28,7 @@ function HomeScreen({ navigation }) {
 					height: "100%"
 				}}
 			>
+				
 				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
@@ -58,6 +59,14 @@ function HomeScreen({ navigation }) {
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>Settings</Text>
+						<Image source={cog} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Settings")}
+						style={[styles.card, {backgroundColor: "#4B9E76"}]}
+					>
+						<Text style={[styles.buttonText,{color: "white"}]}>Youth Support Services</Text>
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
