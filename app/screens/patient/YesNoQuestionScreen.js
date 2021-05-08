@@ -11,26 +11,120 @@ import {
 	Icon,
 	TouchableHighlight,
 	Image,
+	ScrollView,
+	FlatList
 } from "react-native";
 
+var questions = [
+	{
+		question: "1. Do you have a safe place to stay?",
+		answers: [
+			{ option: "Yes" }, 
+			{ option: "No" }],
+	},
+	{
+		question: "2. Do you need safety planning?",
+		answers: [
+			{ option: "Yes" },
+			{ option: "No" },
+		],
+	},
+	{
+		question: "3. Likert Scale Question",
+		answers: [
+			{ option: "(1) Great" }, 
+			{ option: "(2) Good" },
+			{ option: "(3) Okay" },
+			{ option: "(4) Surviving" },
+			{ option: "(5) Crisis" },
+		],
+	},
+	{
+		question: "4. Example Question",
+		answers: [
+			{option: "Yes"},
+			{option: "No"}
+		],
+	},
+	{
+		question: "5. Example Question",
+		answers: [
+			{option: "Yes"},
+			{option: "No"}
+		],
+	},
+	{
+		question: "6. Example Question",
+		answers: [
+			{option: "Yes"},
+			{option: "No"}
+		],
+	}
+	
+];
 
-import check from "../../assets/check.png";
-import close from "../../assets/close.png";
+
+
+const Item = ({ item, onPress, backgroundColor, textColor }) => (
+	<Text style={styles.text}>{item.question}</Text>
+	
+);
 
 function YesNoQuestionScreen({ navigation }) {
-	const [text, setText] = useState("");
+	const [value, setValue] = React.useState('first');
+	const renderItem = ({ questions }) => {
+		return (
+			<Item
+				item={questions.answers}
+				onPress={() => (backgroundColor = "#3248a8")}
+			/>
 
+		)
+	}
 	
 
 	return (
-		
+
 		<View style={styles.container}>
 			
 			<Text style={styles.topText}>Safety and Security Survey</Text>
 			<View style={styles.rectangle}></View>
 			<Text style={styles.skipToResultsText}>Skip to Results?</Text>
 			<View style={styles.bottomContainer}>
-				<View>
+
+			<FlatList
+			 	contentContainerStyle={{ paddingBottom: 110 }}
+				data={questions}
+				keyExtractor={(item, index) => index.toString()}
+				renderItem={({ item }) => {
+					return (
+							<View>
+								<Text style={styles.text}>{item.question}</Text>
+								<FlatList
+								data={item.answers}
+								keyExtractor={(item, index) => index.toString()}
+								renderItem={({ item: answers, index }) => (
+									<View>
+										<TouchableHighlight
+											underlayColor="#A6E1FF"
+											onPress={() => navigation.navigate("Resource List")}
+											style={styles.button}>
+											<Text style={styles.buttonText}>{answers.option}</Text>
+										</TouchableHighlight>
+									</View>
+								)}
+								/>
+							</View>
+					);
+				}}
+			/>
+
+
+
+
+
+
+				{/* <View>
 					<Text style={styles.text}>1. Do you have a safe place to stay?</Text>
 					<TouchableHighlight
 						underlayColor="#A6E1FF"
@@ -64,11 +158,18 @@ function YesNoQuestionScreen({ navigation }) {
 						<Text style={styles.buttonText}>No</Text>
 					</TouchableHighlight>
 				</View>
+				<View style={{flex: 1}}>
 				<View style={{ top: 100 }}>
-					
 					<Text style={styles.text}>3. Example Likert Scale Question</Text>
-					
+					<RadioButton.Group style={styles.radioButtonGroup} onValueChange={newValue => setValue(newValue)} value={value}>
+						<RadioButton.Item style={styles.radioButtonItem} label = "(1) Great" value="1"></RadioButton.Item>
+						<RadioButton.Item style={styles.radioButtonItem} label = "(2) Good" value="2"></RadioButton.Item>
+						<RadioButton.Item style={styles.radioButtonItem} label = "(3) Okay" value="3"></RadioButton.Item>
+						<RadioButton.Item style={styles.radioButtonItem} label = "(4) Surviving" value="4"></RadioButton.Item>
+						<RadioButton.Item style={styles.radioButtonItem} label = "(5) Crisis" value="5"></RadioButton.Item>
+					</RadioButton.Group>
 				</View>
+				</View>*/}
 			</View>
 		</View>
 	);
@@ -79,8 +180,8 @@ var styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#0066BB",
 		alignItems: "center",
-		justifyContent: "flex-start",
-		padding: 0,
+		//justifyContent: "flex-start",
+		//padding: 0,
 		paddingTop: 100,
 	},
 	skipToResultsText: {
@@ -110,13 +211,14 @@ var styles = StyleSheet.create({
 	},
 	text: {
 		color: "#003C98",
-		top: 34,
+		//top: 50,
 		left: 40,
 		fontWeight: "bold",
 		fontSize: 16,
+		marginTop: 40
 	},
 	button: {
-		top: 55,
+		top: 20,
 		height: 45,
 		margin: 3,
 		width: 280,
@@ -139,6 +241,16 @@ var styles = StyleSheet.create({
 		color: "#000",
 		alignSelf: "center",
 	},
+	// radioButtonItem: {
+	// 	height: 43,
+	// 	width: 300,
+	// 	alignSelf: 'center',
+	// 	color: '#A6E1FF'
+	// },
+	// radioButtonGroup: {
+	// 	paddingTop: 50
+
+	// }
 });
 
 export default YesNoQuestionScreen;

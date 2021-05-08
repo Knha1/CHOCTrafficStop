@@ -13,12 +13,26 @@ import colors from "../../config/colors";
 
 var sections = [
 	{
-		title: "Sleep",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+		title: "Coping",
+		innerData: [
+			{ name: "RESOURCE 1" }, 
+			{ name: "RESOURCE 2" }],
 	},
 	{
-		title: "Coping",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+		title: "Food / Fitness",
+		innerData: [
+			{ name: "RESOURCE 1" },
+			{ name: "RESOURCE 2" },
+			{ name: "RESOURCE 3" },
+		],
+	},
+	{
+		title: "Health / Wellness",
+		innerData: [
+			{ name: "RESOURCE 1" },
+			{ name: "RESOURCE 2" },
+			{ name: "RESOURCE 3" },
+		],
 	},
 	{
 		title: "Mindfulness",
@@ -30,23 +44,15 @@ var sections = [
 	},
 	{
 		title: "Relationships",
-		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+		innerData: [
+			{ name: "RESOURCE 1" }, 
+			{ name: "RESOURCE 2" }],
 	},
 	{
-		title: "Health / Wellness",
+		title: "Sleep",
 		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Food / Fitness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
+			{ name: "RESOURCE 1" }, 
+			{ name: "RESOURCE 2" }],
 	},
 	{
 		title: "Other",
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 		alignSelf: "center",
 		fontSize: 20,
-		paddingTop: 20,
+		paddingTop: 60,
 		paddingBottom: 12,
 	},
 	subtext: {
@@ -163,7 +169,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-start",
 		padding: 10,
 		paddingLeft: 20,
-		fontSize: 16,
+		fontSize: 16
 	},
 	resourceTitle: {
 		color: "#003C98",
