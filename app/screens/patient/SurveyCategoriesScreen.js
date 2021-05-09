@@ -27,10 +27,11 @@ function SurveyCategoriesScreen({ navigation }) {
 			<ImageBackground
 				source={bg}
 				style={{
-					borderTopRightRadius: 60,
-					borderTopLeftRadius: 60,
+					borderTopRightRadius: 40,
+					borderTopLeftRadius: 40,
 					overflow: "hidden",
 					resizeMode: "stretch",
+					top:100,
 					height: "100%"
 				}}
 			>
@@ -38,9 +39,11 @@ function SurveyCategoriesScreen({ navigation }) {
 					style={{
 						paddingTop: 10,
 						fontSize: 22,
-						alignSelf: "center",
+						alignSelf: "flex-start",
 						padding: 20,
 						color: "#F1F2F2",
+						top: 35,
+						left: 20
 					}}
 				>
 					What resources do you need?
@@ -52,6 +55,8 @@ function SurveyCategoriesScreen({ navigation }) {
 						alignSelf: "flex-start",
 						padding: 20,
 						color: "#F1F2F2",
+						left: 20,
+						top: 10
 					}}
 				>
 					Please select one of the following survey categories that best
@@ -65,6 +70,7 @@ function SurveyCategoriesScreen({ navigation }) {
 						padding: 20,
 						color: "#F1F2F2",
 						textDecorationLine: "underline",
+						left: 20
 					}}
 				>
 					Or, you can see your past resources here.
@@ -162,8 +168,8 @@ const styles = StyleSheet.create({
 	},
 	card: {
 		backgroundColor: "#F1F2F2",
-		width: "45%",
-		height: "30%",
+		width: "44%",
+		height: "28%",
 		alignSelf: "flex-start",
 		marginBottom: 10,
 		marginHorizontal: 2,

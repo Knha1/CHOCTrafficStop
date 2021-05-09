@@ -23,14 +23,15 @@ function HomeScreen({ navigation }) {
 			<ImageBackground
 				source={bg}
 				style={{
-					borderTopRightRadius: 60,
-					borderTopLeftRadius: 60,
+					borderTopRightRadius: 40,
+					borderTopLeftRadius: 40,
 					overflow: "hidden",
 					resizeMode: "stretch",
+					top: 100,
 					height: "100%"
 				}}
 			>
-				<View style={{ height: "70%", padding: 20, alignItems: "center" }}>
+				<View style={{ height: "70%", padding: 20, alignItems: "center", top: 50 }}>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
 						style={styles.card}
@@ -66,9 +67,9 @@ function HomeScreen({ navigation }) {
 
 				<View style={styles.emergency}>
 					<Text
-						style={{ color: "#F1F2F2", textAlign: "center", marginBottom: 10 }}
+						style={{ color: "#F1F2F2", textAlign: "center", marginBottom: 10, bottom: 100 }}
 					>
-						This button is intended for use ONLY in case of an emergency.
+						This button is intended for use ONLY{"\n"} in case of an emergency.
 					</Text>
 					<TouchableOpacity
 						onPress={() => setModalVisible(true)}
@@ -82,6 +83,7 @@ function HomeScreen({ navigation }) {
 							borderTopLeftRadius: 20,
 							borderBottomRightRadius: 20,
 							borderBottomLeftRadius: 20,
+							bottom: 100
 						}}
 					>
 						<Text style={{ color: "white" }}>EMERGENCY 911</Text>
@@ -107,7 +109,7 @@ function HomeScreen({ navigation }) {
 						>
 							Warning!
 						</Text>
-						<Text style={{ textAlign: "center", marginBottom: 20 }}>
+						<Text style={{ textAlign: "center", marginBottom: 30}}>
 							This button is intended for use ONLY in case of an emergency. Are
 							you sure you want to call 911?
 						</Text>
@@ -126,6 +128,7 @@ function HomeScreen({ navigation }) {
 									backgroundColor: "#D9D9D9",
 									borderRadius: 20,
 									padding: 4,
+									right: 5,
 									textAlign: "center",
 								}}
 							>
@@ -178,6 +181,7 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		justifyContent: "center",
 		alignItems: "center",
+		alignSelf: 'center',
 		flex: 1,
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 2 },

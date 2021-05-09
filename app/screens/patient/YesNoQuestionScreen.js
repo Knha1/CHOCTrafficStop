@@ -70,6 +70,8 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	
 );
 
+
+
 function YesNoQuestionScreen({ navigation }) {
 	const [value, setValue] = React.useState('first');
 	const renderItem = ({ questions }) => {
@@ -81,8 +83,18 @@ function YesNoQuestionScreen({ navigation }) {
 
 		)
 	}
-	
 
+	const footer = () => {
+		return (
+			<TouchableHighlight
+			underlayColor="#A6E1FF"
+			style={styles.submitButton}
+			onPress={() => navigation.navigate("Resource List")}>
+				<Text style={{color: "#FFF"}}>SUBMIT SURVEY</Text>
+			</TouchableHighlight>
+		);
+	  };
+	
 	return (
 
 		<View style={styles.container}>
@@ -92,10 +104,15 @@ function YesNoQuestionScreen({ navigation }) {
 			<Text style={styles.skipToResultsText}>Skip to Results?</Text>
 			<View style={styles.bottomContainer}>
 
+			
+
+			
 			<FlatList
-			 	contentContainerStyle={{ paddingBottom: 110 }}
+			 	contentContainerStyle={{ paddingBottom: 100 }}
 				data={questions}
 				keyExtractor={(item, index) => index.toString()}
+				
+				ListFooterComponent={footer}
 				renderItem={({ item }) => {
 					return (
 							<View>
@@ -114,64 +131,15 @@ function YesNoQuestionScreen({ navigation }) {
 									</View>
 								)}
 								/>
+								
 							</View>
 					);
 				}}
 			/>
-
-
-
-
-
-
-				{/* <View>
-					<Text style={styles.text}>1. Do you have a safe place to stay?</Text>
-					<TouchableHighlight
-						underlayColor="#A6E1FF"
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.button}
-					>
-						<Text style={styles.buttonText}>Yes</Text>
-					</TouchableHighlight>
-					<TouchableHighlight
-						underlayColor="#A6E1FF"
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.button}
-					>
-						<Text style={styles.buttonText}>No</Text>
-					</TouchableHighlight>
-				</View>
-				<View style={{ top: 50 }}>
-					<Text style={styles.text}>2. Do you need safety planning?</Text>
-					<TouchableHighlight
-						underlayColor="#A6E1FF"
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.button}
-					>
-						<Text style={styles.buttonText}>Yes</Text>
-					</TouchableHighlight>
-					<TouchableHighlight
-						underlayColor="#A6E1FF"
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.button}
-					>
-						<Text style={styles.buttonText}>No</Text>
-					</TouchableHighlight>
-				</View>
-				<View style={{flex: 1}}>
-				<View style={{ top: 100 }}>
-					<Text style={styles.text}>3. Example Likert Scale Question</Text>
-					<RadioButton.Group style={styles.radioButtonGroup} onValueChange={newValue => setValue(newValue)} value={value}>
-						<RadioButton.Item style={styles.radioButtonItem} label = "(1) Great" value="1"></RadioButton.Item>
-						<RadioButton.Item style={styles.radioButtonItem} label = "(2) Good" value="2"></RadioButton.Item>
-						<RadioButton.Item style={styles.radioButtonItem} label = "(3) Okay" value="3"></RadioButton.Item>
-						<RadioButton.Item style={styles.radioButtonItem} label = "(4) Surviving" value="4"></RadioButton.Item>
-						<RadioButton.Item style={styles.radioButtonItem} label = "(5) Crisis" value="5"></RadioButton.Item>
-					</RadioButton.Group>
-				</View>
-				</View>*/}
+			
 			</View>
 		</View>
+		
 	);
 }
 
@@ -241,16 +209,17 @@ var styles = StyleSheet.create({
 		color: "#000",
 		alignSelf: "center",
 	},
-	// radioButtonItem: {
-	// 	height: 43,
-	// 	width: 300,
-	// 	alignSelf: 'center',
-	// 	color: '#A6E1FF'
-	// },
-	// radioButtonGroup: {
-	// 	paddingTop: 50
-
-	// }
+	submitButton: {
+		top: 50,
+		height: 45,
+		margin: 3,
+		width: 340,
+		borderRadius: 64,
+		alignSelf: "center",
+		backgroundColor: "#0E4B9D",
+		alignItems: "center",
+		justifyContent: "center"
+	}
 });
 
 export default YesNoQuestionScreen;
