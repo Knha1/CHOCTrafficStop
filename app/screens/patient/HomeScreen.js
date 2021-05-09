@@ -15,6 +15,7 @@ import charity from "../../assets/charity1.png";
 import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
+import logo from "../../assets/logo_nobg.png"
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -53,6 +54,14 @@ function HomeScreen({ navigation }) {
 					>
 						<Text style={styles.buttonText}>View All Resources</Text>
 						<Image source={charity} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("CHOC Resources")}
+						style={styles.card}
+					>
+						<Text style={styles.buttonText}>View CHOC Resources</Text>
+						<Image source={logo} style={styles.icon} />
 					</TouchableOpacity>
 
 					<TouchableOpacity
