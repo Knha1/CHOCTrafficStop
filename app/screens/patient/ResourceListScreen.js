@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import {
 	Text,
 	SafeAreaView,
@@ -10,65 +11,155 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
+import { readData } from "../../utils/DataHandler";
 
-var sections = [
-	{
-		title: "Coping",
-		innerData: [
-			{ name: "RESOURCE 1" }, 
-			{ name: "RESOURCE 2" }],
-	},
-	{
-		title: "Food / Fitness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Health / Wellness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Mindfulness",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-	{
-		title: "Relationships",
-		innerData: [
-			{ name: "RESOURCE 1" }, 
-			{ name: "RESOURCE 2" }],
-	},
-	{
-		title: "Sleep",
-		innerData: [
-			{ name: "RESOURCE 1" }, 
-			{ name: "RESOURCE 2" }],
-	},
-	{
-		title: "Other",
-		innerData: [
-			{ name: "RESOURCE 1" },
-			{ name: "RESOURCE 2" },
-			{ name: "RESOURCE 3" },
-		],
-	},
-];
+// var resources = "";
 
+// if (resources == undefined) {
+// 	// Sort resources by category
+// 	var sortedResources = resources.sort((a, b) =>
+// 		a.category > b.category ? 1 : -1
+// 	);
+
+// 	var currentCategory = sortedResources[0].category;
+// 	var sections = []; // TODO: rename later
+
+// 	// Sections2 index tracker
+// 	var index = 0;
+// 	// Creating new object
+// 	sections.push({
+// 		title: sortedResources[0].category,
+// 		innerData: [],
+// 	});
+
+// 	for (var i = 0; i < sortedResources.length; i++) {
+// 		// If there's a new category, push a new category title + innerData
+// 		if (sortedResources[i].category != currentCategory) {
+// 			index++;
+// 			currentCategory = sortedResources[i].category;
+// 			sections.push({
+// 				title: sortedResources[i].category,
+// 				innerData: [],
+// 			});
+// 		}
+// 		// If in current category, add to innerData
+// 		else {
+// 			// Test print
+// 			console.log("NAME: " + sortedResources[i].name);
+
+// 			sections[index].innerData.push({
+// 				name: sortedResources[i].name,
+// 				description: sortedResources[i].description,
+// 				resource_id: sortedResources[i].resource_id,
+// 			});
+// 		}
+// 	}
+// 	// console.log("OUR WORK");
+// 	// console.log(sections);
+
+// ===== ANGIE'S SECTIONS =====
+// var sections2 = [
+// 	{
+// 		title: "Sleep",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Coping",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Mindfulness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Relationships",
+// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
+// 	},
+// 	{
+// 		title: "Health / Wellness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Food / Fitness",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// 	{
+// 		title: "Other",
+// 		innerData: [
+// 			{ name: "RESOURCE 1" },
+// 			{ name: "RESOURCE 2" },
+// 			{ name: "RESOURCE 3" },
+// 		],
+// 	},
+// ];
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
 function ResourceListScreen({ navigation }) {
+	// State variable to show loading screen if resources aren't loaded yet
+	const [isLoading, setIsLoading] = useState(true);
+	var resources = [];
+	var sections = []; // TODO: rename later?
+
+	// Read in resources locally and display it
+	useEffect(() => {
+		readData("resources").then(
+			function (value) {
+				resources = JSON.parse(value);
+
+				// Sort resources by category
+				var sortedResources = resources.sort((a, b) =>
+					a.category > b.category ? 1 : -1
+				);
+
+				var currentCategory = sortedResources[0].category;
+
+				// Index tracker for each category within 'sections'
+				var index = 0;
+				// Create initial object for sections
+				sections.push({
+					title: sortedResources[0].category,
+					innerData: [],
+				});
+
+				for (var i = 0; i < sortedResources.length; i++) {
+					// If there's a new category, push a new category title + empty innerData
+					if (sortedResources[i].category != currentCategory) {
+						index++;
+						currentCategory = sortedResources[i].category;
+						sections.push({
+							title: sortedResources[i].category,
+							innerData: [],
+						});
+					}
+					// Add to innerData for all resources
+					sections[index].innerData.push({
+						name: sortedResources[i].name,
+						description: sortedResources[i].description,
+						resource_id: sortedResources[i].resource_id,
+					});
+				}
+				setIsLoading(false);
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+	});
+
 	const renderItem = ({ sections }) => {
 		return (
 			<Item
@@ -77,6 +168,16 @@ function ResourceListScreen({ navigation }) {
 			/>
 		);
 	};
+
+	// Display loading if resources aren't loaded yet
+	// TODO: currently not displaying loading at all
+	if (isLoading) {
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+	}
 
 	return (
 		<View>
@@ -107,10 +208,14 @@ function ResourceListScreen({ navigation }) {
 									<View style={styles.cards}>
 										<TouchableOpacity
 											style={styles.links}
-											onPress={() => navigation.navigate("Resource Details")}
+											onPress={() =>
+												navigation.navigate("Resource Details", {
+													resource_id: innerData.resource_id,
+												})
+											}
 										>
 											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>Info about Resource</Text>
+											<Text>{innerData.description}</Text>
 										</TouchableOpacity>
 									</View>
 								)}
@@ -132,7 +237,7 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 		alignSelf: "center",
 		fontSize: 20,
-		paddingTop: 60,
+		paddingTop: 20,
 		paddingBottom: 12,
 	},
 	subtext: {
@@ -169,7 +274,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-start",
 		padding: 10,
 		paddingLeft: 20,
-		fontSize: 16
+		fontSize: 16,
 	},
 	resourceTitle: {
 		color: "#003C98",
