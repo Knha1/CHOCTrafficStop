@@ -15,6 +15,7 @@ import ResourceRecommendedScreen from "./app/screens/patient/ResourceRecommended
 import ResourceDetailScreen from "./app/screens/patient/ResourceDetailScreen";
 import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
+import CHOCResourceList from "./app/screens/patient/CHOCResourceList";
 // SCREEN IMPORTS -- ADMIN
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
 import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
@@ -23,6 +24,7 @@ import ViewResourceScreen from "./app/screens/admin/ViewResourceScreen";
 import StatisticsDetailsScreen from "./app/screens/admin/StatisticsDetailsScreen";
 import AddResourceScreen from "./app/screens/admin/AddResourceScreen";
 import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
+
 
 const Stack = createStackNavigator();
 
@@ -177,6 +179,12 @@ export default function App() {
 				<Stack.Screen
 					name="YesNo Question"
 					component={YesNoQuestionScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="CHOC Resources"
+					component={CHOCResourceList}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
