@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Settings } from "react-native";
 import { firebase } from "./app/firebase/config";
-import DataHandler from "./app/utils/DataHandler";
+import { storeData } from "./app/utils/DataHandler";
 // SCREEN IMPORTS -- PATIENT
 import LoginScreen from "./app/screens/patient/LoginScreen";
 import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
@@ -53,7 +53,7 @@ export default function App() {
 						});
 					}
 				});
-				DataHandler.storeData("resources", tempResources);
+				storeData("resources", tempResources);
 			} else {
 				console.log("'resource' data retrieval from DB was unsuccessful.");
 			}
@@ -83,7 +83,7 @@ export default function App() {
 						});
 					}
 				});
-				DataHandler.storeData("questions", tempQuestions);
+				storeData("questions", tempQuestions);
 			} else {
 				console.log("'question' data retrieval from DB was unsuccessful.");
 			}

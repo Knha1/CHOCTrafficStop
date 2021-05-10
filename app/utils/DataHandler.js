@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-async function readData(key) {
+export async function readData(key) {
 	try {
 		const value = await AsyncStorage.getItem(key);
 		if (value != null) {
@@ -20,7 +20,7 @@ async function readData(key) {
  * @param {object} data
  * @param {string} key
  */
-async function storeData(key, data) {
+export async function storeData(key, data) {
 	try {
 		// If data is a string, skip stringify; else, stringify it
 		if (typeof data == "string") {
@@ -33,7 +33,7 @@ async function storeData(key, data) {
 	}
 }
 
-export default DataHandler = {
-	readData,
-	storeData,
-};
+// export default DataHandler = {
+// 	readData,
+// 	storeData,
+// };
