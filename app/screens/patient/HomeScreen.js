@@ -15,7 +15,7 @@ import charity from "../../assets/charity1.png";
 import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
-import logo from "../../assets/logo_nobg.png"
+import logo from "../../assets/logo_nobg.png";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -26,11 +26,15 @@ function HomeScreen({ navigation }) {
 				style={{
 					overflow: "hidden",
 					resizeMode: "stretch",
-					height: "100%"
+					height: "100%",
 				}}
 			>
-				
-				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
+				<View
+					style={[
+						styles.base,
+						{ height: "70%", padding: 20, alignItems: "center" },
+					]}
+				>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
 						style={styles.card}
@@ -56,11 +60,13 @@ function HomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => navigation.navigate("CHOC Resources")}
-						style={styles.card}
+						onPress={() => navigation.navigate("Youth Support Services")}
+						style={[styles.card, { backgroundColor: "#4B9E76" }]}
 					>
-						<Text style={styles.buttonText}>View CHOC Resources</Text>
-						<Image source={logo} style={styles.icon} />
+						<Text style={[styles.buttonText, { color: "white" }]}>
+							Youth Support Services
+						</Text>
+						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
 					<TouchableOpacity
@@ -71,16 +77,15 @@ function HomeScreen({ navigation }) {
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Settings")}
-						style={[styles.card, {backgroundColor: "#4B9E76"}]}
-					>
-						<Text style={[styles.buttonText,{color: "white"}]}>Youth Support Services</Text>
-						<Image source={cog} style={styles.icon} />
-					</TouchableOpacity>
-
 					<Text
-						style={{ color: "black", textAlign: "center", marginBottom: 10, width: "80%", position: "absolute", bottom: "10%"}}
+						style={{
+							color: "black",
+							textAlign: "center",
+							marginBottom: 10,
+							width: "80%",
+							position: "absolute",
+							bottom: "10%",
+						}}
 					>
 						This button is intended for use ONLY in case of an emergency.
 					</Text>
@@ -100,39 +105,52 @@ function HomeScreen({ navigation }) {
 							shadowOffset: { width: 0, height: 2 },
 							shadowOpacity: 0.25,
 							shadowRadius: 4,
-							}}
+						}}
 					>
 						<Text style={{ color: "white" }}>EMERGENCY 911</Text>
 					</TouchableOpacity>
 				</View>
 
-
-
 				<Modal
 					animationType="none"
 					visible={modalVisible}
-					transparent = {true}
+					transparent={true}
 					onRequestClose={() => {
 						setModalVisible(!modalVisible);
 					}}
 				>
-					<View style={[styles.container, {backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: "center"}]}>
+					<View
+						style={[
+							styles.container,
+							{ backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center" },
+						]}
+					>
 						<View style={styles.emergencyConfirm}>
-						<Text
-							style={{
-								textAlign: "center",
-								marginBottom: 10,
-								color: "#9C0000",
-								fontWeight: "bold",
-								fontSize: 24,
-							}}
-						>
-							Warning!
-						</Text>
-						<Text style={{ textAlign: "center", marginBottom: 20, marginHorizontal: "10%"}}>
-							This button is intended for use ONLY in case of an emergency. If you are in immediate danger and you require immediate help call 911
-						</Text>
-							<View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+							<Text
+								style={{
+									textAlign: "center",
+									marginBottom: 10,
+									color: "#9C0000",
+									fontWeight: "bold",
+									fontSize: 24,
+								}}
+							>
+								Warning!
+							</Text>
+							<Text
+								style={{
+									textAlign: "center",
+									marginBottom: 20,
+									marginHorizontal: "10%",
+								}}
+							>
+								This button is intended for use ONLY in case of an emergency. If
+								you are in immediate danger and you require immediate help call
+								911
+							</Text>
+							<View
+								style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+							>
 								<TouchableOpacity
 									onPress={() => setModalVisible(!modalVisible)}
 									style={{
@@ -161,13 +179,10 @@ function HomeScreen({ navigation }) {
 									</Text>
 								</TouchableOpacity>
 							</View>
-						
 						</View>
 					</View>
 				</Modal>
 			</ImageBackground>
-
-			
 		</View>
 	);
 }
@@ -189,8 +204,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		borderRadius: 20,
 		marginHorizontal: "5%",
-		paddingVertical: "5%"
-		
+		paddingVertical: "5%",
 	},
 	buttonSpacing: {
 		margin: 5,
@@ -211,11 +225,11 @@ const styles = StyleSheet.create({
 	},
 	base: {
 		marginTop: "20%",
-		backgroundColor: '#F1F2F2',
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
-		flex: 1
+		flex: 1,
 	},
 	icon: {
 		resizeMode: "contain",

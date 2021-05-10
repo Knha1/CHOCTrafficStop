@@ -12,46 +12,46 @@ import {
 import colors from "../../config/colors";
 
 var sections = [
-    {
+	{
 		title: "Coping",
 		innerData: [
 			{ name: "Understand & Managing Your Health" },
-            { name: "Stress and Coping" },
-            { name: "Positive Emotions" },
+			{ name: "Stress and Coping" },
+			{ name: "Positive Emotions" },
 		],
 	},
-    {
+	{
 		title: "Food / Fitness",
 		innerData: [
 			{ name: "Healthy Relationships with Food & Exercise" },
 			{ name: "Food Pantries in Orange County" },
-            { name: "Exercise and Fitness" },
+			{ name: "Exercise and Fitness" },
 		],
 	},
-    {
+	{
 		title: "Health / Wellness",
 		innerData: [
 			{ name: "Be Your Best Self" },
 			{ name: "Relaxation and Breathing" },
-            { name: "Meditations" },
-            { name: "Yoga" },
+			{ name: "Meditations" },
+			{ name: "Yoga" },
 		],
 	},
-    {
+	{
 		title: "Mindfulness",
 		innerData: [
 			{ name: "How to Be Mindful" },
 			{ name: "Mindfulness Exercises" },
 		],
 	},
-    {
+	{
 		title: "Relationships",
 		innerData: [
 			{ name: "Understanding Other Teens" },
 			{ name: "Healthy Relationships" },
 			{ name: "Abusive Relationships" },
-            { name: "Stress and Coping" },
-            { name: "Asking for Help" },
+			{ name: "Stress and Coping" },
+			{ name: "Asking for Help" },
 		],
 	},
 	{
@@ -67,7 +67,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function CHOCResourceList({ navigation }) {
+function YouthServicesScreen({ navigation }) {
 	const renderItem = ({ sections }) => {
 		return (
 			<Item
@@ -79,7 +79,7 @@ function CHOCResourceList({ navigation }) {
 
 	return (
 		<View>
-			<Text style={styles.header}>CHOC Resources</Text>
+			<Text style={styles.header}>Youth Support Services</Text>
 			<FlatList
 				data={sections}
 				keyExtractor={(item, index) => index.toString()}
@@ -186,4 +186,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default CHOCResourceList;
+export default YouthServicesScreen;
