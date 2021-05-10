@@ -1,6 +1,11 @@
 import json
 import csv
 
+OUTPUT_FILENAME = 'sampleDB.json'
+QUESTIONS_FILENAME = 'questions.json'
+CREATE_QUESTIONS_JSON = True
+
+# Create empty dictionaries for sample data
 d = dict()
 
 patients = dict()
@@ -22,9 +27,9 @@ data = dict()
 d1 = dict()
 d2 = dict()
 
-# Assign
+regCodes = dict()
 
-# --- patients ---
+# --- PATIENTS ---
 patient1['patient_id'] = 1
 patient1['reg_code'] = 'GUEST'
 patient2['patient_id'] = 2
@@ -91,12 +96,14 @@ reso['num_resources'] = 4
 d['resource'] = reso
 
 # --- QUESTIONS ---
-# Download TSV from spreadsheet, rename it to q.tsv FIRST
-# question_id, category, order, text, type, answer_choices: {}
+# 1. Download questions from spreadsheet as .tsv file
+# 2. Rename input file as 'q.tsv'
+# 3. Place in same directory as 'createSampleDB.py'
 with open('q.tsv', 'r') as infile:
     rd = csv.reader(infile, delimiter='\t')
     rowIndex = 0
     for q in rd:
+        # Ignore lines 0 and 29+ (change as needed)
         if not (rowIndex == 0 or rowIndex >= 29):
             q_data = dict()
             ac_std = dict()
@@ -170,10 +177,23 @@ data[1] = d1
 data[2] = d2
 data['num_data'] = 2
 
+# --- REGISTRATION CODES ---
+regCodes['1'] = 'GUEST'
+regCodes['2'] = 'CHOC1'
+
+d['reg_codes'] = regCodes
+
 d['data'] = data
 
 
-# Write
-with open('testdata.json', 'w') as outfile:
+# Create Sample DB JSON
+with open(OUTPUT_FILENAME, 'w') as outfile:
     json.dump(d, outfile)
-print('done')
+print(f'Completed creating sample JSON, output file: {OUTPUT_FILENAME}')
+
+# Create Questions JSON
+if CREATE_QUESTIONS_JSON:
+    with open(QUESTIONS_FILENAME, 'w') as outfile:
+        json.dump(questions, outfile)
+    print(
+        f'Completed creating questions JSON, output file: {QUESTIONS_FILENAME}')

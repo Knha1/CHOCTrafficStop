@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 testdata.json
 ignoreTimerWarn.js
+sampleDB.json
 
 # macOS
 .DS_Store
