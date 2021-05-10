@@ -9,6 +9,7 @@ import {
 	Alert,
 	Image,
 	TouchableOpacity,
+	ScrollView
 } from "react-native";
 // import { Colors } from "react-native/Libraries/NewAppScreen";
 import colors from "../../config/colors";
@@ -23,105 +24,101 @@ function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
 
 	return (
-		<View style={styles.base}>
-			<ImageBackground
-				source={bg}
-				style={{
-					borderTopRightRadius: 60,
-					borderTopLeftRadius: 60,
-					overflow: "hidden",
-					resizeMode: "stretch",
-					height: "100%"
-				}}
-			>
-				<Text
+		<View style={[styles.container]}>
+			<View style={[styles.base, {height: "100%", alignItems: "center", justifyContent: "space-evenly"}]}>
+				<ImageBackground
+					source={bg}
 					style={{
-						paddingTop: 10,
-						fontSize: 22,
-						alignSelf: "center",
-						padding: 20,
-						color: "#F1F2F2",
+						overflow: "hidden",
+						resizeMode: "stretch",
+						height: "100%",
+						width: "100%",
+						borderTopRightRadius: 30,
+						borderTopLeftRadius: 30,
 					}}
 				>
-					What resources do you need?
-				</Text>
-				<Text
-					style={{
-						paddingTop: 10,
-						fontSize: 14,
-						alignSelf: "flex-start",
-						padding: 20,
-						color: "#F1F2F2",
-					}}
-				>
-					Please select one of the following survey categories that best
-					describes the kind of resources you are looking for.
-				</Text>
-				<Text
-					style={{
-						paddingTop: 10,
-						fontSize: 14,
-						alignSelf: "flex-start",
-						padding: 20,
-						color: "#F1F2F2",
-						textDecorationLine: "underline",
-					}}
-				>
-					Or, you can see your past resources here.
-				</Text>
-
-				<View style={styles.row}>
-					<TouchableOpacity
-						onPress={() => navigation.navigate("YesNo Question")}
-						style={[styles.card, { flexDirection: "column" }]}
+					<ScrollView>
+					<Text
+						style={{
+							marginTop: "10%",
+							fontSize: 22,
+							alignSelf: "center",
+							textAlign: "center",
+							marginBottom: "1%",
+							color: "#F1F2F2",
+						}}
 					>
-						<Image source={safetySecurity} style={styles.icon} />
-						<Text style={{ alignSelf: "center", textAlign: "center" }}>
-							Safety and Security
-						</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("YesNo Question")}
-						style={styles.card}
+						What resources do you need?
+					</Text>
+					<Text
+						style={styles.subtext
+						}
 					>
-						<Image source={relationshipsSupport} style={styles.icon} />
-						<Text style={{ alignSelf: "center", textAlign: "center" }}>
-							Relationships and Support
-						</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("YesNo Question")}
-						style={styles.card}
+						Please select one of the following survey categories that best
+						describes the kind of resources you are looking for.
+					</Text>
+					<Text
+						style={[styles.subtext, {
+							textDecorationLine: "underline",
+						}]}
 					>
-						<Image source={mentalHealth} style={styles.icon} />
-						<Text style={{ alignSelf: "center", textAlign: "center" }}>
-							Mental Health
-						</Text>
-					</TouchableOpacity>
+						Or, you can see your past resources here.
+					</Text>
 
-					<TouchableOpacity
-						onPress={() => navigation.navigate("YesNo Question")}
-						style={styles.card}
-					>
-						<Image source={physical} style={styles.icon} />
-						<Text style={{ alignSelf: "center", textAlign: "center" }}>
-							Physical Health and Wellbeing
-						</Text>
-					</TouchableOpacity>
+					<View style={styles.row}>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("YesNo Question")}
+							style={[styles.card, { flexDirection: "column" }]}
+						>
+							<Image source={safetySecurity} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Safety and Security
+							</Text>
+						</TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={() => navigation.navigate("YesNo Question")}
-						style={[styles.card, { flexDirection: "column" }]}
-					>
-						<Image source={community} style={styles.icon} />
-						<Text style={{ alignSelf: "center", textAlign: "center" }}>
-							Community
-						</Text>
-					</TouchableOpacity>
-				</View>
-			</ImageBackground>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("YesNo Question")}
+							style={styles.card}
+						>
+							<Image source={relationshipsSupport} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Relationships and Support
+							</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							onPress={() => navigation.navigate("YesNo Question")}
+							style={styles.card}
+						>
+							<Image source={mentalHealth} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Mental Health
+							</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							onPress={() => navigation.navigate("YesNo Question")}
+							style={styles.card}
+						>
+							<Image source={physical} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Physical Health and Wellbeing
+							</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							onPress={() => navigation.navigate("YesNo Question")}
+							style={[styles.card, { flexDirection: "column" }]}
+						>
+							<Image source={community} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Community
+							</Text>
+						</TouchableOpacity>
+					</View>
+					</ScrollView>
+				</ImageBackground>
+			</View>
 		</View>
 	);
 }
@@ -129,9 +126,8 @@ function SurveyCategoriesScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.bg,
-		alignItems: "center",
-		justifyContent: "center",
+		//alignItems: "center",
+		//justifyContent: "flex-start",
 	},
 	title: {},
 	emergency: {
@@ -160,6 +156,13 @@ const styles = StyleSheet.create({
 	emergencyChoice: {
 		flexDirection: "row",
 	},
+	subtext:{
+		fontSize: 14,
+		alignSelf: "flex-start",
+		marginStart: 20,
+		marginVertical: "2%",
+		color: "#F1F2F2"
+	},
 	card: {
 		backgroundColor: "#F1F2F2",
 		width: "45%",
@@ -174,9 +177,10 @@ const styles = StyleSheet.create({
 		color: "#F1F2F2",
 	},
 	base: {
-		borderTopRightRadius: 60,
-		borderTopLeftRadius: 60,
-		height: "100%",
+		marginTop: "20%",
+		//backgroundColor: '#F1F2F2',
+		alignSelf: "stretch",
+		flex: 1
 	},
 	icon: {
 		resizeMode: "contain",
