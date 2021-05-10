@@ -1,4 +1,5 @@
 import json
+import csv
 
 d = dict()
 
@@ -13,9 +14,6 @@ reso3 = dict()
 reso4 = dict()
 
 questions = dict()
-q1 = dict()
-q2 = dict()
-q3 = dict()
 
 admins = dict()
 admin1 = dict()
@@ -85,7 +83,7 @@ reso4['email'] = ''
 
 reso[1] = reso1
 reso[2] = reso2
-reso[3] = reso3 
+reso[3] = reso3
 reso[4] = reso4
 
 reso['num_resources'] = 4
@@ -93,32 +91,51 @@ reso['num_resources'] = 4
 d['resource'] = reso
 
 # --- QUESTIONS ---
-q1['question_id'] = 1
-q1['category'] = 'Mental Health'
-q1['order'] = 1
-q1['text'] = 'Are you in crisis or distress where you feel like hurting yourself?'
-q1['type'] = 'Yes or No'
-q1['answer_choices'] = ''
+# Download TSV from spreadsheet, rename it to q.tsv FIRST
+# question_id, category, order, text, type, answer_choices: {}
+with open('q.tsv', 'r') as infile:
+    rd = csv.reader(infile, delimiter='\t')
+    rowIndex = 0
+    for q in rd:
+        if not (rowIndex == 0 or rowIndex >= 29):
+            q_data = dict()
+            ac_std = dict()
+            ac_std['1'] = "Rarely (None or 1-3 times/month)"
+            ac_std['2'] = "Sometimes (1-2 times/week)"
+            ac_std['3'] = "Often (3-5 times/week)"
+            ac_std['4'] = "Almost (6-7 times/week)"
+            ac_std['5'] = "Always (Everyday)"
 
-q2['question_id'] = 2
-q2['category'] = 'Physical Health & Wellbeing'
-q2['order'] = 10
-q2['text'] = 'Do you have trouble falling asleep?'
-q2['type'] = 'Likert Scale (Modified)'
-ac = {
-	1: "Rarely (None or 1-3 times/month)",
-	2: "Sometimes (1-2 times/week)",
-	3: "Often (3-5 times/week)",
-	4: "Almost (6-7 times/week)",
-	5: "Always (Everyday)"
-}
-q2['answer_choices'] = ac
+            ac_mod1 = dict()    # For qid 9
+            ac_mod1['1'] = "Very Bad"
+            ac_mod1['2'] = "Bad"
+            ac_mod1['3'] = "Ok"
+            ac_mod1['4'] = 'Good'
+            ac_mod1['5'] = 'Very Good'
 
+            ac_mod2 = dict()    # For qid 18-22
+            ac_mod2['1'] = "Rarely (None or 1-3 times/month)"
+            ac_mod2['2'] = "Sometimes (1-2 times/week)"
+            ac_mod2['3'] = "Often (3-5 times/week)"
+            ac_mod2['4'] = "Almost (6-7 times/week)"
+            ac_mod2['5'] = "Always (Everyday)"
 
-questions[1] = q1
-questions[2] = q2
-
-questions['num_questions'] = 2
+            q_data['question_id'] = q[0]
+            q_data['category'] = q[3]
+            q_data['order'] = q[4]
+            q_data['text'] = q[1]
+            q_data['type'] = q[2]
+            if q[2] == 'Yes/No':
+                q_data['answer_choices'] = ''
+            elif q[2] == 'Likert':
+                q_data['answer_choices'] = ac_std
+            elif q[2] == 'Likert (Modified)':
+                if rowIndex == 9:
+                    q_data['answer_choices'] = ac_mod1
+                else:
+                    q_data['answer_choices'] = ac_mod2
+            questions[rowIndex] = q_data
+        rowIndex += 1
 
 d['question'] = questions
 
@@ -149,7 +166,7 @@ d2['year'] = 2021
 d2['month'] = 3
 
 
-data[1] = d1 
+data[1] = d1
 data[2] = d2
 data['num_data'] = 2
 
@@ -158,5 +175,5 @@ d['data'] = data
 
 # Write
 with open('testdata.json', 'w') as outfile:
-	json.dump(d, outfile)
+    json.dump(d, outfile)
 print('done')
