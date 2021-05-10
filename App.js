@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Settings } from "react-native";
 import { firebase } from "./app/firebase/config";
+import { storeData } from "./app/utils/DataHandler";
 // SCREEN IMPORTS -- PATIENT
 import LoginScreen from "./app/screens/patient/LoginScreen";
 import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
@@ -26,8 +27,7 @@ import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
-	// Get resources from DB, declare as global
-	global.resources = "";
+	// Get resources from DB and store locally
 	firebase
 		.database()
 		.ref()
@@ -42,7 +42,7 @@ export default function App() {
 					if (!Number.isInteger(child.val())) {
 						tempResources.push({
 							resource_id: child.val().resource_id,
-							name: child.val().address,
+							name: child.val().name,
 							description: child.val().description,
 							category: child.val().category,
 							organization: child.val().organization,
@@ -53,16 +53,14 @@ export default function App() {
 						});
 					}
 				});
-
-				global.resources = tempResources;
+				storeData("resources", tempResources);
 			} else {
 				console.log("'resource' data retrieval from DB was unsuccessful.");
 			}
 		})
 		.catch((err) => console.log(err));
 
-	// Get questions from DB, declare as global
-	global.questions = "";
+	// Get questions from DB and store locally
 	firebase
 		.database()
 		.ref()
@@ -85,8 +83,7 @@ export default function App() {
 						});
 					}
 				});
-
-				global.questions = tempQuestions;
+				storeData("questions", tempQuestions);
 			} else {
 				console.log("'question' data retrieval from DB was unsuccessful.");
 			}
