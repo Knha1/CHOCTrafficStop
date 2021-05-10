@@ -16,6 +16,7 @@ import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
+import { Linking } from "react-native";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -146,7 +147,7 @@ function HomeScreen({ navigation }) {
 							>
 								This button is intended for use ONLY in case of an emergency. If
 								you are in immediate danger and you require immediate help call
-								911
+								911.
 							</Text>
 							<View
 								style={{ flexDirection: "row", justifyContent: "space-evenly" }}
@@ -166,6 +167,7 @@ function HomeScreen({ navigation }) {
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
+									onPress={() => Linking.openURL(`tel:${911}`)}
 									style={{
 										backgroundColor: "#A32E2E",
 										width: "40%",
