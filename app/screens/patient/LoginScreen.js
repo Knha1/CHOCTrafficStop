@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// import DataHandler from "../../utils/DataHandler";
+
 import {
 	ImageBackground,
 	StyleSheet,
@@ -9,15 +11,39 @@ import {
 	View,
 	Button,
 	KeyboardAvoidingView,
+	ActivityIndicator,
 } from "react-native";
 import colors from "../../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { firebase } from "../../firebase/config";
+import { useEffect } from "react";
+import {storeData, readData} from "../../utils/DataHandler.js"
 
 function LoginScreen({ navigation }) {
 	const [text, setText] = useState("");
+	const [isLoading, setLoading] = useState(true);
+	// const [data, setData] = useState([]);
+	
+	useEffect(() => {
+		readData("log").then(
+			function (value){
+			var loggedIn = value;
+			// console.log(loggedIn);
+			
+			if(loggedIn != null)
+			{
+				navigation.navigate("Home");
+			}
+
+			},
+			function (err) {
+				console.log(err);
+				}
+			).finally(() => setLoading(false));
+		  }, []);
 
 	return (
+		
 		<LinearGradient
 			colors={["#0658BC", "#489CAB"]}
 			locations={[0, 0.9]}
@@ -25,7 +51,9 @@ function LoginScreen({ navigation }) {
 			end={{ x: 1, y: 1 }}
 			style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}
 		>
-			<KeyboardAvoidingView style={styles.container} behavior="height">
+			{isLoading ? <ActivityIndicator/> : (
+				<KeyboardAvoidingView style={styles.container} behavior="height">
+				
 				<View style={styles.bottomContainer}>
 					<Text
 						style={{
@@ -36,7 +64,7 @@ function LoginScreen({ navigation }) {
 							paddingLeft: 36,
 						}}
 					>
-						Get Started
+						Get Started 
 					</Text>
 					<TextInput
 						style={{
@@ -58,7 +86,7 @@ function LoginScreen({ navigation }) {
 							if (regCode.length == 0) {
 								regCode = "GUEST";
 							}
-
+							storeData("log", "True");
 							// Grab the num_patients count on DB
 							firebase
 								.database()
@@ -96,13 +124,15 @@ function LoginScreen({ navigation }) {
 
 					{/* NAVIGATE TO ADMIN LOG IN PAGE */}
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", marginTop: 80 }}
+						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
 						onPress={() => navigation.navigate("Admin Home")}
 					>
 						Log In as Admin User
 					</Text>
 				</View>
 			</KeyboardAvoidingView>
+			)}
+
 		</LinearGradient>
 	);
 }
