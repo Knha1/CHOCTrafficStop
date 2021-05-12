@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import {
 	Text,
+	ScrollView,
 	SafeAreaView,
 	StyleSheet,
 	SectionList,
@@ -127,7 +128,7 @@ function ResourceListScreen({ navigation }) {
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
 				// If done loading
-				<View>
+				<ScrollView>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
 						Based on your survey results, here are some resources that might be
@@ -173,7 +174,7 @@ function ResourceListScreen({ navigation }) {
 							);
 						}}
 					/>
-				</View>
+				</ScrollView>
 			)}
 		</View>
 	);
