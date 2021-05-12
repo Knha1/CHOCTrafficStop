@@ -14,50 +14,6 @@ import {
 import colors from "../../config/colors";
 import { readData } from "../../utils/DataHandler";
 
-// var resources = "";
-
-// if (resources == undefined) {
-// 	// Sort resources by category
-// 	var sortedResources = resources.sort((a, b) =>
-// 		a.category > b.category ? 1 : -1
-// 	);
-
-// 	var currentCategory = sortedResources[0].category;
-// 	var sections = []; // TODO: rename later
-
-// 	// Sections2 index tracker
-// 	var index = 0;
-// 	// Creating new object
-// 	sections.push({
-// 		title: sortedResources[0].category,
-// 		innerData: [],
-// 	});
-
-// 	for (var i = 0; i < sortedResources.length; i++) {
-// 		// If there's a new category, push a new category title + innerData
-// 		if (sortedResources[i].category != currentCategory) {
-// 			index++;
-// 			currentCategory = sortedResources[i].category;
-// 			sections.push({
-// 				title: sortedResources[i].category,
-// 				innerData: [],
-// 			});
-// 		}
-// 		// If in current category, add to innerData
-// 		else {
-// 			// Test print
-// 			console.log("NAME: " + sortedResources[i].name);
-
-// 			sections[index].innerData.push({
-// 				name: sortedResources[i].name,
-// 				description: sortedResources[i].description,
-// 				resource_id: sortedResources[i].resource_id,
-// 			});
-// 		}
-// 	}
-// 	// console.log("OUR WORK");
-// 	// console.log(sections);
-
 // ===== ANGIE'S SECTIONS =====
 // var sections2 = [
 // 	{
@@ -118,18 +74,9 @@ function ResourceListScreen({ navigation }) {
 	useEffect(() => {
 		readData("resources")
 			.then((resources) => {
-				// Load 'resources' from AsyncStorage, put in data useState
-				console.log("Resources about to be stored in 'data':");
-				console.log(JSON.parse(resources));
-				setData(JSON.parse(resources));
-			})
-			.then(() => {
-				// Load 'resources' from data useState now, sort and put into 'sections'
-				console.log("Loading resources in 'data': ");
-				console.log({ data });
-				var resources = { data };
+				// Load 'resources' from AsyncStorage
+				var resources = JSON.parse(resources);
 				// Sort resources by category
-				resources = resources["data"];
 				resources = resources.sort((a, b) =>
 					a.category > b.category ? 1 : -1
 				);
@@ -159,8 +106,6 @@ function ResourceListScreen({ navigation }) {
 					}
 					// If category is the same, add to innerData
 					else {
-						// console.log("same category; index = ", categoryIndex);
-						// console.log("pulling: " + JSON.stringify(resources[categoryIndex]));
 						sections[categoryIndex].innerData.push({
 							name: resources[i].name,
 							description: resources[i].description,
@@ -169,19 +114,10 @@ function ResourceListScreen({ navigation }) {
 					}
 				}
 				setData(sections);
-				console.log(sections);
 			})
 			.catch((error) => console.error(error))
 			.finally(() => setLoading(false));
 	}, [isLoading]);
-
-	// const Item = ({ title }) => {
-	// 	<View>
-	// 		<Text>{title}</Text>;
-	// 	</View>;
-	// };
-
-	// const renderItem = ({ item }) => <Item title={item.title} />;
 
 	return (
 		<View>
@@ -189,11 +125,53 @@ function ResourceListScreen({ navigation }) {
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
-				// TODO: replace with Angie's FlatList UI
-				<FlatList
-					data={data}
-					renderItem={({ item }) => <Text>{item.title}</Text>}
-				/>
+				<View>
+					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.subtext}>
+						Based on your survey results, here are some resources that might be
+						helpful to you.
+					</Text>
+					<TouchableOpacity style={styles.button}>
+						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
+					</TouchableOpacity>
+					<FlatList
+						data={data}
+						keyExtractor={(item, index) => index.toString()}
+						renderItem={({ item }) => {
+							const color = "black";
+							const backgroundColor = "white";
+							return (
+								<View>
+									<View>
+										<Text style={styles.title}>{item.title}</Text>
+									</View>
+
+									<FlatList
+										data={item.innerData}
+										keyExtractor={(item, index) => index.toString()}
+										renderItem={({ item: innerData, index }) => (
+											<View style={styles.cards}>
+												<TouchableOpacity
+													style={styles.links}
+													onPress={() =>
+														navigation.navigate("Resource Details", {
+															resource_id: innerData.resource_id,
+														})
+													}
+												>
+													<Text style={styles.resourceTitle}>
+														{innerData.name}
+													</Text>
+													<Text>{innerData.description}</Text>
+												</TouchableOpacity>
+											</View>
+										)}
+									/>
+								</View>
+							);
+						}}
+					/>
+				</View>
 			)}
 		</View>
 	);
