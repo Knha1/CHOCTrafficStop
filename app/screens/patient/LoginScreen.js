@@ -30,7 +30,7 @@ function LoginScreen({ navigation }) {
 			var loggedIn = value;
 			// console.log(loggedIn);
 			
-			if(loggedIn != null)
+			if(loggedIn == "True")
 			{
 				navigation.navigate("Home");
 			}
@@ -51,7 +51,7 @@ function LoginScreen({ navigation }) {
 			end={{ x: 1, y: 1 }}
 			style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}
 		>
-			{isLoading ? <ActivityIndicator/> : (
+			{/* {isLoading ? <ActivityIndicator/> : ( */}
 				<KeyboardAvoidingView style={styles.container} behavior="height">
 				
 				<View style={styles.bottomContainer}>
@@ -131,7 +131,7 @@ function LoginScreen({ navigation }) {
 					</Text>
 				</View>
 			</KeyboardAvoidingView>
-			)}
+			{/* )} */}
 
 		</LinearGradient>
 	);
