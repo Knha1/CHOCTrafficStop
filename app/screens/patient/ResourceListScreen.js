@@ -8,6 +8,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	ActivityIndicator,
 } from "react-native";
 
 import colors from "../../config/colors";
@@ -110,120 +111,90 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 function ResourceListScreen({ navigation }) {
 	// State variable to show loading screen if resources aren't loaded yet
-	const [isLoading, setIsLoading] = useState(true);
-	var resources = [];
-	var sections = []; // TODO: rename later?
+	const [isLoading, setLoading] = useState(true);
+	// State variable to store data for resource list
+	const [data, setData] = useState([]);
 
-	// Read in resources locally and display it
 	useEffect(() => {
-		readData("resources").then(
-			function (value) {
-				resources = JSON.parse(value);
-
+		readData("resources")
+			.then((resources) => {
+				// Load 'resources' from AsyncStorage, put in data useState
+				console.log("Resources about to be stored in 'data':");
+				console.log(JSON.parse(resources));
+				setData(JSON.parse(resources));
+			})
+			.then(() => {
+				// Load 'resources' from data useState now, sort and put into 'sections'
+				console.log("Loading resources in 'data': ");
+				console.log({ data });
+				var resources = { data };
 				// Sort resources by category
-				var sortedResources = resources.sort((a, b) =>
+				resources = resources["data"];
+				resources = resources.sort((a, b) =>
 					a.category > b.category ? 1 : -1
 				);
 
-				var currentCategory = sortedResources[0].category;
+				var currentCategory = "";
+				var categoryIndex = 0;
+				var sections = [];
 
-				// Index tracker for each category within 'sections'
-				var index = 0;
-				// Create initial object for sections
-				sections.push({
-					title: sortedResources[0].category,
-					innerData: [],
-				});
-
-				for (var i = 0; i < sortedResources.length; i++) {
-					// If there's a new category, push a new category title + empty innerData
-					if (sortedResources[i].category != currentCategory) {
-						index++;
-						currentCategory = sortedResources[i].category;
+				for (var i = 0; i < resources.length; i++) {
+					// If there's a new category, push a new category title + innerData
+					if (resources[i].category != currentCategory) {
+						// Skip first category index increment, avoid OOB error
+						if (i != 0) {
+							categoryIndex++;
+						}
+						currentCategory = resources[i].category;
 						sections.push({
-							title: sortedResources[i].category,
-							innerData: [],
+							title: currentCategory,
+							innerData: [
+								{
+									name: resources[i].name,
+									description: resources[i].description,
+									resource_id: resources[i].resource_id,
+								},
+							],
 						});
 					}
-					// Add to innerData for all resources
-					sections[index].innerData.push({
-						name: sortedResources[i].name,
-						description: sortedResources[i].description,
-						resource_id: sortedResources[i].resource_id,
-					});
+					// If category is the same, add to innerData
+					else {
+						// console.log("same category; index = ", categoryIndex);
+						// console.log("pulling: " + JSON.stringify(resources[categoryIndex]));
+						sections[categoryIndex].innerData.push({
+							name: resources[i].name,
+							description: resources[i].description,
+							resource_id: resources[i].resource_id,
+						});
+					}
 				}
-				setIsLoading(false);
-			},
-			function (err) {
-				console.log(err);
-			}
-		);
-	});
+				setData(sections);
+				console.log(sections);
+			})
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
+	}, [isLoading]);
 
-	const renderItem = ({ sections }) => {
-		return (
-			<Item
-				item={sections.innerData}
-				onPress={() => (backgroundColor = "#3248a8")}
-			/>
-		);
-	};
+	// const Item = ({ title }) => {
+	// 	<View>
+	// 		<Text>{title}</Text>;
+	// 	</View>;
+	// };
 
-	// Display loading if resources aren't loaded yet
-	// TODO: currently not displaying loading at all
-	if (isLoading) {
-		return (
-			<View>
-				<Text>Loading...</Text>
-			</View>
-		);
-	}
+	// const renderItem = ({ item }) => <Item title={item.title} />;
 
 	return (
 		<View>
-			<Text style={styles.header}>Resources for You</Text>
-			<Text style={styles.subtext}>
-				Based on your survey results, here are some resources that might be
-				helpful to you.
-			</Text>
-			<TouchableOpacity style={styles.button}>
-				<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-			</TouchableOpacity>
-			<FlatList
-				data={sections}
-				keyExtractor={(item, index) => index.toString()}
-				renderItem={({ item }) => {
-					const color = "black";
-					const backgroundColor = "white";
-					return (
-						<View>
-							<View>
-								<Text style={styles.title}>{item.title}</Text>
-							</View>
-
-							<FlatList
-								data={item.innerData}
-								keyExtractor={(item, index) => index.toString()}
-								renderItem={({ item: innerData, index }) => (
-									<View style={styles.cards}>
-										<TouchableOpacity
-											style={styles.links}
-											onPress={() =>
-												navigation.navigate("Resource Details", {
-													resource_id: innerData.resource_id,
-												})
-											}
-										>
-											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>{innerData.description}</Text>
-										</TouchableOpacity>
-									</View>
-								)}
-							/>
-						</View>
-					);
-				}}
-			/>
+			{isLoading ? (
+				// If still loading
+				<ActivityIndicator size="small" color="#0000ff" />
+			) : (
+				// TODO: replace with Angie's FlatList UI
+				<FlatList
+					data={data}
+					renderItem={({ item }) => <Text>{item.title}</Text>}
+				/>
+			)}
 		</View>
 	);
 }
