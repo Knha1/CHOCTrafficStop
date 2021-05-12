@@ -17,6 +17,8 @@ reso1 = dict()
 reso2 = dict()
 reso3 = dict()
 reso4 = dict()
+reso5 = dict()
+reso6 = dict()
 
 questions = dict()
 
@@ -86,12 +88,37 @@ reso4['phone_num'] = '714-619-0258'
 reso4['address'] = '1575 E. 17th Street\nSanta Ana CA 92705'
 reso4['email'] = "email4"
 
+reso5['resource_id'] = 5
+reso5['name'] = 'Counteracting Restlessness'
+reso5['category'] = 'Sleep'
+reso5['availability'] = '24/7 (Online Resource)'
+reso5['description'] = 'Steps you should take to help you fall asleep at night.'
+reso5['organization'] = 'CHOC'
+reso5['website'] = 'https://kidshealth.org/CHOC/en/teens/sleepless.html'
+reso5['phone_num'] = 'none'
+reso5['address'] = '1201 W La Veta Ave Orange, CA 92868'
+reso5['email'] = "no email"
+
+reso6['resource_id'] = 6
+reso6['name'] = 'How to Be Mindful'
+reso6['category'] = 'Mindfulness'
+reso6['availability'] = 'Monday – Friday (12:00PM – 8:00PM)\nSaturday (12:00PM – 4:00PM)'
+reso6['description'] = 'Information about mindfulness and tips on how to practice mindfulness yourself.'
+reso6['organization'] = 'Project Choice'
+reso6['website'] = 'https://kidshealth.org/CHOC/en/teens/mindfulness.html'
+reso6['phone_num'] = 'none6'
+reso6['address'] = '1201 W La Veta Ave Orange, CA 92868'
+reso6['email'] = "no email 6"
+
+
 reso[1] = reso1
 reso[2] = reso2
 reso[3] = reso3
 reso[4] = reso4
+reso[5] = reso5
+reso[6] = reso6
 
-reso['num_resources'] = 4
+reso['num_resources'] = 6
 
 d['resource'] = reso
 
