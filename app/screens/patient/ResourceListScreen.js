@@ -120,11 +120,13 @@ function ResourceListScreen({ navigation }) {
 	}, [isLoading]);
 
 	return (
+		// TODO: Fix FlatList; no longer scrollable
 		<View>
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
+				// If done loading
 				<View>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
@@ -135,7 +137,7 @@ function ResourceListScreen({ navigation }) {
 						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
 					<FlatList
-						data={data}
+						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({ item }) => {
 							const color = "black";
