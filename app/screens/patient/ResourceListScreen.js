@@ -15,53 +15,6 @@ import {
 import colors from "../../config/colors";
 import { readData } from "../../utils/DataHandler";
 
-// ===== ANGIE'S SECTIONS =====
-// var sections2 = [
-// 	{
-// 		title: "Sleep",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Coping",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Mindfulness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Relationships",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Health / Wellness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Food / Fitness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Other",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// ];
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
@@ -121,7 +74,8 @@ function ResourceListScreen({ navigation }) {
 	}, [isLoading]);
 
 	return (
-		// TODO: Fix FlatList; no longer scrollable
+		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
+		// TODO: Change nested FlatList + FlatList into SectionList
 		<View>
 			{isLoading ? (
 				// If still loading
