@@ -14,7 +14,6 @@ import { firebase } from "../../firebase/config";
 function AdminLoginScreen({ navigation }) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	// TODO: display message to user if username/password is wrong
 	const [message, setMessage] = useState("");
 
 	return (
@@ -64,7 +63,7 @@ function AdminLoginScreen({ navigation }) {
 						secureTextEntry={true}
 					/>
 
-					<Text>{}</Text>
+					<Text style={{ margin: 5, padding: 5 }}>{message}</Text>
 
 					<TouchableOpacity
 						style={styles.button}
@@ -72,6 +71,9 @@ function AdminLoginScreen({ navigation }) {
 						onPress={() => {
 							var valid = false;
 							if (username.length == 0 || password.length == 0) {
+								setMessage(
+									"Username and/or password isn't filled in. Try again."
+								);
 								console.log(
 									"Username and/or password isn't filled in. Try again."
 								);
@@ -92,7 +94,6 @@ function AdminLoginScreen({ navigation }) {
 												if (username == child.val().username) {
 													validUsername = true;
 													admin_id = child.val().admin_id;
-													console.log("found matching username");
 												}
 											});
 										} else {
@@ -120,6 +121,7 @@ function AdminLoginScreen({ navigation }) {
 												if (validUsername && validPassword) {
 													navigation.navigate("Admin Home");
 												} else {
+													setMessage("Invalid password or username");
 													console.log("Invalid password or username.");
 												}
 											});
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		position: "absolute",
-		top: 300,
+		top: 340,
 		alignItems: "center",
 		alignSelf: "center",
 		justifyContent: "center",
