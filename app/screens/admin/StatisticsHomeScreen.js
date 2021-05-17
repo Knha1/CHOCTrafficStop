@@ -107,7 +107,7 @@ function StatisticsHomeScreen({ navigation }) {
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							onPress={() => navigation.navigate("View Resource")}
+							onPress={() => navigation.navigate("Statistics Details")}
 							style={{
 								backgroundColor: "#0E4B9D",
 								alignSelf: "center",

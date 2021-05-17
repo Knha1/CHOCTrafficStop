@@ -10,7 +10,7 @@ function ExportDataScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={bg} style={{overflow: "hidden",resizeMode: "stretch",height: "100%", width: "100%"}}>
-				<View style={styles.base}>
+				<View style={[styles.base]}>
 					<Text style={{
 							marginTop: "10%",
 							fontSize: 26,
@@ -39,7 +39,7 @@ function ExportDataScreen({ navigation }) {
 					/>
 
 					<View style={{flexDirection: "row", position: "absolute", bottom: 30, left: 40 }}>
-						<TouchableOpacity onPress={() =>navigation.navigate('Admin Home')} 
+						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')} 
 						style={{
 							backgroundColor: "#DFDFDF",
 							alignSelf: "center",
@@ -50,7 +50,7 @@ function ExportDataScreen({ navigation }) {
 							<Text style={[styles.buttonText, {color: "#003C98"}]}>Cancel</Text>
 
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() =>navigation.navigate('Admin Home')}
+						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')}
 						style={{
 							backgroundColor: "#0E4B9D",
 							alignSelf: "center",
