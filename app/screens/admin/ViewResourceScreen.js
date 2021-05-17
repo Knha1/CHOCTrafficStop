@@ -33,27 +33,23 @@ function ViewResourceScreen({ navigation }) {
 						>
 							Website: https://kidshealth.org/CHOC/en/teens/how-much-sleep.html
 						</Text>
-						<Text style={styles.text4}>
-							Resource Name provides tips for sleeping better at night... Nulla
-							ultrices sed commodo in id arcu iaculis in urna. Euismod proin massa
-							sed scelerisque nisi, tristique nisl sem cras. Sed arcu erat nullam
-							in in phasellus sem arcu. Dui purus, malesuada dis elit aenean
-							pulvinar arcu.{"\n"}
+						<Text style={styles.description}>
+							Getting Enough Sleep provides tips for sleeping better at night... Nulla
+							ultrices sed commodo in id arcu iaculis in urna.{"\n"}
 							{"\n"}
-							Sed eget rhoncus laoreet ullamcorper suspendisse viverra tincidunt.
-							Tortor diam id a dui aliquet a vulputate tellus. Est, massa
-							tristique nunc egestas urna commodo fames duis. Aliquam curabitur
+							Est, massa tristique nunc egestas urna commodo fames duis. Aliquam curabitur
 							congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed
 							tellus amet. Dictum massa elementum sagittis iaculis proin.
 						</Text>
 					</View>
-					<View>
+					<View style={{position:"absolute", bottom: '7%', alignContent: 'center', alignSelf: 'center'}}>
 						<TouchableOpacity
-						onPress={() => navigation.navigate("Statistics Details")}
-						style={styles.deleteButton}>
+							onPress={() => navigation.navigate("Statistics Details")}
+							style={styles.deleteButton}>
 							<Text style={{color: 'white'}}>Delete Resource</Text>
 						</TouchableOpacity>
-					</View>
+
+						</View>
 				</View>
 			</View>
 		);
@@ -154,15 +150,15 @@ const styles = StyleSheet.create({
 		top: 30,
 		left: 40,
 	},
-	text4: {
+	description: {
 		fontSize: 14,
 		width: 320,
 		left: 40,
-		top: 70,
+		top: 75,
 	},
 	deleteButton: {
-		position: "absolute",
-		top: 110,
+		position: 'absolute',
+		bottom: '15%',
 		alignItems: "center",
 		alignSelf: "center",
 		justifyContent: "center",
