@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, Button, Modal, Linking, Image, TouchableOpacity} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
+
 import colors from "../../config/colors";
 import backArrowWhite from "../../assets/backArrowWhite.png";
 import edit from "../../assets/edit.png";
@@ -13,7 +14,10 @@ function ViewResourceScreen({ navigation }) {
 				<View style={styles.bottomContainer}>
 					<View>
 						<Text style={styles.text}>Getting Enough Sleep</Text>
-						<Image style={{position:'absolute', width: 25, height: 25, left: '84%', top: '10%' }} source={edit}></Image>
+						<TouchableOpacity style={styles.iconButton} onPress = {() => navigation.navigate("Statistics Details")}>
+							<Image style={{ width: 25, height: 25, alignSelf: 'center' }} source={edit}></Image>
+						</TouchableOpacity>
+						
 						<Text style={styles.text3}>SLEEP</Text>
 						<Text style={styles.text2}>Organization: CHOC</Text>
 						<Text style={styles.text2}>Availability: 24/7; Online Resource</Text>
@@ -77,6 +81,17 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 96,
 		paddingBottom: 100,
+	},
+	iconButton: {
+		position: 'absolute',
+		left: '78%',
+		top: '10%',
+		borderColor:'rgba(0,0,0,0.2)',
+		justifyContent:'center',
+		width:55,
+		height:55,
+		backgroundColor:'#d8d8d8',
+		borderRadius:50,
 	},
 	rectangle: {
 		height: 4,
