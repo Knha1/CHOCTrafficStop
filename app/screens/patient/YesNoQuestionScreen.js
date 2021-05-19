@@ -71,7 +71,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 						// If Likert scale
 						else {
 							sections.push({
-								text: questions[i].text,
+								text: questions[i].order + ". " + questions[i].text,
 								type: questions[i].type,
 								choices: [
 									// TODO: change tags' value to tags
@@ -114,7 +114,16 @@ function YesNoQuestionScreen({ route, navigation }) {
 		<View style={styles.container}>
 			<Text style={styles.topText}>{category_name} Survey</Text>
 			<View style={styles.rectangle}></View>
-			<Text style={styles.skipToResultsText}>Skip to Results?</Text>
+			<Text
+				style={styles.skipToResultsText}
+				onPress={() =>
+					navigation.navigate("Resource List", {
+						tags: finalTags,
+					})
+				}
+			>
+				Skip to Results?
+			</Text>
 			<View style={styles.bottomContainer}>
 				<FlatList
 					contentContainerStyle={{ paddingBottom: 100 }}
