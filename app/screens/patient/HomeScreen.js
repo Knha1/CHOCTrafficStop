@@ -16,6 +16,8 @@ import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
+import back from "../../assets/backArrowWhite.png";
+import heart from "../../assets/heart.png";
 import { Linking } from "react-native";
 
 function HomeScreen({ navigation }) {
@@ -30,6 +32,9 @@ function HomeScreen({ navigation }) {
 					height: "100%",
 				}}
 			>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source = {back} style = {styles.backButton}></Image>
+			</TouchableOpacity>
 				<View
 					style={[
 						styles.base,
@@ -67,7 +72,7 @@ function HomeScreen({ navigation }) {
 						<Text style={[styles.buttonText, { color: "white" }]}>
 							Youth Support Services
 						</Text>
-						<Image source={cog} style={styles.icon} />
+						<Image source={heart} style={styles.icon} />
 					</TouchableOpacity>
 
 					<TouchableOpacity
@@ -192,8 +197,8 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center",
-		justifyContent: "flex-start",
+		// alignItems: "center",
+		// justifyContent: "flex-start",
 	},
 	emergency: {
 		flex: 1,
@@ -226,12 +231,21 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 	},
 	base: {
-		marginTop: "20%",
+		// marginTop: "1%",
 		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
 		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 	icon: {
 		resizeMode: "contain",

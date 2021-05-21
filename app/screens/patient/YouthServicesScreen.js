@@ -7,60 +7,43 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	Linking
 } from "react-native";
 
 import colors from "../../config/colors";
 
+// var ProjectChoice = () => {Linking.openURL('https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/')}
+
 var sections = [
 	{
-		title: "Coping",
+		title: "PROJECT CHOICE",
 		innerData: [
-			{ name: "Understand & Managing Your Health" },
-			{ name: "Stress and Coping" },
-			{ name: "Positive Emotions" },
+			{ name: "Individual Case Management", 
+			description: "Work together with Project CHOICE to develop safety plans and receive all the support you need.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/" },
+			{ name: "Safety Planning" , description: "Create a safety plan with the team at Project CHOICE.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"},
+			{ name: "Medical, Mental Health & Substance Use Support", description: "Receive support for mental health, medical health, and substance abuse.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/" },
+			{ name: "Housing Referrals", description: "Be referred to affordable houing resources.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"},
+			{ name: "Education & Employment Assistance", description: "Get help and support in finding education and employment opportunities.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"},
+			{ name: "Court Support & Advocacy", description: "Find someone to support and advocate for you in Court." ,
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"},
+			{ name: "Linkages to Community Resources", description: "Discover different kinds of community resources in Orange County.",
+			website: "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"},
 		],
 	},
 	{
-		title: "Food / Fitness",
+		title: "WAYMAKERS",
 		innerData: [
-			{ name: "Healthy Relationships with Food & Exercise" },
-			{ name: "Food Pantries in Orange County" },
-			{ name: "Exercise and Fitness" },
+			{ name: "Waymakers: Victim assistance Programs", description: "Victim assistance",
+			website: "https://waymakersoc.org/" },
+			{ name: "Victim Services", description: "safety planning, crisis response, victim assistance for all crimes (human trafficking / rape crisis), court advocacy.",
+			website:  "https://waymakersoc.org/"},
 		],
-	},
-	{
-		title: "Health / Wellness",
-		innerData: [
-			{ name: "Be Your Best Self" },
-			{ name: "Relaxation and Breathing" },
-			{ name: "Meditations" },
-			{ name: "Yoga" },
-		],
-	},
-	{
-		title: "Mindfulness",
-		innerData: [
-			{ name: "How to Be Mindful" },
-			{ name: "Mindfulness Exercises" },
-		],
-	},
-	{
-		title: "Relationships",
-		innerData: [
-			{ name: "Understanding Other Teens" },
-			{ name: "Healthy Relationships" },
-			{ name: "Abusive Relationships" },
-			{ name: "Stress and Coping" },
-			{ name: "Asking for Help" },
-		],
-	},
-	{
-		title: "Sleep",
-		innerData: [
-			{ name: "Preventing Nightmares" },
-			{ name: "Counteracting Restfulness" },
-		],
-	},
+	}
 ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -99,10 +82,10 @@ function YouthServicesScreen({ navigation }) {
 									<View style={styles.cards}>
 										<TouchableOpacity
 											style={styles.links}
-											onPress={() => navigation.navigate("Resource Details")}
+											onPress={() => navigation.navigate(Linking.openURL(innerData.website))}
 										>
 											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>Info about Resource</Text>
+											<Text>{innerData.description}</Text>
 										</TouchableOpacity>
 									</View>
 								)}
@@ -126,6 +109,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
+		marginTop: '10%'
 	},
 	subtext: {
 		fontSize: 14,

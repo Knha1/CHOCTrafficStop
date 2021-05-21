@@ -8,108 +8,21 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	Image,
+	ActivityIndicator,
+	ScrollView
 } from "react-native";
 
 import colors from "../../config/colors";
 import { readData } from "../../utils/DataHandler";
+import back from "../../assets/backArrowBlack.png";
 
-// var resources = "";
-
-// if (resources == undefined) {
-// 	// Sort resources by category
-// 	var sortedResources = resources.sort((a, b) =>
-// 		a.category > b.category ? 1 : -1
-// 	);
-
-// 	var currentCategory = sortedResources[0].category;
-// 	var sections = []; // TODO: rename later
-
-// 	// Sections2 index tracker
-// 	var index = 0;
-// 	// Creating new object
-// 	sections.push({
-// 		title: sortedResources[0].category,
-// 		innerData: [],
-// 	});
-
-// 	for (var i = 0; i < sortedResources.length; i++) {
-// 		// If there's a new category, push a new category title + innerData
-// 		if (sortedResources[i].category != currentCategory) {
-// 			index++;
-// 			currentCategory = sortedResources[i].category;
-// 			sections.push({
-// 				title: sortedResources[i].category,
-// 				innerData: [],
-// 			});
-// 		}
-// 		// If in current category, add to innerData
-// 		else {
-// 			// Test print
-// 			console.log("NAME: " + sortedResources[i].name);
-
-// 			sections[index].innerData.push({
-// 				name: sortedResources[i].name,
-// 				description: sortedResources[i].description,
-// 				resource_id: sortedResources[i].resource_id,
-// 			});
-// 		}
-// 	}
-// 	// console.log("OUR WORK");
-// 	// console.log(sections);
-
-// ===== ANGIE'S SECTIONS =====
-// var sections2 = [
-// 	{
-// 		title: "Sleep",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Coping",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Mindfulness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Relationships",
-// 		innerData: [{ name: "RESOURCE 1" }, { name: "RESOURCE 2" }],
-// 	},
-// 	{
-// 		title: "Health / Wellness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Food / Fitness",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// 	{
-// 		title: "Other",
-// 		innerData: [
-// 			{ name: "RESOURCE 1" },
-// 			{ name: "RESOURCE 2" },
-// 			{ name: "RESOURCE 3" },
-// 		],
-// 	},
-// ];
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function ResourceListScreen({ navigation }) {
-	// State variable to show loading screen if resources aren't loaded yet
+function StatisticsResourceListScreen({ navigation }) {
+		// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
@@ -141,7 +54,7 @@ function ResourceListScreen({ navigation }) {
 							innerData: [
 								{
 									name: resources[i].name,
-									description: resources[i].description,
+									// description: resources[i].description,
 									resource_id: resources[i].resource_id,
 								},
 							],
@@ -151,7 +64,7 @@ function ResourceListScreen({ navigation }) {
 					else {
 						sections[categoryIndex].innerData.push({
 							name: resources[i].name,
-							description: resources[i].description,
+							// description: resources[i].description,
 							resource_id: resources[i].resource_id,
 						});
 					}
@@ -166,20 +79,21 @@ function ResourceListScreen({ navigation }) {
 		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
 		// TODO: Change nested FlatList + FlatList into SectionList
 		<View>
+			
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
 				// If done loading
-				<ScrollView>
+				
+				
+				<View>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
 						Based on your survey results, here are some resources that might be
 						helpful to you.
 					</Text>
-					<TouchableOpacity style={styles.button}>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-					</TouchableOpacity>
+
 					<FlatList
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
@@ -208,7 +122,7 @@ function ResourceListScreen({ navigation }) {
 													<Text style={styles.resourceTitle}>
 														{innerData.name}
 													</Text>
-													<Text>{innerData.description}</Text>
+													{/* <Text>{innerData.description}</Text> */}
 												</TouchableOpacity>
 											</View>
 										)}
@@ -217,7 +131,7 @@ function ResourceListScreen({ navigation }) {
 							);
 						}}
 					/>
-				</ScrollView>
+				</View>
 			)}
 		</View>
 	);
@@ -234,6 +148,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
+		marginTop: '10%',
+		position: 'absolute'
 	},
 	subtext: {
 		fontSize: 14,
@@ -292,6 +208,15 @@ const styles = StyleSheet.create({
 		width: 340,
 		marginBottom: 15,
 	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
+	},
 });
 
-export default ResourceListScreen;
+export default StatisticsResourceListScreen;

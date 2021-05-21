@@ -19,6 +19,7 @@ import mentalHealth from "../../assets/MentalHealthIcon.png";
 import physical from "../../assets/PhysicalHealthWellbeingIcon.png";
 import community from "../../assets/CommunityIcon.png";
 import bg from "../../assets/background.png";
+import back from "../../assets/backArrowBlack.png"
 
 function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
@@ -30,11 +31,17 @@ function SurveyCategoriesScreen({ navigation }) {
 					styles.base,
 					{
 						height: "100%",
-						alignItems: "center",
+						// alignItems: "center",
 						justifyContent: "space-evenly",
 					},
 				]}
 			>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source = {back} style = {styles.backButton}></Image>
+					
+				</TouchableOpacity>
+				{/* <Button title="Back" onPress={() => navigation.goBack()} /> */}
+				
 				<ImageBackground
 					source={bg}
 					style={{
@@ -46,6 +53,7 @@ function SurveyCategoriesScreen({ navigation }) {
 						borderTopLeftRadius: 30,
 					}}
 				>
+					
 					<ScrollView>
 						<Text
 							style={{
@@ -186,10 +194,18 @@ const styles = StyleSheet.create({
 		color: "#F1F2F2",
 	},
 	base: {
-		marginTop: "20%",
+		marginTop: "18%",
 		//backgroundColor: '#F1F2F2',
 		alignSelf: "stretch",
 		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '8%',
+		marginLeft: '4%'
 	},
 	icon: {
 		resizeMode: "contain",

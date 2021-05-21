@@ -6,6 +6,7 @@ import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
+import back from "../../assets/backArrowWhite.png";
 
 
 function AdminHomeScreen({ navigation }) {
@@ -21,7 +22,9 @@ function AdminHomeScreen({ navigation }) {
 					width: "100%"
 				}}
 			>
-				<Button title="Back" onClick={() => this.props.navigation.goBack()} />
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source = {back} style = {styles.backButton}></Image>
+			</TouchableOpacity>
 				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Home")}
@@ -104,12 +107,21 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "20%",
-		backgroundColor: '#F1F2F2',
+		// marginTop: "1%",
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
-		flex: 1
+		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 	card: {
 		backgroundColor: "white",
