@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, Linking, Image, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView} from "react-native";
+import { Text, View, StyleSheet, Button, Modal, Linking, Image, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, ScrollView} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
@@ -13,15 +13,23 @@ function EditResourceScreen({ navigation }) {
 	return (
 			<View style={styles.container}>
 				<Image style={styles.backArrow} source={backArrowWhite}></Image>
-				<View style={styles.bottomContainer}>
+				<ScrollView style={styles.bottomContainer}>
 					<KeyboardAvoidingView
-					behavior="padding">
+					behavior="height"
+					style={{ flex: 1 }}
+					enabled={true}>
 						<Text style={styles.text}>Editing Resource</Text>
 
 						<Text style = {styles.text3}>Title</Text>
 						<TextInput
 							style={styles.input}
 							defaultValue = "Getting Enough Sleep"
+						/>
+
+						<Text style = {styles.text3}>Tags</Text>
+						<TextInput
+							style={styles.input}
+							defaultValue = "SLEEP"
 						/>
 
 						<Text style = {styles.text3}>Organization</Text>
@@ -47,23 +55,29 @@ function EditResourceScreen({ navigation }) {
 							style={styles.input}
 							defaultValue = "https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
 						/>
-
+						
 						<Text style = {styles.text3}>Description</Text>
 						<TextInput
-							style={styles.input}
+							multiline={true}
+							//textAlignVertical="center"
+							style={styles.descriptionInput}
 							defaultValue = "Getting Enough Sleep provides tips for sleeping better at night. Nulla ultrices sed commodo in id arcu iaculis in urna. Est, massa tristique nunc egestas urna commodo fames duis. Aliquam curabitur congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed tellus amet. Dictum massa elementum sagittis iaculis proin."
 						/>
 						
 					</KeyboardAvoidingView>
-					<View style={{position:"absolute", bottom: '7%', alignContent: 'center', alignSelf: 'center'}}>
+					
+
 						<TouchableOpacity
 							onPress={() => navigation.navigate("Statistics Details")}
-							style={styles.deleteButton}>
-							<Text style={{color: 'white'}}>Delete Resource</Text>
+							style={styles.cancelButton}>
+							<Text style={{color: '#0E4B9D'}}>Cancel</Text>
 						</TouchableOpacity>
-
-						</View>
-				</View>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("Statistics Details")}
+							style={styles.saveButton}>
+							<Text style={{color: 'white'}}>Save Changes</Text>
+						</TouchableOpacity>
+				</ScrollView>
 			</View>
 		);
 	}
@@ -83,6 +97,12 @@ const styles = StyleSheet.create({
 		left: 40,
 		top: 34,
 		fontSize: 18
+	},
+	descriptionInput: {
+		width: 330,
+		left: 40,
+		top: 34,
+		fontSize: 16
 	},
 	backArrow: {
 		height: 34,
@@ -177,16 +197,29 @@ const styles = StyleSheet.create({
 		left: 40,
 		top: 75,
 	},
-	deleteButton: {
+	cancelButton: {
 		position: 'absolute',
-		bottom: '15%',
+		top: '85%',
+		left: 40,
 		alignItems: "center",
-		alignSelf: "center",
 		justifyContent: "center",
-		backgroundColor: "#A32E2E",
+		backgroundColor: "white",
+		borderColor: "#0E4B9D",
+		borderRadius: 30,
+		borderWidth: 2,
+		height: 45,
+		width: 129,
+	},
+	saveButton: {
+		position: 'absolute',
+		top: '85%',
+		left: 200,
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "#0E4B9D",
 		borderRadius: 30,
 		height: 45,
-		width: 340,
+		width: 168
 	}
 });
 
