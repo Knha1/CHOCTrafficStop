@@ -51,6 +51,7 @@ export default function App() {
 							phone_num: child.val().phone_num,
 							availability: child.val().availability,
 							website: child.val().website,
+							tags: child.val().tags,
 						});
 					}
 				});
@@ -81,6 +82,7 @@ export default function App() {
 							text: child.val().text,
 							type: child.val().type,
 							answer_choices: child.val().answer_choices,
+							tags: child.val().tags,
 						});
 					}
 				});
