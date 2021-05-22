@@ -15,12 +15,6 @@ patient1 = dict()
 patient2 = dict()
 
 reso = dict()
-reso1 = dict()
-reso2 = dict()
-reso3 = dict()
-reso4 = dict()
-reso5 = dict()
-reso6 = dict()
 
 questions = dict()
 
@@ -89,19 +83,24 @@ with open('q.tsv', 'r') as infile:
         # Ignore lines 0 and 29+ (change as needed)
         if not (rowIndex == 0 or rowIndex >= 29):
             q_data = dict()
+
+            ac_yn = dict()
+            ac_yn['1'] = "Yes"
+            ac_yn['2'] = "No"
+
             ac_std = dict()
-            ac_std['1'] = "Rarely (None or 1-3 times/month)"
-            ac_std['2'] = "Sometimes (1-2 times/week)"
-            ac_std['3'] = "Often (3-5 times/week)"
-            ac_std['4'] = "Almost (6-7 times/week)"
-            ac_std['5'] = "Always (Everyday)"
+            ac_std['1'] = "(1) Crisis"
+            ac_std['2'] = "(2) Surviving"
+            ac_std['3'] = "(3) OK"
+            ac_std['4'] = "(4) Good"
+            ac_std['5'] = "(5) Great"
 
             ac_mod1 = dict()    # For qid 9
-            ac_mod1['1'] = "Very Bad"
-            ac_mod1['2'] = "Bad"
-            ac_mod1['3'] = "Ok"
-            ac_mod1['4'] = 'Good'
-            ac_mod1['5'] = 'Very Good'
+            ac_mod1['1'] = "(1) Very Bad"
+            ac_mod1['2'] = "(2) Bad"
+            ac_mod1['3'] = "(3) OK"
+            ac_mod1['4'] = '(4) Good'
+            ac_mod1['5'] = '(5) Very Good'
 
             ac_mod2 = dict()    # For qid 18-22
             ac_mod2['1'] = "Rarely (None or 1-3 times/month)"
@@ -116,7 +115,7 @@ with open('q.tsv', 'r') as infile:
             q_data['text'] = q[1]
             q_data['type'] = q[2]
             if q[2] == 'Yes/No':
-                q_data['answer_choices'] = ''
+                q_data['answer_choices'] = ac_yn
             elif q[2] == 'Likert':
                 q_data['answer_choices'] = ac_std
             elif q[2] == 'Likert (Modified)':
@@ -124,6 +123,23 @@ with open('q.tsv', 'r') as infile:
                     q_data['answer_choices'] = ac_mod1
                 else:
                     q_data['answer_choices'] = ac_mod2
+
+            # Match up tags to answers
+            q_tags = dict()
+            split_tags = q[6].split('=')
+            if q[2] == 'Yes/No':
+                q_tags['1'] = split_tags[0].strip().split(',')
+                q_tags['2'] = split_tags[1].strip().split(',')
+                print("yn", q_tags)
+            else:
+                q_tags['1'] = split_tags[0].strip().split(',')
+                q_tags['2'] = split_tags[1].strip().split(',')
+                q_tags['3'] = split_tags[2].strip().split(',')
+                q_tags['4'] = split_tags[3].strip().split(',')
+                q_tags['5'] = split_tags[4].strip().split(',')
+                print("likert", q_tags)
+            q_data['tags'] = q_tags
+
             questions[rowIndex] = q_data
         rowIndex += 1
 
@@ -186,4 +202,4 @@ if CREATE_RESOURCES_JSON:
     with open(RESOURCES_FILENAME, 'w') as outfile:
         json.dump(reso, outfile)
     print(
-        f'Completed creating resourcess JSON, output file: {RESOURCES_FILENAME}')
+        f'Completed creating resources JSON, output file: {RESOURCES_FILENAME}')
