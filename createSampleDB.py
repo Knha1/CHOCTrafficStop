@@ -4,7 +4,7 @@ import csv
 OUTPUT_FILENAME = 'sampleDB.json'
 QUESTIONS_FILENAME = 'questions.json'
 RESOURCES_FILENAME = 'resources.json'
-CREATE_QUESTIONS_JSON = False
+CREATE_QUESTIONS_JSON = True
 CREATE_RESOURCES_JSON = False
 
 # Create empty dictionaries for sample data
@@ -89,18 +89,18 @@ with open('q.tsv', 'r') as infile:
             ac_yn['2'] = "No"
 
             ac_std = dict()
-            ac_std['1'] = "(1) Crisis"
-            ac_std['2'] = "(2) Surviving"
-            ac_std['3'] = "(3) OK"
-            ac_std['4'] = "(4) Good"
-            ac_std['5'] = "(5) Great"
+            ac_std['1'] = "Crisis"
+            ac_std['2'] = "Surviving"
+            ac_std['3'] = "OK"
+            ac_std['4'] = "Good"
+            ac_std['5'] = "Great"
 
             ac_mod1 = dict()    # For qid 9
-            ac_mod1['1'] = "(1) Very Bad"
-            ac_mod1['2'] = "(2) Bad"
-            ac_mod1['3'] = "(3) OK"
-            ac_mod1['4'] = '(4) Good'
-            ac_mod1['5'] = '(5) Very Good'
+            ac_mod1['1'] = "Very Bad"
+            ac_mod1['2'] = "Bad"
+            ac_mod1['3'] = "OK"
+            ac_mod1['4'] = 'Good'
+            ac_mod1['5'] = 'Very Good'
 
             ac_mod2 = dict()    # For qid 18-22
             ac_mod2['1'] = "Rarely (None or 1-3 times/month)"
@@ -130,14 +130,12 @@ with open('q.tsv', 'r') as infile:
             if q[2] == 'Yes/No':
                 q_tags['1'] = split_tags[0].strip().split(',')
                 q_tags['2'] = split_tags[1].strip().split(',')
-                print("yn", q_tags)
             else:
                 q_tags['1'] = split_tags[0].strip().split(',')
                 q_tags['2'] = split_tags[1].strip().split(',')
                 q_tags['3'] = split_tags[2].strip().split(',')
                 q_tags['4'] = split_tags[3].strip().split(',')
                 q_tags['5'] = split_tags[4].strip().split(',')
-                print("likert", q_tags)
             q_data['tags'] = q_tags
 
             questions[rowIndex] = q_data
