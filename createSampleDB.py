@@ -3,7 +3,9 @@ import csv
 
 OUTPUT_FILENAME = 'sampleDB.json'
 QUESTIONS_FILENAME = 'questions.json'
-CREATE_QUESTIONS_JSON = True
+RESOURCES_FILENAME = 'resources.json'
+CREATE_QUESTIONS_JSON = False
+CREATE_RESOURCES_JSON = False
 
 # Create empty dictionaries for sample data
 d = dict()
@@ -44,83 +46,37 @@ patients['num_patients'] = 2
 d['patient'] = patients
 
 # --- RESOURCES ---
-reso1['resource_id'] = 1
-reso1['name'] = 'How Much Sleep Do I Need?'
-reso1['category'] = 'Sleep'
-reso1['availability'] = '24/7 (Online Resource)'
-reso1['description'] = 'Describes how much sleep teens should be getting'
-reso1['organization'] = 'CHOC'
-reso1['website'] = 'https://kidshealth.org/CHOC/en/teens/how-much-sleep.html'
-reso1['phone_num'] = '###-###-###1'
-reso1['address'] = 'Addy1'
-reso1['email'] = 'email1'
+# 1. Download resources from spreadsheet as .tsv file
+# 2. Rename input file as 'r.tsv'
+# 3. Place in same directory as 'createSampleDB.py'
+with open('r.tsv', 'r') as infile:
+    rd = csv.reader(infile, delimiter='\t')
+    rowIndex = 0
+    for r in rd:
+        # Ignore line 0 (header)
+        if rowIndex != 0:
+            newResource = dict()
 
-reso2['resource_id'] = 2
-reso2['name'] = '5 Ideas for Better Sleep'
-reso2['category'] = 'Sleep'
-reso2['availability'] = '24/7 (Online Resource)'
-reso2['description'] = 'Sample description2'
-reso2['organization'] = 'CHOC'
-reso2['website'] = 'https://kidshealth.org/CHOC/en/teens/tips-sleep.html'
-reso2['phone_num'] = '###-###-###2'
-reso2['address'] = 'addy2'
-reso2['email'] = 'email2'
+            newResource['resource_id'] = r[0]
+            newResource['name'] = r[1]
+            newResource['category'] = r[3]
+            newResource['availability'] = r[5]
+            newResource['description'] = r[2]
+            newResource['organization'] = r[4]
+            newResource['website'] = r[9]
+            newResource['phone_num'] = r[6]
+            newResource['address'] = r[7]
+            newResource['email'] = r[8]
 
-reso3['resource_id'] = 3
-reso3['name'] = 'Healthy Relationships with Food & Exercise'
-reso3['category'] = 'Food / Fitness'
-reso3['availability'] = '24/7 (Online Resource)'
-reso3['description'] = 'Sample description3'
-reso3['organization'] = 'CHOC'
-reso3['website'] = 'https://kidshealth.org/CHOC/en/teens/food-fitness'
-reso3['phone_num'] = '###-###-###3'
-reso3['address'] = 'email3'
-reso3['email'] = 'email3'
+            # Split tags by comma, then into a list
+            tags = r[10].split(',')
+            newResource['tags'] = [tag.strip().lower() for tag in tags]
+            reso[rowIndex] = newResource
 
-reso4['resource_id'] = 4
-reso4['name'] = 'Safety Planning'
-reso4['category'] = 'Safety'
-reso4['availability'] = 'Monday – Friday (12:00PM – 8:00PM)\nSaturday (12:00PM – 4:00PM)'
-reso4['description'] = 'Sample description4'
-reso4['organization'] = 'Project Choice'
-reso4['website'] = 'https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/'
-reso4['phone_num'] = '714-619-0258'
-reso4['address'] = '1575 E. 17th Street\nSanta Ana CA 92705'
-reso4['email'] = "email4"
+        rowIndex += 1
 
-reso5['resource_id'] = 5
-reso5['name'] = 'Counteracting Restlessness'
-reso5['category'] = 'Sleep'
-reso5['availability'] = '24/7 (Online Resource)'
-reso5['description'] = 'Steps you should take to help you fall asleep at night.'
-reso5['organization'] = 'CHOC'
-reso5['website'] = 'https://kidshealth.org/CHOC/en/teens/sleepless.html'
-reso5['phone_num'] = 'none'
-reso5['address'] = '1201 W La Veta Ave Orange, CA 92868'
-reso5['email'] = "no email"
-
-reso6['resource_id'] = 6
-reso6['name'] = 'How to Be Mindful'
-reso6['category'] = 'Mindfulness'
-reso6['availability'] = 'Monday – Friday (12:00PM – 8:00PM)\nSaturday (12:00PM – 4:00PM)'
-reso6['description'] = 'Information about mindfulness and tips on how to practice mindfulness yourself.'
-reso6['organization'] = 'Project Choice'
-reso6['website'] = 'https://kidshealth.org/CHOC/en/teens/mindfulness.html'
-reso6['phone_num'] = 'none6'
-reso6['address'] = '1201 W La Veta Ave Orange, CA 92868'
-reso6['email'] = "no email 6"
-
-
-reso[1] = reso1
-reso[2] = reso2
-reso[3] = reso3
-reso[4] = reso4
-reso[5] = reso5
-reso[6] = reso6
-
-reso['num_resources'] = 6
-
-d['resource'] = reso
+reso['num_resources'] = len(reso)
+d["resource"] = reso
 
 # --- QUESTIONS ---
 # 1. Download questions from spreadsheet as .tsv file
@@ -175,8 +131,8 @@ d['question'] = questions
 
 # --- ADMINS ---
 admin1['admin_id'] = 1
-admin1['username'] = 'myUsername'
-admin1['password'] = 'myPassword'
+admin1['username'] = 'CHOCAdmin'
+admin1['password'] = 'TrafficStop2021'
 
 admins[1] = admin1
 
@@ -224,3 +180,10 @@ if CREATE_QUESTIONS_JSON:
         json.dump(questions, outfile)
     print(
         f'Completed creating questions JSON, output file: {QUESTIONS_FILENAME}')
+
+# Create Resourcess JSON
+if CREATE_RESOURCES_JSON:
+    with open(RESOURCES_FILENAME, 'w') as outfile:
+        json.dump(reso, outfile)
+    print(
+        f'Completed creating resourcess JSON, output file: {RESOURCES_FILENAME}')
