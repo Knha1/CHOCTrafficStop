@@ -17,33 +17,34 @@ import colors from "../../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { firebase } from "../../firebase/config";
 import { useEffect } from "react";
-import {storeData, readData} from "../../utils/DataHandler.js"
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function LoginScreen({ navigation }) {
 	const [text, setText] = useState("");
 	const [isLoading, setLoading] = useState(true);
 	// const [data, setData] = useState([]);
-	
-	useEffect(() => {
-		readData("log").then(
-			function (value){
-			var loggedIn = value;
-			// console.log(loggedIn);
-			
-			if(loggedIn == "True")
-			{
-				navigation.navigate("Home");
-			}
 
-			},
-			function (err) {
-				console.log(err);
+	useEffect(() => {
+		readData("log")
+			.then(
+				function (value) {
+					var loggedIn = value;
+					// console.log(loggedIn);
+
+					if (loggedIn == "User") {
+						navigation.navigate("Home");
+					} else if (loggedIn == "Admin") {
+						navigation.navigate("Admin Home");
+					}
+				},
+				function (err) {
+					console.log(err);
 				}
-			).finally(() => setLoading(false));
-		  }, []);
+			)
+			.finally(() => setLoading(false));
+	}, []);
 
 	return (
-		
 		<LinearGradient
 			colors={["#0658BC", "#489CAB"]}
 			locations={[0, 0.9]}
@@ -52,8 +53,7 @@ function LoginScreen({ navigation }) {
 			style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}
 		>
 			{/* {isLoading ? <ActivityIndicator/> : ( */}
-				<KeyboardAvoidingView style={styles.container} behavior="height">
-				
+			<KeyboardAvoidingView style={styles.container} behavior="height">
 				<View style={styles.bottomContainer}>
 					<Text
 						style={{
@@ -64,7 +64,7 @@ function LoginScreen({ navigation }) {
 							paddingLeft: 36,
 						}}
 					>
-						Get Started 
+						Get Started
 					</Text>
 					<TextInput
 						style={{
@@ -91,19 +91,24 @@ function LoginScreen({ navigation }) {
 								.get()
 								.then((snapshot) => {
 									if (snapshot.exists()) {
-										for (var i = 0; i < snapshot.length; i++) {
-											if (regCode == snapshot[i]) {
+										// Checks if registration code is valid
+										for (var i = 0; i < snapshot.val().length; i++) {
+											if (regCode == snapshot.val()[i]) {
 												validCode = true;
 												break;
 											}
 										}
 									}
+								})
+								.then(() => {
+									// If code isn't valid, set it to 'GUEST'
+									if (regCode.length == 0 || validCode == false) {
+										regCode = "GUEST";
+									}
 								});
 
-							if (regCode.length == 0) {
-								regCode = "GUEST";
-							}
-							storeData("log", "True");
+							storeData("log", "User");
+
 							// Grab the num_patients count on DB
 							firebase
 								.database()
@@ -113,6 +118,7 @@ function LoginScreen({ navigation }) {
 								.get()
 								.then((snapshot) => {
 									if (snapshot.exists()) {
+										console.log("2nd firebase: " + regCode);
 										var newPatientId = snapshot.val() + 1;
 										// Update the num_patients count on DB
 										firebase
@@ -142,14 +148,16 @@ function LoginScreen({ navigation }) {
 					{/* NAVIGATE TO ADMIN LOG IN PAGE */}
 					<Text
 						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
-						onPress={() => navigation.navigate("Admin Home")}
+						onPress={() => {
+							navigation.navigate("Admin Home");
+							storeData("log", "Admin");
+						}}
 					>
 						Log In as Admin User
 					</Text>
 				</View>
 			</KeyboardAvoidingView>
 			{/* )} */}
-
 		</LinearGradient>
 	);
 }
