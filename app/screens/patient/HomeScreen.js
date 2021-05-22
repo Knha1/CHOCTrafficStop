@@ -41,6 +41,25 @@ function HomeScreen({ navigation }) {
 						{ height: "70%", padding: 20, alignItems: "center" },
 					]}
 				>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Youth Support Services")}
+						style={[styles.card, { backgroundColor: "#4B9E76" }]}
+					>
+						<Text style={[styles.buttonText, { color: "white" }]}>
+							Youth Support Services
+						</Text>
+						<Image source={heart} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Resource List")}
+						style={styles.card}
+					>
+						<Text style={styles.buttonText}>View All Resources</Text>
+						<Image source={charity} style={styles.icon} />
+					</TouchableOpacity>
+
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
 						style={styles.card}
@@ -55,24 +74,6 @@ function HomeScreen({ navigation }) {
 					>
 						<Text style={styles.buttonText}>See Past Resources</Text>
 						<Image source={schedule} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.card}
-					>
-						<Text style={styles.buttonText}>View All Resources</Text>
-						<Image source={charity} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Youth Support Services")}
-						style={[styles.card, { backgroundColor: "#4B9E76" }]}
-					>
-						<Text style={[styles.buttonText, { color: "white" }]}>
-							Youth Support Services
-						</Text>
-						<Image source={heart} style={styles.icon} />
 					</TouchableOpacity>
 
 					<TouchableOpacity

@@ -7,10 +7,14 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
-	Linking
+	Linking,
+	ImageBackground,
+	Image
 } from "react-native";
 
 import colors from "../../config/colors";
+import bg from "../../assets/background.png";
+import back from "../../assets/backArrowBlack.png";
 
 // var ProjectChoice = () => {Linking.openURL('https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/')}
 
@@ -62,6 +66,9 @@ function YouthServicesScreen({ navigation }) {
 
 	return (
 		<View>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source = {back} style = {styles.backButton}></Image>
+			</TouchableOpacity>
 			<Text style={styles.header}>Youth Support Services</Text>
 			<FlatList
 				data={sections}
@@ -80,13 +87,24 @@ function YouthServicesScreen({ navigation }) {
 								keyExtractor={(item, index) => index.toString()}
 								renderItem={({ item: innerData, index }) => (
 									<View style={styles.cards}>
-										<TouchableOpacity
-											style={styles.links}
-											onPress={() => navigation.navigate(Linking.openURL(innerData.website))}
+										<ImageBackground
+										source={bg}
+										style={{
+											overflow: "hidden",
+											resizeMode: "stretch",
+											paddingBottom: 10,
+											borderRadius: 15
+											// height: "100%",
+										}}
 										>
-											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>{innerData.description}</Text>
-										</TouchableOpacity>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() => navigation.navigate(Linking.openURL(innerData.website))}
+											>
+												<Text style={styles.resourceTitle}>{innerData.name}</Text>
+												<Text style={styles.descText}>{innerData.description}</Text>
+											</TouchableOpacity>
+										</ImageBackground>
 									</View>
 								)}
 							/>
@@ -101,7 +119,7 @@ function YouthServicesScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#F9F9F9",
+		backgroundColor: "blue",
 	},
 	header: {
 		color: "#003C98",
@@ -109,7 +127,9 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
-		marginTop: '10%'
+		marginTop: '10%',
+		position: "absolute",
+		
 	},
 	subtext: {
 		fontSize: 14,
@@ -121,12 +141,13 @@ const styles = StyleSheet.create({
 	},
 	links: {
 		paddingLeft: 10,
-		paddingBottom: 20,
+		// paddingBottom: 20,
 		paddingTop: 10,
+		
 	},
 	cards: {
 		backgroundColor: "white",
-		paddingBottom: 10,
+		// paddingBottom: 10,
 		borderRadius: 15,
 		margin: 5,
 		width: "87%",
@@ -139,6 +160,9 @@ const styles = StyleSheet.create({
 			width: 2,
 			height: 2,
 		},
+		// borderWidth: 1,
+    	// borderColor: "#56E9CE",
+    // borderRadius: 50,
 	},
 	title: {
 		color: "#000",
@@ -146,9 +170,18 @@ const styles = StyleSheet.create({
 		padding: 10,
 		paddingLeft: 20,
 		fontSize: 16,
+		color: "#003C98",
 	},
 	resourceTitle: {
-		color: "#003C98",
+		color: "white",
+		fontSize: 14,
+		fontWeight: "bold",
+		marginBottom: 6
+	},
+	descText:{
+		color: "white",
+		fontSize: 14,
+		marginBottom: 4
 	},
 	button: {
 		shadowColor: "#000",
@@ -168,6 +201,16 @@ const styles = StyleSheet.create({
 		width: 340,
 		marginBottom: 15,
 	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		 marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
+	},
+	
 });
 
 export default YouthServicesScreen;
