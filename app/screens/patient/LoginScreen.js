@@ -55,6 +55,23 @@ function LoginScreen({ navigation }) {
 						title="Login"
 						onPress={() => {
 							var regCode = text.toUpperCase();
+							var validCode = false;
+							firebase
+								.database()
+								.ref()
+								.child("reg_codes")
+								.get()
+								.then((snapshot) => {
+									if (snapshot.exists()) {
+										for (var i = 0; i < snapshot.length; i++) {
+											if (regCode == snapshot[i]) {
+												validCode = true;
+												break;
+											}
+										}
+									}
+								});
+
 							if (regCode.length == 0) {
 								regCode = "GUEST";
 							}
