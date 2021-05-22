@@ -70,13 +70,13 @@ function HomeScreen({ navigation }) {
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						onPress={() => navigation.navigate("Settings")}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>Settings</Text>
 						<Image source={cog} style={styles.icon} />
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 
 					<Text
 						style={{
