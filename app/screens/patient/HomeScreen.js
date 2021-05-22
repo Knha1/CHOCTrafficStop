@@ -17,6 +17,7 @@ import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
 import { Linking } from "react-native";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -76,7 +77,19 @@ function HomeScreen({ navigation }) {
 					>
 						<Text style={styles.buttonText}>Settings</Text>
 						<Image source={cog} style={styles.icon} />
+
 					</TouchableOpacity> */}
+
+					<TouchableOpacity
+						style={styles.card}
+						onPress={() => {
+							storeData("log", null);
+							navigation.navigate("Welcome");
+						}}
+					>
+						<Text style={styles.buttonText}>Clear Credentials</Text>
+						<Image source={cog} style={styles.icon} />
+					</TouchableOpacity>
 
 					<Text
 						style={{
