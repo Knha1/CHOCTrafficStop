@@ -94,6 +94,7 @@ function LoginScreen({ navigation }) {
 										// Checks if registration code is valid
 										for (var i = 0; i < snapshot.val().length; i++) {
 											if (regCode == snapshot.val()[i]) {
+												storeData("regCode", regCode); // Store registration code locally
 												validCode = true;
 												break;
 											}
@@ -104,6 +105,7 @@ function LoginScreen({ navigation }) {
 									// If code isn't valid, set it to 'GUEST'
 									if (regCode.length == 0 || validCode == false) {
 										regCode = "GUEST";
+										storeData("regCode", "GUEST");
 									}
 								});
 
@@ -120,6 +122,7 @@ function LoginScreen({ navigation }) {
 									if (snapshot.exists()) {
 										console.log("2nd firebase: " + regCode);
 										var newPatientId = snapshot.val() + 1;
+										storeData("user_id", newPatientId); // TODO: Change in the future, can have dupes
 										// Update the num_patients count on DB
 										firebase
 											.database()
