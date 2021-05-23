@@ -54,6 +54,7 @@ function ResourceListScreen({ navigation }) {
 									name: resources[i].name,
 									description: resources[i].description,
 									resource_id: resources[i].resource_id,
+									tags: resources[i].tags,
 								},
 							],
 						});
@@ -64,6 +65,7 @@ function ResourceListScreen({ navigation }) {
 							name: resources[i].name,
 							description: resources[i].description,
 							resource_id: resources[i].resource_id,
+							tags: resources[i].tags,
 						});
 					}
 				}
@@ -110,10 +112,12 @@ function ResourceListScreen({ navigation }) {
 											<View style={styles.cards}>
 												<TouchableOpacity
 													style={styles.links}
-													onPress={() =>
-														navigation.navigate("Resource Details", {
-															resource_id: innerData.resource_id,
-														})
+													onPress={
+														() =>
+															navigation.navigate("Resource Details", {
+																resource_id: innerData.resource_id,
+															})
+														// TODO: Update view count for resource
 													}
 												>
 													<Text style={styles.resourceTitle}>
