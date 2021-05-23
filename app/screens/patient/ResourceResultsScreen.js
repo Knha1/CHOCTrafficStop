@@ -13,17 +13,34 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
-import { readData } from "../../utils/DataHandler";
+import { storeData, readData } from "../../utils/DataHandler";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function ResourceListScreen({ navigation }) {
+function ResourceResultsScreen({ route, navigation }) {
+	var filter = route.params;
+	const tags = filter["tags"];
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
+	// console.log(tags);
+	// console.log(tags.length);
+	var filterTags = [];
+	storeData("previousTags", tags);
+	for (var o in tags) {
+		// Goes through each answer's list of tags
+		if (tags[o] != null) {
+			for (var j = 0; j < tags[o].length; j++) {
+				if (!(tags[o][j] in filterTags)) {
+					// If the tag hasn't been seen
+					filterTags.push(tags[o][j]);
+				}
+			}
+		}
+	}
 
 	useEffect(() => {
 		readData("resources")
@@ -41,32 +58,41 @@ function ResourceListScreen({ navigation }) {
 
 				for (var i = 0; i < resources.length; i++) {
 					// If there's a new category, push a new category title + innerData
-					if (resources[i].category != currentCategory) {
-						// Skip first category index increment, avoid OOB error
-						if (i != 0) {
-							categoryIndex++;
+
+					var validResource = false;
+					for (var j = 0; j < resources[i].tags.length; j++) {
+						if (filterTags.includes(resources[i].tags[j])) {
+							validResource = true;
 						}
-						currentCategory = resources[i].category;
-						sections.push({
-							title: currentCategory,
-							innerData: [
-								{
-									name: resources[i].name,
-									description: resources[i].description,
-									resource_id: resources[i].resource_id,
-									tags: resources[i].tags,
-								},
-							],
-						});
 					}
-					// If category is the same, add to innerData
-					else {
-						sections[categoryIndex].innerData.push({
-							name: resources[i].name,
-							description: resources[i].description,
-							resource_id: resources[i].resource_id,
-							tags: resources[i].tags,
-						});
+					if (validResource == true) {
+						if (resources[i].category != currentCategory) {
+							// Skip first category index increment, avoid OOB error
+							if (i != 0) {
+								categoryIndex++;
+							}
+							currentCategory = resources[i].category;
+							sections.push({
+								title: currentCategory,
+								innerData: [
+									{
+										name: resources[i].name,
+										description: resources[i].description,
+										resource_id: resources[i].resource_id,
+										tags: resources[i].tags,
+									},
+								],
+							});
+						}
+						// If category is the same, add to innerData
+						else {
+							sections[categoryIndex].innerData.push({
+								name: resources[i].name,
+								description: resources[i].description,
+								resource_id: resources[i].resource_id,
+								tags: resources[i].tags,
+							});
+						}
 					}
 				}
 				setData(sections);
@@ -90,7 +116,11 @@ function ResourceListScreen({ navigation }) {
 						Based on your survey results, here are some resources that might be
 						helpful to you.
 					</Text>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => navigation.navigate("Home")}
+						// TODO: Remove navigation to home -- temp for testing
+					>
 						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
 					<FlatList
@@ -209,4 +239,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ResourceListScreen;
+export default ResourceResultsScreen;

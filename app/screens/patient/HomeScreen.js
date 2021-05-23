@@ -17,6 +17,7 @@ import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
 import { Linking } from "react-native";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -45,7 +46,21 @@ function HomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Resource List")}
+						onPress={() => {
+							var filterTags = [];
+							readData("previousTags")
+								.then((value) => {
+									filterTags = JSON.parse(value);
+									console.log(filterTags);
+								})
+								.finally(() => {
+									console.log("navigating");
+									console.log(filterTags);
+									navigation.navigate("Resource Results", {
+										tags: filterTags,
+									});
+								});
+						}}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>See Past Resources</Text>
@@ -70,11 +85,24 @@ function HomeScreen({ navigation }) {
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
-					<TouchableOpacity
+					{/* Unused Settings Screen */}
+					{/* <TouchableOpacity
 						onPress={() => navigation.navigate("Settings")}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>Settings</Text>
+						<Image source={cog} style={styles.icon} />
+
+					</TouchableOpacity> */}
+
+					<TouchableOpacity
+						style={styles.card}
+						onPress={() => {
+							storeData("log", null);
+							navigation.navigate("Welcome");
+						}}
+					>
+						<Text style={styles.buttonText}>Clear Credentials</Text>
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
