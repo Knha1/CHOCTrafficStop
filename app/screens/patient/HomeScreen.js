@@ -46,7 +46,21 @@ function HomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Resource List")}
+						onPress={() => {
+							var filterTags = [];
+							readData("previousTags")
+								.then((value) => {
+									filterTags = JSON.parse(value);
+									console.log(filterTags);
+								})
+								.finally(() => {
+									console.log("navigating");
+									console.log(filterTags);
+									navigation.navigate("Resource Results", {
+										tags: filterTags,
+									});
+								});
+						}}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>See Past Resources</Text>
@@ -71,6 +85,7 @@ function HomeScreen({ navigation }) {
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
+					{/* Unused Settings Screen */}
 					{/* <TouchableOpacity
 						onPress={() => navigation.navigate("Settings")}
 						style={styles.card}
