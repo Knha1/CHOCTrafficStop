@@ -26,6 +26,7 @@ import AddResourceScreen from "./app/screens/admin/AddResourceScreen";
 import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 import StatisticsResourceListScreen from "./app/screens/admin/StatisticsResourceListScreen";
 import AdminResourceListScreen from "./app/screens/admin/AdminResourceListScreen";
+import AdminLoginScreen from "./app/screens/admin/AdminLoginScreen";
 
 const Stack = createStackNavigator();
 
@@ -200,6 +201,11 @@ export default function App() {
 				<Stack.Screen
 					name="Admin Resource List"
 					component={AdminResourceListScreen}
+				/>
+
+				<Stack.Screen
+					name="Admin Login"
+					component={AdminLoginScreen}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>

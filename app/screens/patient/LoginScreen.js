@@ -150,7 +150,7 @@ function LoginScreen({ navigation }) {
 					<Text
 						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
 						onPress={() => {
-							navigation.navigate("Admin Home");
+							navigation.navigate("Admin Login");
 							storeData("log", "Admin");
 						}}
 					>
