@@ -4,7 +4,7 @@ import csv
 OUTPUT_FILENAME = 'sampleDB.json'
 QUESTIONS_FILENAME = 'questions.json'
 RESOURCES_FILENAME = 'resources.json'
-CREATE_QUESTIONS_JSON = True
+CREATE_QUESTIONS_JSON = False
 CREATE_RESOURCES_JSON = False
 
 # Create empty dictionaries for sample data
@@ -146,7 +146,7 @@ d['question'] = questions
 # --- ADMINS ---
 admin1['admin_id'] = 1
 admin1['username'] = 'CHOCAdmin'
-admin1['password'] = 'TrafficStop2021'
+admin1['password'] = 'trafficstop'
 
 admins[1] = admin1
 
