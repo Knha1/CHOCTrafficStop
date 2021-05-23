@@ -11,11 +11,11 @@ import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
 import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
 import HomeScreen from "./app/screens/patient/HomeScreen";
 import SettingsScreen from "./app/screens/patient/SettingsScreen";
-import ResourceRecommendedScreen from "./app/screens/patient/ResourceRecommendedScreen";
 import ResourceDetailScreen from "./app/screens/patient/ResourceDetailScreen";
 import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
 import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
+import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
 // SCREEN IMPORTS -- ADMIN
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
 import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
@@ -127,12 +127,6 @@ export default function App() {
 				/>
 
 				<Stack.Screen
-					name="Recommended"
-					component={ResourceRecommendedScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
 					name="Resource Details"
 					component={ResourceDetailScreen}
 					options={{ headerShown: false }}
@@ -186,6 +180,12 @@ export default function App() {
 				<Stack.Screen
 					name="Youth Support Services"
 					component={YouthServicesScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="Resource Results"
+					component={ResourceResultsScreen}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
