@@ -120,7 +120,6 @@ function LoginScreen({ navigation }) {
 								.get()
 								.then((snapshot) => {
 									if (snapshot.exists()) {
-										console.log("2nd firebase: " + regCode);
 										var newPatientId = snapshot.val() + 1;
 										storeData("user_id", newPatientId); // TODO: Change in the future, can have dupes
 										// Update the num_patients count on DB
