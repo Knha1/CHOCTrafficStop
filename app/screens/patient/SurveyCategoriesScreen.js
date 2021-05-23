@@ -9,6 +9,7 @@ import {
 	Alert,
 	Image,
 	TouchableOpacity,
+	ScrollView,
 } from "react-native";
 // import { Colors } from "react-native/Libraries/NewAppScreen";
 import colors from "../../config/colors";
@@ -23,7 +24,7 @@ function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
 
 	return (
-		<View style={styles.base}>
+		<ScrollView style={styles.base}>
 			<ImageBackground
 				source={bg}
 				style={{
@@ -140,7 +141,7 @@ function SurveyCategoriesScreen({ navigation }) {
 					</TouchableOpacity>
 				</View>
 			</ImageBackground>
-		</View>
+		</ScrollView>
 	);
 }
 
