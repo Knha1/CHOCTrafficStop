@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
-import { readData } from "../../utils/DataHandler";
+import { storeData, readData } from "../../utils/DataHandler";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -29,20 +29,18 @@ function ResourceResultsScreen({ route, navigation }) {
 	// console.log(tags);
 	// console.log(tags.length);
 	var filterTags = [];
-
+	storeData("previousTags", tags);
 	for (var o in tags) {
-		for (
-			var j = 0;
-			j < tags[o].length;
-			j++ // Goes through each answer's list of tags
-		) {
-			if (!(tags[o][j] in filterTags)) {
-				// If the tag hasn't been seen
-				filterTags.push(tags[o][j]);
+		// Goes through each answer's list of tags
+		if (tags[o] != null) {
+			for (var j = 0; j < tags[o].length; j++) {
+				if (!(tags[o][j] in filterTags)) {
+					// If the tag hasn't been seen
+					filterTags.push(tags[o][j]);
+				}
 			}
 		}
 	}
-	console.log(filterTags);
 
 	useEffect(() => {
 		readData("resources")
@@ -118,7 +116,11 @@ function ResourceResultsScreen({ route, navigation }) {
 						Based on your survey results, here are some resources that might be
 						helpful to you.
 					</Text>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => navigation.navigate("Home")}
+						// TODO: Remove navigation to home -- temp for testing
+					>
 						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
 					<FlatList
