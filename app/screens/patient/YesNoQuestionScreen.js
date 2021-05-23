@@ -127,7 +127,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<Text
 				style={styles.skipToResultsText}
 				onPress={() =>
-					navigation.navigate("Resource List", {
+					navigation.navigate("Resource Results", {
 						tags: finalTags,
 					})
 				}
