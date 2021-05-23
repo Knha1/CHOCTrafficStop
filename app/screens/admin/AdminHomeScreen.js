@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity, Image } from "react-native";
+import {
+	Text,
+	View,
+	StyleSheet,
+	Button,
+	Modal,
+	ImageBackground,
+	TouchableOpacity,
+	Image,
+} from "react-native";
 
 import colors from "../../config/colors";
 import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
-import cog from "../../assets/settings1.png"
+import back from "../../assets/backArrowWhite.png";
+import cog from "../../assets/settings1.png";
 import charity from "../../assets/charity1.png";
 import { storeData, readData } from "../../utils/DataHandler.js";
 
@@ -20,11 +30,18 @@ function AdminHomeScreen({ navigation }) {
 					overflow: "hidden",
 					resizeMode: "stretch",
 					height: "100%",
-					width: "100%"
+					width: "100%",
 				}}
 			>
-				<Button title="Back" onClick={() => this.props.navigation.goBack()} />
-				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
+				<View
+					style={[
+						styles.base,
+						{ height: "70%", padding: 20, alignItems: "center" },
+					]}
+				>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Home")}
 						style={styles.card}
@@ -68,7 +85,6 @@ function AdminHomeScreen({ navigation }) {
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
-
 					<TouchableOpacity
 						onPress={() => setModalVisible(true)}
 						style={{
@@ -82,15 +98,13 @@ function AdminHomeScreen({ navigation }) {
 							shadowOffset: { width: 0, height: 2 },
 							shadowOpacity: 0.25,
 							shadowRadius: 4,
-							}}
+						}}
 					>
-						
 						<Text style={{ color: "white" }}>Add Resource +</Text>
 					</TouchableOpacity>
 				</View>
 			</ImageBackground>
 		</View>
-
 	);
 }
 
@@ -127,12 +141,21 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "20%",
-		backgroundColor: '#F1F2F2',
+		// marginTop: "1%",
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
-		flex: 1
+		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	card: {
 		backgroundColor: "white",
@@ -153,7 +176,7 @@ const styles = StyleSheet.create({
 		marginLeft: "10%",
 		color: "#003C98",
 		flexWrap: "wrap",
-		width: "50%"
+		width: "50%",
 	},
 	icon: {
 		resizeMode: "contain",

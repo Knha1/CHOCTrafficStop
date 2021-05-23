@@ -15,6 +15,7 @@ import {
 	FlatList,
 	ActivityIndicator,
 } from "react-native";
+import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
 import logo from "../../assets/logo_nobg.png";
@@ -112,6 +113,9 @@ function YesNoQuestionScreen({ route, navigation }) {
 
 	return (
 		<View style={styles.container}>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
 			<Text style={styles.topText}>{category_name} Survey</Text>
 			<View style={styles.rectangle}></View>
 			<Text
@@ -154,17 +158,18 @@ var styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#0066BB",
-		alignItems: "center",
+		// alignItems: "center",
 		//justifyContent: "flex-start",
 		//padding: 0,
-		paddingTop: 100,
+		paddingTop: 50,
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
 		fontSize: 14,
 		position: "absolute",
 		top: 130,
-		paddingBottom: 100,
+		marginBottom: 100,
+		alignSelf: "center",
 	},
 	rectangle: {
 		height: 4,
@@ -173,15 +178,23 @@ var styles = StyleSheet.create({
 		position: "absolute",
 		top: 115,
 		backgroundColor: "#FFF",
+		alignSelf: "center",
 	},
 	topText: {
-		fontSize: 20,
-		color: "#FFF",
-		bottom: 70,
+		// fontSize: 20,
+		// color: "#FFF",
+		// bottom: 70,
+		// alignSelf: "center",
+		// textAlign: "center",
+		// alignItems: "center",
+		// paddingTop: 40,
+		// position: "absolute"
+		color: "white",
 		alignSelf: "center",
-		textAlign: "center",
-		alignItems: "center",
-		paddingTop: 40,
+		fontSize: 20,
+		marginBottom: 12,
+		position: "absolute",
+		marginTop: 60,
 	},
 	text: {
 		color: "#003C98",
@@ -210,6 +223,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
+		marginTop: "20%",
 	},
 	buttonText: {
 		color: "#000",
@@ -225,6 +239,18 @@ var styles = StyleSheet.create({
 		backgroundColor: "#0E4B9D",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		// position: 'absolute',
+		// top: 0,
+		// paddingBottom: '10%'
+		// marginBottom: '2%',
+		// marginLeft: '4%',
+		// marginTop: '11%',
 	},
 });
 

@@ -16,6 +16,8 @@ import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
+import back from "../../assets/backArrowWhite.png";
+import heart from "../../assets/heart.png";
 import { Linking } from "react-native";
 import { storeData, readData } from "../../utils/DataHandler.js";
 
@@ -31,12 +33,33 @@ function HomeScreen({ navigation }) {
 					height: "100%",
 				}}
 			>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
 				<View
 					style={[
 						styles.base,
 						{ height: "70%", padding: 20, alignItems: "center" },
 					]}
 				>
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Youth Support Services")}
+						style={[styles.card, { backgroundColor: "#4B9E76" }]}
+					>
+						<Text style={[styles.buttonText, { color: "white" }]}>
+							Youth Support Services
+						</Text>
+						<Image source={heart} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Resource List")}
+						style={styles.card}
+					>
+						<Text style={styles.buttonText}>View All Resources</Text>
+						<Image source={charity} style={styles.icon} />
+					</TouchableOpacity>
+
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Survey Categories")}
 						style={styles.card}
@@ -65,24 +88,6 @@ function HomeScreen({ navigation }) {
 					>
 						<Text style={styles.buttonText}>See Past Resources</Text>
 						<Image source={schedule} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Resource List")}
-						style={styles.card}
-					>
-						<Text style={styles.buttonText}>View All Resources</Text>
-						<Image source={charity} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Youth Support Services")}
-						style={[styles.card, { backgroundColor: "#4B9E76" }]}
-					>
-						<Text style={[styles.buttonText, { color: "white" }]}>
-							Youth Support Services
-						</Text>
-						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
 					{/* Unused Settings Screen */}
@@ -220,8 +225,8 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center",
-		justifyContent: "flex-start",
+		// alignItems: "center",
+		// justifyContent: "flex-start",
 	},
 	emergency: {
 		flex: 1,
@@ -254,12 +259,21 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 	},
 	base: {
-		marginTop: "20%",
+		// marginTop: "1%",
 		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
 		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	icon: {
 		resizeMode: "contain",
