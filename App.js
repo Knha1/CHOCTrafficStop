@@ -78,6 +78,11 @@ export default function App() {
 				snapshot.forEach((child) => {
 					// Ignore the num_questions variable, store the rest of the resource
 					if (!Number.isInteger(child.val())) {
+						var tags = {};
+						for (var tagNum in child.val().tags) {
+							tags[tagNum] = child.val().tags[tagNum];
+						}
+
 						tempQuestions.push({
 							category: child.val().category,
 							order: child.val().order,
@@ -85,7 +90,7 @@ export default function App() {
 							text: child.val().text,
 							type: child.val().type,
 							answer_choices: child.val().answer_choices,
-							tags: child.val().tags,
+							tags: tags,
 						});
 					}
 				});

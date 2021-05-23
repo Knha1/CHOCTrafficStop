@@ -26,6 +26,10 @@ function YesNoQuestionScreen({ route, navigation }) {
 	var category = route.params;
 	var finalTags = [];
 	const category_name = category["category"];
+	const chosen = {}; //
+	const [chosenTags, setChosenTags] = useState([]); // Tags for the resource list
+	const [answeredQuestions, setAnsweredQuestions] = useState(0); // # of answered questions for progress bar
+	const [totalQuestions, setTotalQuestions] = useState(0); // # of total questions for progress abr
 
 	const footer = () => {
 		return (
@@ -43,15 +47,15 @@ function YesNoQuestionScreen({ route, navigation }) {
 		);
 	};
 
+	async function updateAnswers(qNum) {}
+
 	useEffect(() => {
 		readData("questions")
 			.then((questions) => {
-				console.log("loading questions");
 				// Load 'questions' from AsyncStorage
 				var questions = JSON.parse(questions);
 				var sections = [];
 				for (var i = 0; i < questions.length; i++) {
-					console.log("loading each question");
 					if (questions[i].category == category_name) {
 						// If yes/no question
 						console.log("Type of question: " + questions[i].type);
@@ -61,8 +65,8 @@ function YesNoQuestionScreen({ route, navigation }) {
 								type: questions[i].type,
 								choices: [
 									// TODO: change tags' value to tags
-									{ label: "Yes", tags: "tags for yes" },
-									{ label: "No", tags: "tags for no" },
+									{ label: "Yes", tags: questions[i].tags[1] },
+									{ label: "No", tags: questions[i].tags[2] },
 								],
 								order: questions[i].order,
 
@@ -78,23 +82,23 @@ function YesNoQuestionScreen({ route, navigation }) {
 									// TODO: change tags' value to tags
 									{
 										label: "1 " + questions[i].answer_choices[1],
-										tags: "tags for 1",
+										tags: questions[i].tags[1],
 									},
 									{
 										label: "2 " + questions[i].answer_choices[2],
-										tags: "tags for 2",
+										tags: questions[i].tags[2],
 									},
 									{
 										label: "3 " + questions[i].answer_choices[3],
-										tags: "tags for 3",
+										tags: questions[i].tags[3],
 									},
 									{
 										label: "4 " + questions[i].answer_choices[4],
-										tags: "tags for 4",
+										tags: questions[i].tags[4],
 									},
 									{
 										label: "5 " + questions[i].answer_choices[5],
-										tags: "tags for 5",
+										tags: questions[i].tags[5],
 									},
 								],
 								order: questions[i].order,
@@ -103,9 +107,17 @@ function YesNoQuestionScreen({ route, navigation }) {
 							});
 						}
 					}
-					console.log(sections);
 					setData(sections);
 				}
+			})
+			.then(() => {
+				setTotalQuestions(data.length);
+				for (var i = 0; i < data.length; i++) {
+					chosen[i] = "nonex";
+				}
+			})
+			.then(() => {
+				setChosenTags(chosen);
 			})
 			.catch((error) => console.error(error))
 			.finally(() => setLoading(false));
@@ -126,7 +138,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 					})
 				}
 			>
-				Skip to Results?
+				Skip to Results? ({answeredQuestions} / {totalQuestions})
 			</Text>
 			<View style={styles.bottomContainer}>
 				<FlatList
@@ -142,7 +154,21 @@ function YesNoQuestionScreen({ route, navigation }) {
 									data={item.choices}
 									selectedBtn={(e) => {
 										finalTags[item.order] = e.tags;
-										console.log(e.tags);
+
+										var tempChosen = chosenTags;
+										var answerCount = 0;
+
+										tempChosen[item.order - 1] = e.tags;
+										for (var ans in tempChosen) {
+											if (tempChosen[ans] != "nonex") {
+												answerCount++;
+											}
+										}
+
+										console.log(tempChosen);
+
+										setChosenTags(tempChosen);
+										setAnsweredQuestions(answerCount);
 									}}
 								/>
 							</View>
