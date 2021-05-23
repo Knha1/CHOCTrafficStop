@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity, Image} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
+import back from "../../assets/backArrowWhite.png";
 
 function StatisticsDetailsScreen({ navigation }) {
 	return (
         <View style={styles.container}>
+			
 			<ImageBackground
 				source={bg}
 				style={{
@@ -16,12 +18,14 @@ function StatisticsDetailsScreen({ navigation }) {
 					height: "100%",
 				}}
 			>
-
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source = {back} style = {styles.backButton}></Image>
+				</TouchableOpacity>
 				<View style={[
 						styles.base,
-						{ height: "70%", padding: 20, alignItems: "center"},
+						{ height: "70%", alignItems: "center"},
 					]}>
-				<Text style = {{marginTop: "1%", fontSize: 16, alignSelf: "flex-start", textAlign: "left", marginLeft: "8%", color: "#797979", fontWeight: 'bold'}}>Details</Text>
+				<Text style = {{marginTop: "8%", fontSize: 16, alignSelf: "flex-start", textAlign: "left", marginLeft: "8%", color: "#797979", fontWeight: 'bold'}}>Details</Text>
 				<Text style = {styles.textTitle}>Resource Name</Text>
 				{/* <View
 					style={{
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "20%",
+		marginTop: "10%",
 		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
@@ -146,6 +150,14 @@ const styles = StyleSheet.create({
 		marginLeft: "8%",
 		marginBottom: "5%",
 		color: "#292929",
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 });
 

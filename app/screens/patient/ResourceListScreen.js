@@ -8,9 +8,13 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	ActivityIndicator,
+	ScrollView,
+	Image
 } from "react-native";
 
 import colors from "../../config/colors";
+import back from "../../assets/backArrowBlack.png";
 import { readData } from "../../utils/DataHandler";
 
 // var resources = "";
@@ -172,6 +176,9 @@ function ResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
+					<TouchableOpacity onPress={() => navigation.goBack()}>
+						<Image source = {back} style = {styles.backButton}></Image>
+					</TouchableOpacity>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
 						Based on your survey results, here are some resources that might be
@@ -234,6 +241,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
+		position: "absolute",
+		marginTop: 40
 	},
 	subtext: {
 		fontSize: 14,
@@ -291,6 +300,15 @@ const styles = StyleSheet.create({
 		height: 45,
 		width: 340,
 		marginBottom: 15,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		 marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 });
 

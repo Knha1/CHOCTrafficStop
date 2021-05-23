@@ -9,7 +9,8 @@ import {
 	View,
 	Linking,
 	ImageBackground,
-	Image
+	Image,
+	ScrollView
 } from "react-native";
 
 import colors from "../../config/colors";
@@ -65,7 +66,7 @@ function YouthServicesScreen({ navigation }) {
 	};
 
 	return (
-		<View>
+		<ScrollView>
 			<TouchableOpacity onPress={() => navigation.goBack()}>
 				<Image source = {back} style = {styles.backButton}></Image>
 			</TouchableOpacity>
@@ -77,12 +78,13 @@ function YouthServicesScreen({ navigation }) {
 					const color = "black";
 					const backgroundColor = "white";
 					return (
-						<View>
+						<View >
 							<View>
 								<Text style={styles.title}>{item.title}</Text>
 							</View>
 
 							<FlatList
+								contentContainerStyle={{ paddingBottom: 10}}
 								data={item.innerData}
 								keyExtractor={(item, index) => index.toString()}
 								renderItem={({ item: innerData, index }) => (
@@ -93,8 +95,7 @@ function YouthServicesScreen({ navigation }) {
 											overflow: "hidden",
 											resizeMode: "stretch",
 											paddingBottom: 10,
-											borderRadius: 15
-											// height: "100%",
+											borderRadius: 15,
 										}}
 										>
 											<TouchableOpacity
@@ -112,7 +113,7 @@ function YouthServicesScreen({ navigation }) {
 					);
 				}}
 			/>
-		</View>
+		</ScrollView>
 	);
 }
 
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		alignSelf: 'flex-start',
-		 marginBottom: '2%',
+		marginBottom: '2%',
 		marginLeft: '4%',
 		marginTop: '11%'
 	},

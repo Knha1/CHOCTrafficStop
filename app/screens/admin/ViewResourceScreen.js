@@ -4,7 +4,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
-
+//===========================================================================
+// IGNORE THIS WHOLE PAGE. DID IT ON ACCIDENT WHEN I WASN'T SUPPOSED TO. -KIM
+//===========================================================================
 function ViewResourceScreen({ navigation }) {
 	return (
         <View style={styles.container}>
@@ -21,14 +23,6 @@ function ViewResourceScreen({ navigation }) {
         <Text style = {styles.textBody}>[DESCRIPTION]: Food Resource is an organization dedicated to providing food...Nulla ultrices sed commodo in id arcu iaculis in urna. Euismod proin massa sed scelerisque nisi, tristique nisl sem cras. Sed arcu erat nullam in in phasellus sem arcu. Dui purus, malesuada dis elit aenean pulvinar arcu. 
 Sed eget rhoncus laoreet ullamcorper suspendisse viverra tincidunt. Tortor diam id a dui aliquet a vulputate tellus. Est, massa tristique nunc egestas urna commodo fames duis. Aliquam curabitur congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed tellus amet. Dictum massa elementum sagittis iaculis proin. </Text>
 
-{/*         
-        <Button
-          title="Delete Resource"
-		  color = "red"
-          onPress={() =>
-            navigation.navigate('Admin Home')
-          }
-        /> */}
 		<TouchableOpacity
 						onPress={() => navigation.navigate('Admin Home')}
 						style={{
