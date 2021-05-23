@@ -6,7 +6,9 @@ import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
-
+import cog from "../../assets/settings1.png"
+import charity from "../../assets/charity1.png";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function AdminHomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +34,14 @@ function AdminHomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
+						onPress={() => navigation.navigate("Admin Resource List")}
+						style={styles.card}
+					>
+						<Text style={styles.buttonText}>View Resource List</Text>
+						<Image source={charity} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Details")}
 						style={styles.card}
 					>
@@ -48,6 +58,18 @@ function AdminHomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
+						style={styles.card}
+						onPress={() => {
+							storeData("log", null);
+							navigation.navigate("Welcome");
+						}}
+					>
+						<Text style={styles.buttonText}>Clear Credentials</Text>
+						<Image source={cog} style={styles.icon} />
+					</TouchableOpacity>
+
+
+					<TouchableOpacity
 						onPress={() => setModalVisible(true)}
 						style={{
 							alignSelf: "center",
@@ -62,6 +84,7 @@ function AdminHomeScreen({ navigation }) {
 							shadowRadius: 4,
 							}}
 					>
+						
 						<Text style={{ color: "white" }}>Add Resource +</Text>
 					</TouchableOpacity>
 				</View>
