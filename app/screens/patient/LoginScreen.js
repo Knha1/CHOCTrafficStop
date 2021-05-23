@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// import DataHandler from "../../utils/DataHandler";
+
 import {
 	ImageBackground,
 	StyleSheet,
@@ -9,13 +11,38 @@ import {
 	View,
 	Button,
 	KeyboardAvoidingView,
+	ActivityIndicator,
 } from "react-native";
 import colors from "../../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { firebase } from "../../firebase/config";
+import { useEffect } from "react";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function LoginScreen({ navigation }) {
 	const [text, setText] = useState("");
+	const [isLoading, setLoading] = useState(true);
+	// const [data, setData] = useState([]);
+
+	useEffect(() => {
+		readData("log")
+			.then(
+				function (value) {
+					var loggedIn = value;
+					// console.log(loggedIn);
+
+					if (loggedIn == "User") {
+						navigation.navigate("Home");
+					} else if (loggedIn == "Admin") {
+						navigation.navigate("Admin Home");
+					}
+				},
+				function (err) {
+					console.log(err);
+				}
+			)
+			.finally(() => setLoading(false));
+	}, []);
 
 	return (
 		<LinearGradient
@@ -55,9 +82,33 @@ function LoginScreen({ navigation }) {
 						title="Login"
 						onPress={() => {
 							var regCode = text.toUpperCase();
-							if (regCode.length == 0) {
-								regCode = "GUEST";
-							}
+							var validCode = false;
+							firebase
+								.database()
+								.ref()
+								.child("reg_codes")
+								.get()
+								.then((snapshot) => {
+									if (snapshot.exists()) {
+										// Checks if registration code is valid
+										for (var i = 0; i < snapshot.val().length; i++) {
+											if (regCode == snapshot.val()[i]) {
+												storeData("regCode", regCode); // Store registration code locally
+												validCode = true;
+												break;
+											}
+										}
+									}
+								})
+								.then(() => {
+									// If code isn't valid, set it to 'GUEST'
+									if (regCode.length == 0 || validCode == false) {
+										regCode = "GUEST";
+										storeData("regCode", "GUEST");
+									}
+								});
+
+							storeData("log", "User");
 
 							// Grab the num_patients count on DB
 							firebase
@@ -69,6 +120,7 @@ function LoginScreen({ navigation }) {
 								.then((snapshot) => {
 									if (snapshot.exists()) {
 										var newPatientId = snapshot.val() + 1;
+										storeData("user_id", newPatientId); // TODO: Change in the future, can have dupes
 										// Update the num_patients count on DB
 										firebase
 											.database()
@@ -96,8 +148,11 @@ function LoginScreen({ navigation }) {
 
 					{/* NAVIGATE TO ADMIN LOG IN PAGE */}
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", marginTop: 80 }}
-						onPress={() => navigation.navigate("Admin Home")}
+						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
+						onPress={() => {
+							navigation.navigate("Admin Home");
+							storeData("log", "Admin");
+						}}
 					>
 						Log In as Admin User
 					</Text>

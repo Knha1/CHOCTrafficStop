@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	ImageBackground,
 	Linking,
@@ -12,81 +12,86 @@ import {
 	Icon,
 	TouchableHighlight,
 	Image,
+	ActivityIndicator,
 } from "react-native";
 import backArrowWhite from "../../assets/backArrowWhite.png";
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
+import { readData } from "../../utils/DataHandler";
 
 function ResourceDetailScreen({ route, navigation }) {
 	var resource = route.params;
 	const resource_id = resource["resource_id"];
+	// State variable to show loading screen if resource details aren't loaded yet
+	const [isLoading, setLoading] = useState(true);
+	// State variable to store data for resource details
+	const [data, setData] = useState([]);
 
-	for (var i = 0; i < global.resources.length; i++) {
-		if (global.resources[i].resource_id == resource_id) {
-			var current_resource = global.resources[i];
-			break;
-		}
-	}
+	useEffect(() => {
+		readData("resources")
+			.then((resources) => {
+				var resources = JSON.parse(resources);
 
-	console.log(current_resource);
+				// Index of resource is resource_id - 1
+				var current_resource = resources[resource_id - 1];
+
+				// Set value to 'N/A' if detail isn't supplied
+				for (var key in current_resource) {
+					if (current_resource[key] == "") {
+						current_resource[key] = "N/A";
+					}
+				}
+
+				setData(current_resource);
+			})
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
+	}, [isLoading]);
 
 	return (
-		<View style={styles.container}>
-			{/* <Text style={styles.topText}>Resource Details</Text> */}
-			<Image style={styles.backArrow} source={backArrowWhite}></Image>
-			<View style={styles.bottomContainer}>
-				<View>
-					<Text style={styles.text}>Getting Enough Sleep</Text>
-					<Text style={styles.text3}>SLEEP</Text>
-					{/* <Text style={styles.text}>{current_resource["title"]}</Text>
-					<Text style={styles.text2}>
-						Category: {current_resource["category"]}
-					</Text>
-					<Text style={styles.text2}>
-						Description: {current_resource["description"]}
-					</Text>
-					<Text style={styles.text2}>Organization: CHOC</Text> */}
-					<Text style={styles.text2}>Availability: 24/7; Online Resource</Text>
-					<Text style={styles.text2}>Phone Number: 714-997-3000</Text>
-					<Text style={styles.text2}>Address: n/a</Text>
-					<Text
-						style={styles.text2}
-						onPress={() =>
-							Linking.openURL(
-								"https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
-							)
-						}
-					>
-						Website: https://kidshealth.org/CHOC/en/teens/how-much-sleep.html
-					</Text>
-					<Text style={styles.text4}>
-						Resource Name provides tips for sleeping better at night... Nulla
-						ultrices sed commodo in id arcu iaculis in urna. Euismod proin massa
-						sed scelerisque nisi, tristique nisl sem cras. Sed arcu erat nullam
-						in in phasellus sem arcu. Dui purus, malesuada dis elit aenean
-						pulvinar arcu.{"\n"}
-						{"\n"}
-						Sed eget rhoncus laoreet ullamcorper suspendisse viverra tincidunt.
-						Tortor diam id a dui aliquet a vulputate tellus. Est, massa
-						tristique nunc egestas urna commodo fames duis. Aliquam curabitur
-						congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed
-						tellus amet. Dictum massa elementum sagittis iaculis proin.
-					</Text>
-					{/* <Text style={styles.text2}>
-						Availability: {current_resource["availability"]}
-					</Text>
-					<Text style={styles.text2}>
-						Phone Number: {current_resource["phone_num"]}
-					</Text>
-					<Text style={styles.text2}>
-						Address: {current_resource["address"]}
-					</Text>
-					<Text style={styles.text2}>
-						Website: {current_resource["website"]}
-					</Text> */}
+		<View>
+			{isLoading ? (
+				// If still loading
+				<ActivityIndicator size="small" color="#0000ff" />
+			) : (
+				// If done loading
+				<View style={styles.container}>
+					<Text style={styles.topText}>Resource Details</Text>
+					<Image
+						style={styles.backArrow}
+						source={backArrowWhite}
+						onPress={() => navigation.navigate("Resource List")}
+						// TODO: Check if navigating back works
+					></Image>
+					<View style={styles.bottomContainer}>
+						<View>
+							<Text style={styles.text}>{data["name"]}</Text>
+							<Text style={styles.text3}>{data["category"]}</Text>
+							<Text style={styles.text2}>
+								Organization: {data["organization"]}
+							</Text>
+							<Text style={styles.text2}>
+								Availability: {data["availability"]}
+							</Text>
+							<Text style={styles.text2}>
+								Phone Number: {data["phone_num"]}
+							</Text>
+							<Text style={styles.text2}>Address: {data["address"]}</Text>
+							<Text
+								style={styles.text2}
+								onPress={() => {
+									Linking.openURL(data["website"]);
+									// TODO: Check if URL opening works
+								}}
+							>
+								Website: {data["website"]}
+							</Text>
+							<Text style={styles.text4}>{data["description"]}</Text>
+						</View>
+					</View>
 				</View>
-			</View>
+			)}
 		</View>
 	);
 }

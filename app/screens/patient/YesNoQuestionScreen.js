@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	ImageBackground,
 	SimpleSurvey,
@@ -12,148 +12,148 @@ import {
 	TouchableHighlight,
 	Image,
 	ScrollView,
-	// ==================================================
-	// Add FlatList
 	FlatList,
+	ActivityIndicator,
 } from "react-native";
-// ==================================================
-// Add import vvv
 import back from "../../assets/backArrowWhite.png";
+import { readData } from "../../utils/DataHandler";
+import RadioButtonRN from "radio-buttons-react-native";
+import logo from "../../assets/logo_nobg.png";
 
-var questions = [
-	{
-		question: "1. Do you have a safe place to stay?",
-		answers: [
-			{ option: "Yes" }, 
-			{ option: "No" }],
-	},
-	{
-		question: "2. Do you need safety planning?",
-		answers: [
-			{ option: "Yes" },
-			{ option: "No" },
-		],
-	},
-	{
-		question: "3. Likert Scale Question",
-		answers: [
-			{ option: "(1) Great" }, 
-			{ option: "(2) Good" },
-			{ option: "(3) Okay" },
-			{ option: "(4) Surviving" },
-			{ option: "(5) Crisis" },
-		],
-	},
-	{
-		question: "4. Example Question",
-		answers: [
-			{option: "Yes"},
-			{option: "No"}
-		],
-	},
-	{
-		question: "5. Example Question",
-		answers: [
-			{option: "Yes"},
-			{option: "No"}
-		],
-	},
-	{
-		question: "6. Example Question",
-		answers: [
-			{option: "Yes"},
-			{option: "No"}
-		],
-	}
-	
-];
-
-
-
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-	<Text style={styles.text}>{item.question}</Text>
-	
-);
-
-
-
-function YesNoQuestionScreen({ navigation }) {
-	const [value, setValue] = React.useState('first');
-	const renderItem = ({ questions }) => {
-		return (
-			<Item
-				item={questions.answers}
-				onPress={() => (backgroundColor = "#3248a8")}
-			/>
-
-		)
-	}
+function YesNoQuestionScreen({ route, navigation }) {
+	const [isLoading, setLoading] = React.useState(true);
+	const [data, setData] = useState([]);
+	var category = route.params;
+	var finalTags = [];
+	const category_name = category["category"];
 
 	const footer = () => {
 		return (
 			<TouchableHighlight
-			underlayColor="#A6E1FF"
-			style={styles.submitButton}
-			onPress={() => navigation.navigate("Resource List")}>
-				<Text style={{color: "#FFF"}}>SUBMIT SURVEY</Text>
+				underlayColor="#A6E1FF"
+				style={styles.submitButton}
+				onPress={() =>
+					navigation.navigate("Resource List", {
+						tags: finalTags,
+					})
+				}
+			>
+				<Text style={{ color: "#FFF" }}>SUBMIT SURVEY</Text>
 			</TouchableHighlight>
 		);
-	  };
-	
+	};
+
+	useEffect(() => {
+		readData("questions")
+			.then((questions) => {
+				console.log("loading questions");
+				// Load 'questions' from AsyncStorage
+				var questions = JSON.parse(questions);
+				var sections = [];
+				for (var i = 0; i < questions.length; i++) {
+					console.log("loading each question");
+					if (questions[i].category == category_name) {
+						// If yes/no question
+						console.log("Type of question: " + questions[i].type);
+						if (questions[i].type == "Yes/No") {
+							sections.push({
+								text: questions[i].order + ". " + questions[i].text,
+								type: questions[i].type,
+								choices: [
+									// TODO: change tags' value to tags
+									{ label: "Yes", tags: "tags for yes" },
+									{ label: "No", tags: "tags for no" },
+								],
+								order: questions[i].order,
+
+								// Add more to this later on
+							});
+						}
+						// If Likert scale
+						else {
+							sections.push({
+								text: questions[i].order + ". " + questions[i].text,
+								type: questions[i].type,
+								choices: [
+									// TODO: change tags' value to tags
+									{
+										label: "1 " + questions[i].answer_choices[1],
+										tags: "tags for 1",
+									},
+									{
+										label: "2 " + questions[i].answer_choices[2],
+										tags: "tags for 2",
+									},
+									{
+										label: "3 " + questions[i].answer_choices[3],
+										tags: "tags for 3",
+									},
+									{
+										label: "4 " + questions[i].answer_choices[4],
+										tags: "tags for 4",
+									},
+									{
+										label: "5 " + questions[i].answer_choices[5],
+										tags: "tags for 5",
+									},
+								],
+								order: questions[i].order,
+
+								// Add more to this later on
+							});
+						}
+					}
+					console.log(sections);
+					setData(sections);
+				}
+			})
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
+	}, [isLoading]);
+
 	return (
-
 		<View style={styles.container}>
-			{/* ==================================================
-			*	Add TouchableOpacity
-			 */}
 			<TouchableOpacity onPress={() => navigation.goBack()}>
-				<Image source = {back} style = {styles.backButton}></Image>
+				<Image source={back} style={styles.backButton}></Image>
 			</TouchableOpacity>
-
-			<Text style={styles.topText}>Safety and Security Survey</Text>
+			<Text style={styles.topText}>{category_name} Survey</Text>
 			<View style={styles.rectangle}></View>
-			<Text style={styles.skipToResultsText}>Skip to Results?</Text>
-			
+			<Text
+				style={styles.skipToResultsText}
+				onPress={() =>
+					navigation.navigate("Resource List", {
+						tags: finalTags,
+					})
+				}
+			>
+				Skip to Results?
+			</Text>
 			<View style={styles.bottomContainer}>
-
-			
-			<FlatList
-			 	// contentContainerStyle={{ paddingBottom: 100 }}
-				data={questions}
-				keyExtractor={(item, index) => index.toString()}
-				
-				ListFooterComponent={footer}
-				renderItem={({ item }) => {
-					return (
+				<FlatList
+					contentContainerStyle={{ paddingBottom: 100 }}
+					data={data}
+					keyExtractor={(item, index) => index.toString()}
+					ListFooterComponent={footer}
+					renderItem={({ item }) => {
+						return (
 							<View>
-								<Text style={styles.text}>{item.question}</Text>
-								<FlatList
-								data={item.answers}
-								keyExtractor={(item, index) => index.toString()}
-								renderItem={({ item: answers, index }) => (
-									<View>
-										<TouchableHighlight
-											underlayColor="#A6E1FF"
-											onPress={() => navigation.navigate("Resource List")}
-											style={styles.button}>
-											<Text style={styles.buttonText}>{answers.option}</Text>
-										</TouchableHighlight>
-									</View>
-								)}
+								<Text style={styles.text}>{item.text}</Text>
+								<RadioButtonRN
+									data={item.choices}
+									selectedBtn={(e) => {
+										finalTags[item.order] = e.tags;
+										console.log(e.tags);
+									}}
 								/>
-								
 							</View>
-					);
-				}}
-			/>
-			
+						);
+					}}
+				/>
 			</View>
 		</View>
-		
 	);
 }
-// ==================================================
-// I think you should just copy and paste this whole stylesheet. Was Kinda a mess
+
 var styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -169,7 +169,7 @@ var styles = StyleSheet.create({
 		position: "absolute",
 		top: 130,
 		marginBottom: 100,
-		alignSelf: 'center'
+		alignSelf: "center",
 	},
 	rectangle: {
 		height: 4,
@@ -178,8 +178,7 @@ var styles = StyleSheet.create({
 		position: "absolute",
 		top: 115,
 		backgroundColor: "#FFF",
-		alignSelf: 'center'
-		
+		alignSelf: "center",
 	},
 	topText: {
 		// fontSize: 20,
@@ -195,7 +194,7 @@ var styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 12,
 		position: "absolute",
-		marginTop: 60
+		marginTop: 60,
 	},
 	text: {
 		color: "#003C98",
@@ -203,7 +202,7 @@ var styles = StyleSheet.create({
 		left: 40,
 		fontWeight: "bold",
 		fontSize: 16,
-		marginTop: 40
+		marginTop: 40,
 	},
 	button: {
 		top: 20,
@@ -224,7 +223,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		marginTop: '20%',
+		marginTop: "20%",
 	},
 	buttonText: {
 		color: "#000",
@@ -239,13 +238,13 @@ var styles = StyleSheet.create({
 		alignSelf: "center",
 		backgroundColor: "#0E4B9D",
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
 	},
 	backButton: {
 		resizeMode: "contain",
 		width: 50,
 		height: 50,
-		alignSelf: 'flex-start',
+		alignSelf: "flex-start",
 		// position: 'absolute',
 		// top: 0,
 		// paddingBottom: '10%'

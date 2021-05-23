@@ -3,25 +3,21 @@ import { useEffect } from "react";
 import {
 	Text,
 	ScrollView,
-	SafeAreaView,
 	StyleSheet,
-	SectionList,
 	FlatList,
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
-	Image,
 } from "react-native";
 
 import colors from "../../config/colors";
-import back from "../../assets/backArrowBlack.png";
 import { readData } from "../../utils/DataHandler";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function ResourceListScreen({ navigation }) {
+function AdminResourceListScreen({ navigation }) {
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
@@ -56,7 +52,6 @@ function ResourceListScreen({ navigation }) {
 									name: resources[i].name,
 									description: resources[i].description,
 									resource_id: resources[i].resource_id,
-									tags: resources[i].tags,
 								},
 							],
 						});
@@ -67,7 +62,6 @@ function ResourceListScreen({ navigation }) {
 							name: resources[i].name,
 							description: resources[i].description,
 							resource_id: resources[i].resource_id,
-							tags: resources[i].tags,
 						});
 					}
 				}
@@ -87,9 +81,6 @@ function ResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
 						Based on your survey results, here are some resources that might be
@@ -117,12 +108,10 @@ function ResourceListScreen({ navigation }) {
 											<View style={styles.cards}>
 												<TouchableOpacity
 													style={styles.links}
-													onPress={
-														() =>
-															navigation.navigate("Resource Details", {
-																resource_id: innerData.resource_id,
-															})
-														// TODO: Update view count for resource
+													onPress={() =>
+														navigation.navigate("Resource Details", {
+															resource_id: innerData.resource_id,
+														})
 													}
 												>
 													<Text style={styles.resourceTitle}>
@@ -154,8 +143,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
-		position: "absolute",
-		marginTop: 40,
 	},
 	subtext: {
 		fontSize: 14,
@@ -214,15 +201,6 @@ const styles = StyleSheet.create({
 		width: 340,
 		marginBottom: 15,
 	},
-	backButton: {
-		resizeMode: "contain",
-		width: 50,
-		height: 50,
-		alignSelf: "flex-start",
-		marginBottom: "2%",
-		marginLeft: "4%",
-		marginTop: "11%",
-	},
 });
 
-export default ResourceListScreen;
+export default AdminResourceListScreen;

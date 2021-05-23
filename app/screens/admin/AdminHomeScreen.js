@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity, Image } from "react-native";
+import {
+	Text,
+	View,
+	StyleSheet,
+	Button,
+	Modal,
+	ImageBackground,
+	TouchableOpacity,
+	Image,
+} from "react-native";
 
 import colors from "../../config/colors";
 import schedule from "../../assets/schedule1.png";
@@ -7,7 +16,9 @@ import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
 import back from "../../assets/backArrowWhite.png";
-
+import cog from "../../assets/settings1.png";
+import charity from "../../assets/charity1.png";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function AdminHomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -19,19 +30,32 @@ function AdminHomeScreen({ navigation }) {
 					overflow: "hidden",
 					resizeMode: "stretch",
 					height: "100%",
-					width: "100%"
+					width: "100%",
 				}}
 			>
-			<TouchableOpacity onPress={() => navigation.goBack()}>
-				<Image source = {back} style = {styles.backButton}></Image>
-			</TouchableOpacity>
-				<View style={[styles.base ,{height: "70%", padding: 20, alignItems: "center" }]}>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
+				<View
+					style={[
+						styles.base,
+						{ height: "70%", padding: 20, alignItems: "center" },
+					]}
+				>
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Home")}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>View Statistics</Text>
 						<Image source={clipboard} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => navigation.navigate("Admin Resource List")}
+						style={styles.card}
+					>
+						<Text style={styles.buttonText}>View Resource List</Text>
+						<Image source={charity} style={styles.icon} />
 					</TouchableOpacity>
 
 					<TouchableOpacity
@@ -51,6 +75,17 @@ function AdminHomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
+						style={styles.card}
+						onPress={() => {
+							storeData("log", null);
+							navigation.navigate("Welcome");
+						}}
+					>
+						<Text style={styles.buttonText}>Clear Credentials</Text>
+						<Image source={cog} style={styles.icon} />
+					</TouchableOpacity>
+
+					<TouchableOpacity
 						onPress={() => setModalVisible(true)}
 						style={{
 							alignSelf: "center",
@@ -63,14 +98,13 @@ function AdminHomeScreen({ navigation }) {
 							shadowOffset: { width: 0, height: 2 },
 							shadowOpacity: 0.25,
 							shadowRadius: 4,
-							}}
+						}}
 					>
 						<Text style={{ color: "white" }}>Add Resource +</Text>
 					</TouchableOpacity>
 				</View>
 			</ImageBackground>
 		</View>
-
 	);
 }
 
@@ -118,10 +152,10 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 50,
 		height: 50,
-		alignSelf: 'flex-start',
-		marginBottom: '2%',
-		marginLeft: '4%',
-		marginTop: '11%'
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	card: {
 		backgroundColor: "white",
@@ -142,7 +176,7 @@ const styles = StyleSheet.create({
 		marginLeft: "10%",
 		color: "#003C98",
 		flexWrap: "wrap",
-		width: "50%"
+		width: "50%",
 	},
 	icon: {
 		resizeMode: "contain",

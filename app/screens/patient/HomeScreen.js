@@ -19,6 +19,7 @@ import logo from "../../assets/logo_nobg.png";
 import back from "../../assets/backArrowWhite.png";
 import heart from "../../assets/heart.png";
 import { Linking } from "react-native";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -32,16 +33,15 @@ function HomeScreen({ navigation }) {
 					height: "100%",
 				}}
 			>
-			<TouchableOpacity onPress={() => navigation.goBack()}>
-				<Image source = {back} style = {styles.backButton}></Image>
-			</TouchableOpacity>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
 				<View
 					style={[
 						styles.base,
 						{ height: "70%", padding: 20, alignItems: "center" },
 					]}
 				>
-
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Youth Support Services")}
 						style={[styles.card, { backgroundColor: "#4B9E76" }]}
@@ -69,18 +69,45 @@ function HomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Resource List")}
+						onPress={() => {
+							var filterTags = [];
+							readData("previousTags")
+								.then((value) => {
+									filterTags = JSON.parse(value);
+									console.log(filterTags);
+								})
+								.finally(() => {
+									console.log("navigating");
+									console.log(filterTags);
+									navigation.navigate("Resource Results", {
+										tags: filterTags,
+									});
+								});
+						}}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>See Past Resources</Text>
 						<Image source={schedule} style={styles.icon} />
 					</TouchableOpacity>
 
-					<TouchableOpacity
+					{/* Unused Settings Screen */}
+					{/* <TouchableOpacity
 						onPress={() => navigation.navigate("Settings")}
 						style={styles.card}
 					>
 						<Text style={styles.buttonText}>Settings</Text>
+						<Image source={cog} style={styles.icon} />
+
+					</TouchableOpacity> */}
+
+					<TouchableOpacity
+						style={styles.card}
+						onPress={() => {
+							storeData("log", null);
+							navigation.navigate("Welcome");
+						}}
+					>
+						<Text style={styles.buttonText}>Clear Credentials</Text>
 						<Image source={cog} style={styles.icon} />
 					</TouchableOpacity>
 
@@ -243,10 +270,10 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 50,
 		height: 50,
-		alignSelf: 'flex-start',
-		marginBottom: '2%',
-		marginLeft: '4%',
-		marginTop: '11%'
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	icon: {
 		resizeMode: "contain",
