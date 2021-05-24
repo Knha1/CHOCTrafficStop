@@ -24,17 +24,21 @@ function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
 	const [data, setData] = useState([]);
 	var category = route.params;
-	var finalTags = [];
+	// var finalTags = [];
 	const category_name = category["category"];
+	const [chosenTags, setChosenTags] = useState([]); // Tags for the resource list
+	const [answeredQuestions, setAnsweredQuestions] = useState(0); // # of answered questions for progress bar
+	const [totalQuestions, setTotalQuestions] = useState(0); // # of total questions for progress abr
 
 	const footer = () => {
+		// TODO: fix footer, button isn't pressable
 		return (
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
 				onPress={() =>
 					navigation.navigate("Resource List", {
-						tags: finalTags,
+						tags: chosenTags,
 					})
 				}
 			>
@@ -43,70 +47,72 @@ function YesNoQuestionScreen({ route, navigation }) {
 		);
 	};
 
+	async function updateAnswers(qNum) {}
+
 	useEffect(() => {
 		readData("questions")
 			.then((questions) => {
-				console.log("loading questions");
 				// Load 'questions' from AsyncStorage
 				var questions = JSON.parse(questions);
 				var sections = [];
-				for (var i = 0; i < questions.length; i++) {
-					console.log("loading each question");
-					if (questions[i].category == category_name) {
+				for (var qIndex in questions) {
+					if (questions[qIndex].category == category_name) {
 						// If yes/no question
-						console.log("Type of question: " + questions[i].type);
-						if (questions[i].type == "Yes/No") {
+						if (questions[qIndex].type == "Yes/No") {
 							sections.push({
-								text: questions[i].order + ". " + questions[i].text,
-								type: questions[i].type,
+								text: questions[qIndex].order + ". " + questions[qIndex].text,
+								type: questions[qIndex].type,
 								choices: [
-									// TODO: change tags' value to tags
-									{ label: "Yes", tags: "tags for yes" },
-									{ label: "No", tags: "tags for no" },
+									{ label: "Yes", tags: questions[qIndex].tags[1] },
+									{ label: "No", tags: questions[qIndex].tags[2] },
 								],
-								order: questions[i].order,
-
-								// Add more to this later on
+								order: questions[qIndex].order,
 							});
 						}
 						// If Likert scale
 						else {
 							sections.push({
-								text: questions[i].order + ". " + questions[i].text,
-								type: questions[i].type,
+								text: questions[qIndex].order + ". " + questions[qIndex].text,
+								type: questions[qIndex].type,
 								choices: [
-									// TODO: change tags' value to tags
 									{
-										label: "1 " + questions[i].answer_choices[1],
-										tags: "tags for 1",
+										label: "1 " + questions[qIndex].answer_choices[1],
+										tags: questions[qIndex].tags[1],
 									},
 									{
-										label: "2 " + questions[i].answer_choices[2],
-										tags: "tags for 2",
+										label: "2 " + questions[qIndex].answer_choices[2],
+										tags: questions[qIndex].tags[2],
 									},
 									{
-										label: "3 " + questions[i].answer_choices[3],
-										tags: "tags for 3",
+										label: "3 " + questions[qIndex].answer_choices[3],
+										tags: questions[qIndex].tags[3],
 									},
 									{
-										label: "4 " + questions[i].answer_choices[4],
-										tags: "tags for 4",
+										label: "4 " + questions[qIndex].answer_choices[4],
+										tags: questions[qIndex].tags[4],
 									},
 									{
-										label: "5 " + questions[i].answer_choices[5],
-										tags: "tags for 5",
+										label: "5 " + questions[qIndex].answer_choices[5],
+										tags: questions[qIndex].tags[5],
 									},
 								],
-								order: questions[i].order,
-
-								// Add more to this later on
+								order: questions[qIndex].order,
 							});
 						}
 					}
-					console.log(sections);
-					setData(sections);
 				}
+				setData(sections);
 			})
+			.then(() => {
+				setTotalQuestions(data.length);
+				// Fill the chosen tags list with temp values for tracking progress bar
+				var chosen = {};
+				for (var i = 0; i < data.length; i++) {
+					chosen[i] = "none";
+				}
+				setChosenTags(chosen);
+			})
+			.then(() => {})
 			.catch((error) => console.error(error))
 			.finally(() => setLoading(false));
 	}, [isLoading]);
@@ -120,13 +126,15 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<View style={styles.rectangle}></View>
 			<Text
 				style={styles.skipToResultsText}
-				onPress={() =>
-					navigation.navigate("Resource List", {
-						tags: finalTags,
-					})
-				}
+				onPress={() => {
+					console.log("Naving to results");
+					console.log(chosenTags);
+					navigation.navigate("Resource Results", {
+						tags: chosenTags,
+					});
+				}}
 			>
-				Skip to Results?
+				Skip to Results? ({answeredQuestions} / {totalQuestions})
 			</Text>
 			<View style={styles.bottomContainer}>
 				<FlatList
@@ -141,8 +149,22 @@ function YesNoQuestionScreen({ route, navigation }) {
 								<RadioButtonRN
 									data={item.choices}
 									selectedBtn={(e) => {
-										finalTags[item.order] = e.tags;
-										console.log(e.tags);
+										// finalTags[item.order] = e.tags;
+
+										var tempChosen = chosenTags;
+										var answerCount = 0;
+
+										tempChosen[item.order - 1] = e.tags;
+
+										// Update answer count if temp value is overriden by actual tags
+										for (var ans in tempChosen) {
+											if (tempChosen[ans] != "none") {
+												answerCount++;
+											}
+										}
+
+										setChosenTags(tempChosen);
+										setAnsweredQuestions(answerCount);
 									}}
 								/>
 							</View>
