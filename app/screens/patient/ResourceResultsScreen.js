@@ -26,17 +26,15 @@ function ResourceResultsScreen({ route, navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
-	// console.log(tags);
-	// console.log(tags.length);
 	var filterTags = [];
 	storeData("previousTags", tags);
 	for (var o in tags) {
 		// Goes through each answer's list of tags
 		if (tags[o] != null) {
 			for (var j = 0; j < tags[o].length; j++) {
-				if (!(tags[o][j] in filterTags)) {
+				if (!(tags[o][j].trim in filterTags)) {
 					// If the tag hasn't been seen
-					filterTags.push(tags[o][j]);
+					filterTags.push(tags[o][j].trim());
 				}
 			}
 		}
@@ -54,21 +52,28 @@ function ResourceResultsScreen({ route, navigation }) {
 
 				var currentCategory = "";
 				var categoryIndex = 0;
+				var firstCatFound = false;
 				var sections = [];
 
 				for (var i = 0; i < resources.length; i++) {
 					// If there's a new category, push a new category title + innerData
-
+					
 					var validResource = false;
 					for (var j = 0; j < resources[i].tags.length; j++) {
 						if (filterTags.includes(resources[i].tags[j])) {
+							// console.log("FOUND: " + resources[i].tags[j]);
 							validResource = true;
 						}
 					}
 					if (validResource == true) {
+
 						if (resources[i].category != currentCategory) {
-							// Skip first category index increment, avoid OOB error
-							if (i != 0) {
+							// Skip the first case, only go to next category for every new category encountered after
+
+							if (firstCatFound == false) { // CHANGED: Instead of checking for i=0, just check if this is the first category
+								firstCatFound = true;
+							}
+							else{
 								categoryIndex++;
 							}
 							currentCategory = resources[i].category;
@@ -94,6 +99,7 @@ function ResourceResultsScreen({ route, navigation }) {
 							});
 						}
 					}
+
 				}
 				setData(sections);
 			})
