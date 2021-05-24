@@ -148,7 +148,7 @@ function LoginScreen({ navigation }) {
 
 					{/* NAVIGATE TO ADMIN LOG IN PAGE */}
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", paddingTop: 80 }}
+						style={{ color: "#003C98", alignSelf: "center", marginTop: 80 }}
 						onPress={() => {
 							navigation.navigate("Admin Login");
 							storeData("log", "Admin");
