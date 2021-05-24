@@ -24,7 +24,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
 	const [data, setData] = useState([]);
 	var category = route.params;
-	var finalTags = [];
+	// var finalTags = [];
 	const category_name = category["category"];
 	const [chosenTags, setChosenTags] = useState([]); // Tags for the resource list
 	const [answeredQuestions, setAnsweredQuestions] = useState(0); // # of answered questions for progress bar
@@ -38,7 +38,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 				style={styles.submitButton}
 				onPress={() =>
 					navigation.navigate("Resource List", {
-						tags: finalTags,
+						tags: chosenTags,
 					})
 				}
 			>
@@ -126,11 +126,13 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<View style={styles.rectangle}></View>
 			<Text
 				style={styles.skipToResultsText}
-				onPress={() =>
+				onPress={() => {
+					console.log("Naving to results");
+					console.log(chosenTags);
 					navigation.navigate("Resource Results", {
-						tags: finalTags,
-					})
-				}
+						tags: chosenTags,
+					});
+				}}
 			>
 				Skip to Results? ({answeredQuestions} / {totalQuestions})
 			</Text>
@@ -147,7 +149,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 								<RadioButtonRN
 									data={item.choices}
 									selectedBtn={(e) => {
-										finalTags[item.order] = e.tags;
+										// finalTags[item.order] = e.tags;
 
 										var tempChosen = chosenTags;
 										var answerCount = 0;
