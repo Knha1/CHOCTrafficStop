@@ -252,7 +252,8 @@ var styles = StyleSheet.create({
 		alignSelf: "center",
 	},
 	submitButton: {
-		top: 50,
+		// top: 50,
+		marginTop: 50,
 		height: 45,
 		margin: 3,
 		width: 340,
