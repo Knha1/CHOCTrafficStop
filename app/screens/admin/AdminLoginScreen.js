@@ -35,11 +35,14 @@ function AdminLoginScreen({ navigation }) {
 							paddingLeft: 36,
 						}}
 					>
-						Login as an Admin
+						Admin Login
 					</Text>
+					<Text style={{left: 40, top:25}}>Username</Text>
 					<TextInput
 						style={{
 							margin: 40,
+							marginTop: 30,
+							marginBottom: 15,
 							padding: 5,
 							paddingLeft: 15,
 							borderWidth: 1.0,
@@ -49,9 +52,12 @@ function AdminLoginScreen({ navigation }) {
 						placeholder="Enter Username"
 						onChangeText={(text) => setUsername(text)}
 					/>
+					<Text style={{left: 40, top:15}}>Password</Text>
 					<TextInput
 						style={{
 							margin: 40,
+							marginTop: 20,
+							marginBottom: 0,
 							padding: 5,
 							paddingLeft: 15,
 							borderWidth: 1.0,
@@ -63,7 +69,7 @@ function AdminLoginScreen({ navigation }) {
 						secureTextEntry={true}
 					/>
 
-					<Text style={{ margin: 5, padding: 5 }}>{message}</Text>
+					<Text style={{color: 'red', alignSelf: 'center', top:10}}>{message}</Text>
 
 					<TouchableOpacity
 						style={styles.button}
@@ -72,10 +78,10 @@ function AdminLoginScreen({ navigation }) {
 							var valid = false;
 							if (username.length == 0 || password.length == 0) {
 								setMessage(
-									"Username and/or password isn't filled in. Try again."
+									"Username and/or password are not filled in. Try again."
 								);
 								console.log(
-									"Username and/or password isn't filled in. Try again."
+									"Username and/or password are not filled in. Try again."
 								);
 							} else {
 								// TODO: Replace w/ EXTRA secure sign in
@@ -133,7 +139,7 @@ function AdminLoginScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", marginTop: 80 }}
+						style={{ color: "#003C98", alignSelf: "center", marginTop: 110 }}
 						onPress={() => navigation.navigate("Login")}
 					>
 						Not an Admin? Go Back
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
 	bottomContainer: {
 		alignSelf: "stretch",
 		flex: 1,
-		top: 100,
+		top: 180,
 		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
@@ -163,7 +169,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		position: "absolute",
-		top: 340,
+		top: 310,
 		alignItems: "center",
 		alignSelf: "center",
 		justifyContent: "center",
