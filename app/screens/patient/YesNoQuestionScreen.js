@@ -220,7 +220,7 @@ var styles = StyleSheet.create({
 	},
 	text: {
 		color: "#003C98",
-		//top: 50,
+		width: '80%',
 		left: 40,
 		fontWeight: "bold",
 		fontSize: 16,
