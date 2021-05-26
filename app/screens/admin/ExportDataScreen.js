@@ -17,7 +17,7 @@ function ExportDataScreen({ navigation }) {
 				<View style={[styles.base]}>
 					<Text style={{
 							marginTop: "10%",
-							fontSize: 26,
+							fontSize: 24,
 							alignSelf: "flex-start",
 							textAlign: "left",
 							marginLeft: "10%",
@@ -29,7 +29,7 @@ function ExportDataScreen({ navigation }) {
 							Export Data 
 					</Text>
 					<Text style={styles.subheader}>File Name: </Text>
-					<TextInput style={styles.baseText} placeholder = " File Name" />
+					<TextInput style={styles.baseText} placeholder = "Enter File Name" />
 					<Text style={styles.subheader}>File Format: </Text>
 					<DropDownPicker
 						containerStyle={{marginHorizontal:"10%", height: "5%"}}
@@ -47,7 +47,7 @@ function ExportDataScreen({ navigation }) {
 						style={{
 							backgroundColor: "#DFDFDF",
 							alignSelf: "center",
-							borderRadius: 20,
+							borderRadius: 64,
 							padding: 15,
 							marginHorizontal: 10
 						}}>
@@ -58,7 +58,7 @@ function ExportDataScreen({ navigation }) {
 						style={{
 							backgroundColor: "#0E4B9D",
 							alignSelf: "center",
-							borderRadius: 20,
+							borderRadius: 64,
 							padding: 15,
 							marginHorizontal: 10
 						}}>
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: 'flex-start',
 		marginBottom: '2%',
 		marginLeft: '4%',

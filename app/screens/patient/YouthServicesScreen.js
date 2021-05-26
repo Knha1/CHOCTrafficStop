@@ -244,12 +244,12 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "4%",
-		marginTop: "11%",
+		marginTop: "14%",
 	},
 });
 

@@ -74,6 +74,7 @@ function SurveyCategoriesScreen({ navigation }) {
 								styles.subtext,
 								{
 									textDecorationLine: "underline",
+									marginBottom: '5%'
 								},
 							]}
 						>
@@ -193,15 +194,16 @@ const styles = StyleSheet.create({
 	},
 	subtext: {
 		fontSize: 14,
-		alignSelf: "flex-start",
+		alignSelf: "center",
 		marginStart: 20,
 		marginVertical: "2%",
 		color: "#F1F2F2",
+		width: '90%'
 	},
 	card: {
 		backgroundColor: "#F1F2F2",
-		width: "45%",
-		height: "30%",
+		width: "44%",
+		height: "28%",
 		alignSelf: "flex-start",
 		marginBottom: 10,
 		marginHorizontal: 2,
@@ -219,8 +221,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "8%",
 		marginLeft: "4%",
