@@ -7,11 +7,13 @@ import {
 	Modal,
 	ImageBackground,
 	TouchableOpacity,
+	Image,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
+import back from "../../assets/backArrowWhite.png";
 // import PureChart from 'react-native-pure-chart';
 
 function StatisticsHomeScreen({ navigation }) {
@@ -26,18 +28,22 @@ function StatisticsHomeScreen({ navigation }) {
 					width: "100%",
 				}}
 			>
-				<Text
-					style={{
-						marginTop: "5%",
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source = {back} style = {styles.backButton}></Image>
+				</TouchableOpacity>
+				<Text style={{
+						marginTop: "14%",
 						fontSize: 20,
 						alignSelf: "center",
-						padding: 20,
 						color: "white",
 						fontWeight: "bold",
+						position: 'absolute',
 					}}
 				>
 					Resources Accessed
 				</Text>
+
+			
 				{/* <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text> */}
 				<View style={{ alignItems: "center" }}>
 					{/* <PureChart  data={[
@@ -107,7 +113,7 @@ function StatisticsHomeScreen({ navigation }) {
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							onPress={() => navigation.navigate("View Resource")}
+							onPress={() => navigation.navigate("Statistics List")}
 							style={{
 								backgroundColor: "#0E4B9D",
 								alignSelf: "center",
@@ -124,65 +130,15 @@ function StatisticsHomeScreen({ navigation }) {
 				</View>
 			</ImageBackground>
 		</View>
-		//     <View style={{padding: 10}}>
-		//     <Text style = {{paddingTop: 10, fontSize:20 , alignSelf: 'center', padding: 20}}>Resources Accessed</Text>
-
-		//     <View
-		//     style={{
-		//         borderBottomColor: 'grey',
-		//         borderBottomWidth: 1,
-		//         marginBottom: 15
-		//     }}
-		//     />
-
-		//     <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text>
-
-		//     <View style ={{marginTop: 10, margin:5}}>
-
-		//     <Text style={{fontSize:15, marginBottom:5}}>Top 3 Resources Accessed</Text>
-		//     <Text>From DATE-DATE</Text>
-
-		//     <View style ={{marginTop: 10, margin:5}}></View>
-
-		//     <Text>Resource 1</Text>
-		//     <View style ={{marginTop: 10, margin:5}}></View>
-		//     <Text>Resource 2</Text>
-		//     <View style ={{marginTop: 10, margin:5}}></View>
-		//     <Text>Resource 3</Text>
-		//     <View style ={{marginTop: 10, margin:5}}></View>
-
-		// 	<View style={styles.buttonSpacing}>
-		// 	<Button
-		//       title="Export Data"
-		// 	  color = "blue"
-		//       onPress={() =>
-		//         navigation.navigate('Export Data')
-		//       }
-		//     />
-		// 	</View>
-
-		//       {/* need to add a new screen for this */}
-		//     <View style={styles.buttonSpacing}>
-		// 	<Button
-		//       title="More Details"
-		// 	  color = "blue"
-		//       onPress={() =>
-		//         navigation.navigate('View Resource')
-		//       }
-		//     />
-		// 	</View>
-
-		//     </View>
-		//    </View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.bg,
-		alignItems: "center",
-		justifyContent: "center",
+		// backgroundColor: colors.bg,
+		// alignItems: "center",
+		flexDirection: 'row'
 	},
 	emergency: {
 		flex: 1,
@@ -211,12 +167,21 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "4%",
-		backgroundColor: "white",
+		// marginTop: "1%",
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
 		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 	resourceText: {
 		marginTop: "2%",

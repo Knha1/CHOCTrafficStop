@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, TextInput, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, Button, Modal, TextInput, ImageBackground, Image } from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import back from "../../assets/backArrowWhite.png";
 
 function ExportDataScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={bg} style={{overflow: "hidden",resizeMode: "stretch",height: "100%", width: "100%"}}>
-				<View style={styles.base}>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source = {back} style = {styles.backButton}></Image>
+			</TouchableOpacity>
+				<View style={[styles.base]}>
 					<Text style={{
 							marginTop: "10%",
 							fontSize: 26,
@@ -39,7 +43,7 @@ function ExportDataScreen({ navigation }) {
 					/>
 
 					<View style={{flexDirection: "row", position: "absolute", bottom: 30, left: 40 }}>
-						<TouchableOpacity onPress={() =>navigation.navigate('Admin Home')} 
+						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')} 
 						style={{
 							backgroundColor: "#DFDFDF",
 							alignSelf: "center",
@@ -50,7 +54,7 @@ function ExportDataScreen({ navigation }) {
 							<Text style={[styles.buttonText, {color: "#003C98"}]}>Cancel</Text>
 
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() =>navigation.navigate('Admin Home')}
+						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')}
 						style={{
 							backgroundColor: "#0E4B9D",
 							alignSelf: "center",
@@ -140,12 +144,21 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		marginTop: "20%",
-		backgroundColor: 'white',
+		// marginTop: "1%",
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
-		flex: 1
+		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: 'flex-start',
+		marginBottom: '2%',
+		marginLeft: '4%',
+		marginTop: '11%'
 	},
 	baseText:{
 		marginLeft: "10%",

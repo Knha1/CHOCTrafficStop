@@ -3,7 +3,9 @@ import csv
 
 OUTPUT_FILENAME = 'sampleDB.json'
 QUESTIONS_FILENAME = 'questions.json'
-CREATE_QUESTIONS_JSON = True
+RESOURCES_FILENAME = 'resources.json'
+CREATE_QUESTIONS_JSON = False
+CREATE_RESOURCES_JSON = False
 
 # Create empty dictionaries for sample data
 d = dict()
@@ -13,10 +15,6 @@ patient1 = dict()
 patient2 = dict()
 
 reso = dict()
-reso1 = dict()
-reso2 = dict()
-reso3 = dict()
-reso4 = dict()
 
 questions = dict()
 
@@ -42,58 +40,37 @@ patients['num_patients'] = 2
 d['patient'] = patients
 
 # --- RESOURCES ---
-reso1['resource_id'] = 1
-reso1['name'] = 'How Much Sleep Do I Need?'
-reso1['category'] = 'Sleep'
-reso1['availability'] = '24/7 (Online Resource)'
-reso1['description'] = 'Describes how much sleep teens should be getting'
-reso1['organization'] = 'CHOC'
-reso1['website'] = 'https://kidshealth.org/CHOC/en/teens/how-much-sleep.html'
-reso1['phone_num'] = '###-###-###1'
-reso1['address'] = 'Addy1'
-reso1['email'] = 'email1'
+# 1. Download resources from spreadsheet as .tsv file
+# 2. Rename input file as 'r.tsv'
+# 3. Place in same directory as 'createSampleDB.py'
+with open('r.tsv', 'r') as infile:
+    rd = csv.reader(infile, delimiter='\t')
+    rowIndex = 0
+    for r in rd:
+        # Ignore line 0 (header)
+        if rowIndex != 0:
+            newResource = dict()
 
-reso2['resource_id'] = 2
-reso2['name'] = '5 Ideas for Better Sleep'
-reso2['category'] = 'Sleep'
-reso2['availability'] = '24/7 (Online Resource)'
-reso2['description'] = 'Sample description2'
-reso2['organization'] = 'CHOC'
-reso2['website'] = 'https://kidshealth.org/CHOC/en/teens/tips-sleep.html'
-reso2['phone_num'] = '###-###-###2'
-reso2['address'] = 'addy2'
-reso2['email'] = 'email2'
+            newResource['resource_id'] = r[0]
+            newResource['name'] = r[1]
+            newResource['category'] = r[3]
+            newResource['availability'] = r[5]
+            newResource['description'] = r[2]
+            newResource['organization'] = r[4]
+            newResource['website'] = r[9]
+            newResource['phone_num'] = r[6]
+            newResource['address'] = r[7]
+            newResource['email'] = r[8]
 
-reso3['resource_id'] = 3
-reso3['name'] = 'Healthy Relationships with Food & Exercise'
-reso3['category'] = 'Food / Fitness'
-reso3['availability'] = '24/7 (Online Resource)'
-reso3['description'] = 'Sample description3'
-reso3['organization'] = 'CHOC'
-reso3['website'] = 'https://kidshealth.org/CHOC/en/teens/food-fitness'
-reso3['phone_num'] = '###-###-###3'
-reso3['address'] = 'email3'
-reso3['email'] = 'email3'
+            # Split tags by comma, then into a list
+            tags = r[10].split(',')
+            newResource['tags'] = [tag.strip().lower() for tag in tags]
+            reso[rowIndex] = newResource
 
-reso4['resource_id'] = 4
-reso4['name'] = 'Safety Planning'
-reso4['category'] = 'Safety'
-reso4['availability'] = 'Monday – Friday (12:00PM – 8:00PM)\nSaturday (12:00PM – 4:00PM)'
-reso4['description'] = 'Sample description4'
-reso4['organization'] = 'Project Choice'
-reso4['website'] = 'https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/'
-reso4['phone_num'] = '714-619-0258'
-reso4['address'] = '1575 E. 17th Street\nSanta Ana CA 92705'
-reso4['email'] = "email4"
+        rowIndex += 1
 
-reso[1] = reso1
-reso[2] = reso2
-reso[3] = reso3
-reso[4] = reso4
-
-reso['num_resources'] = 4
-
-d['resource'] = reso
+reso['num_resources'] = len(reso)
+d["resource"] = reso
 
 # --- QUESTIONS ---
 # 1. Download questions from spreadsheet as .tsv file
@@ -106,17 +83,22 @@ with open('q.tsv', 'r') as infile:
         # Ignore lines 0 and 29+ (change as needed)
         if not (rowIndex == 0 or rowIndex >= 29):
             q_data = dict()
+
+            ac_yn = dict()
+            ac_yn['1'] = "Yes"
+            ac_yn['2'] = "No"
+
             ac_std = dict()
-            ac_std['1'] = "Rarely (None or 1-3 times/month)"
-            ac_std['2'] = "Sometimes (1-2 times/week)"
-            ac_std['3'] = "Often (3-5 times/week)"
-            ac_std['4'] = "Almost (6-7 times/week)"
-            ac_std['5'] = "Always (Everyday)"
+            ac_std['1'] = "Crisis"
+            ac_std['2'] = "Surviving"
+            ac_std['3'] = "OK"
+            ac_std['4'] = "Good"
+            ac_std['5'] = "Great"
 
             ac_mod1 = dict()    # For qid 9
             ac_mod1['1'] = "Very Bad"
             ac_mod1['2'] = "Bad"
-            ac_mod1['3'] = "Ok"
+            ac_mod1['3'] = "OK"
             ac_mod1['4'] = 'Good'
             ac_mod1['5'] = 'Very Good'
 
@@ -133,7 +115,7 @@ with open('q.tsv', 'r') as infile:
             q_data['text'] = q[1]
             q_data['type'] = q[2]
             if q[2] == 'Yes/No':
-                q_data['answer_choices'] = ''
+                q_data['answer_choices'] = ac_yn
             elif q[2] == 'Likert':
                 q_data['answer_choices'] = ac_std
             elif q[2] == 'Likert (Modified)':
@@ -141,6 +123,21 @@ with open('q.tsv', 'r') as infile:
                     q_data['answer_choices'] = ac_mod1
                 else:
                     q_data['answer_choices'] = ac_mod2
+
+            # Match up tags to answers
+            q_tags = dict()
+            split_tags = q[6].split('=')
+            if q[2] == 'Yes/No':
+                q_tags['1'] = split_tags[0].strip().split(',')
+                q_tags['2'] = split_tags[1].strip().split(',')
+            else:
+                q_tags['1'] = split_tags[0].strip().split(',')
+                q_tags['2'] = split_tags[1].strip().split(',')
+                q_tags['3'] = split_tags[2].strip().split(',')
+                q_tags['4'] = split_tags[3].strip().split(',')
+                q_tags['5'] = split_tags[4].strip().split(',')
+            q_data['tags'] = q_tags
+
             questions[rowIndex] = q_data
         rowIndex += 1
 
@@ -148,8 +145,8 @@ d['question'] = questions
 
 # --- ADMINS ---
 admin1['admin_id'] = 1
-admin1['username'] = 'myUsername'
-admin1['password'] = 'myPassword'
+admin1['username'] = 'CHOCAdmin'
+admin1['password'] = 'trafficstop'
 
 admins[1] = admin1
 
@@ -197,3 +194,10 @@ if CREATE_QUESTIONS_JSON:
         json.dump(questions, outfile)
     print(
         f'Completed creating questions JSON, output file: {QUESTIONS_FILENAME}')
+
+# Create Resourcess JSON
+if CREATE_RESOURCES_JSON:
+    with open(RESOURCES_FILENAME, 'w') as outfile:
+        json.dump(reso, outfile)
+    print(
+        f'Completed creating resources JSON, output file: {RESOURCES_FILENAME}')

@@ -18,6 +18,7 @@
     "expo-linear-gradient": "^8.4.0",
     "expo-status-bar": "~1.0.3",
     "firebase": "^8.4.2",
+    "radio-buttons-react-native": "^1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",

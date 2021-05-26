@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	ImageBackground,
 	Button,
@@ -10,6 +10,7 @@ import {
 	TextInput,
 	View,
 	Image,
+	ActivityIndicator,
 } from "react-native";
 import logo from "../../assets/logo_nobg.png";
 import { NavigationContainer } from "@react-navigation/native";
@@ -19,8 +20,30 @@ import {
 } from "react-native-responsive-screen";
 import { processFontFamily } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
 function WelcomeScreen({ navigation, props }) {
+	const [isLoading, setLoading] = useState(true);
+
+	useEffect(() => {
+		readData("log")
+			.then(
+				function (value) {
+					var loggedIn = value;
+
+					if (loggedIn == "User") {
+						navigation.navigate("Home");
+					} else if (loggedIn == "Admin") {
+						navigation.navigate("Admin Home");
+					}
+				},
+				function (err) {
+					console.log(err);
+				}
+			)
+			.finally(() => setLoading(false));
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			<LinearGradient

@@ -7,58 +7,84 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	Linking,
+	ImageBackground,
+	Image,
+	ScrollView,
 } from "react-native";
 
 import colors from "../../config/colors";
+import bg from "../../assets/background.png";
+import back from "../../assets/backArrowBlack.png";
+
+// var ProjectChoice = () => {Linking.openURL('https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/')}
 
 var sections = [
 	{
-		title: "Coping",
+		title: "PROJECT CHOICE",
 		innerData: [
-			{ name: "Understand & Managing Your Health" },
-			{ name: "Stress and Coping" },
-			{ name: "Positive Emotions" },
+			{
+				name: "Individual Case Management",
+				description:
+					"Work together with Project CHOICE to develop safety plans and receive all the support you need.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Safety Planning",
+				description: "Create a safety plan with the team at Project CHOICE.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Medical, Mental Health & Substance Use Support",
+				description:
+					"Receive support for mental health, medical health, and substance abuse.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Housing Referrals",
+				description: "Be referred to affordable houing resources.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Education & Employment Assistance",
+				description:
+					"Get help and support in finding education and employment opportunities.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Court Support & Advocacy",
+				description: "Find someone to support and advocate for you in Court.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
+			{
+				name: "Linkages to Community Resources",
+				description:
+					"Discover different kinds of community resources in Orange County.",
+				website:
+					"https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/",
+			},
 		],
 	},
 	{
-		title: "Food / Fitness",
+		title: "WAYMAKERS",
 		innerData: [
-			{ name: "Healthy Relationships with Food & Exercise" },
-			{ name: "Food Pantries in Orange County" },
-			{ name: "Exercise and Fitness" },
-		],
-	},
-	{
-		title: "Health / Wellness",
-		innerData: [
-			{ name: "Be Your Best Self" },
-			{ name: "Relaxation and Breathing" },
-			{ name: "Meditations" },
-			{ name: "Yoga" },
-		],
-	},
-	{
-		title: "Mindfulness",
-		innerData: [
-			{ name: "How to Be Mindful" },
-			{ name: "Mindfulness Exercises" },
-		],
-	},
-	{
-		title: "Relationships",
-		innerData: [
-			{ name: "Understanding Other Teens" },
-			{ name: "Healthy Relationships" },
-			{ name: "Abusive Relationships" },
-			{ name: "Stress and Coping" },
-			{ name: "Asking for Help" },
-		],
-	},
-	{
-		title: "Sleep",
-		innerData: [
-			{ name: "Preventing Nightmares" },
-			{ name: "Counteracting Restfulness" },
+			{
+				name: "Waymakers: Victim assistance Programs",
+				description: "Victim assistance",
+				website: "https://waymakersoc.org/",
+			},
+			{
+				name: "Victim Services",
+				description:
+					"safety planning, crisis response, victim assistance for all crimes (human trafficking / rape crisis), court advocacy.",
+				website: "https://waymakersoc.org/",
+			},
 		],
 	},
 ];
@@ -78,7 +104,10 @@ function YouthServicesScreen({ navigation }) {
 	};
 
 	return (
-		<View>
+		<ScrollView>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
 			<Text style={styles.header}>Youth Support Services</Text>
 			<FlatList
 				data={sections}
@@ -93,17 +122,32 @@ function YouthServicesScreen({ navigation }) {
 							</View>
 
 							<FlatList
+								contentContainerStyle={{ paddingBottom: 10 }}
 								data={item.innerData}
 								keyExtractor={(item, index) => index.toString()}
 								renderItem={({ item: innerData, index }) => (
 									<View style={styles.cards}>
-										<TouchableOpacity
-											style={styles.links}
-											onPress={() => navigation.navigate("Resource Details")}
+										<ImageBackground
+											source={bg}
+											style={{
+												overflow: "hidden",
+												resizeMode: "stretch",
+												paddingBottom: 10,
+												borderRadius: 15,
+											}}
 										>
-											<Text style={styles.resourceTitle}>{innerData.name}</Text>
-											<Text>Info about Resource</Text>
-										</TouchableOpacity>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() => Linking.openURL(innerData.website)}
+											>
+												<Text style={styles.resourceTitle}>
+													{innerData.name}
+												</Text>
+												<Text style={styles.descText}>
+													{innerData.description}
+												</Text>
+											</TouchableOpacity>
+										</ImageBackground>
 									</View>
 								)}
 							/>
@@ -111,14 +155,14 @@ function YouthServicesScreen({ navigation }) {
 					);
 				}}
 			/>
-		</View>
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#F9F9F9",
+		backgroundColor: "blue",
 	},
 	header: {
 		color: "#003C98",
@@ -126,6 +170,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
+		marginTop: "10%",
+		position: "absolute",
 	},
 	subtext: {
 		fontSize: 14,
@@ -137,12 +183,12 @@ const styles = StyleSheet.create({
 	},
 	links: {
 		paddingLeft: 10,
-		paddingBottom: 20,
+		// paddingBottom: 20,
 		paddingTop: 10,
 	},
 	cards: {
 		backgroundColor: "white",
-		paddingBottom: 10,
+		// paddingBottom: 10,
 		borderRadius: 15,
 		margin: 5,
 		width: "87%",
@@ -155,6 +201,9 @@ const styles = StyleSheet.create({
 			width: 2,
 			height: 2,
 		},
+		// borderWidth: 1,
+		// borderColor: "#56E9CE",
+		// borderRadius: 50,
 	},
 	title: {
 		color: "#000",
@@ -162,9 +211,18 @@ const styles = StyleSheet.create({
 		padding: 10,
 		paddingLeft: 20,
 		fontSize: 16,
+		color: "#003C98",
 	},
 	resourceTitle: {
-		color: "#003C98",
+		color: "white",
+		fontSize: 14,
+		fontWeight: "bold",
+		marginBottom: 6,
+	},
+	descText: {
+		color: "white",
+		fontSize: 14,
+		marginBottom: 4,
 	},
 	button: {
 		shadowColor: "#000",
@@ -183,6 +241,15 @@ const styles = StyleSheet.create({
 		height: 45,
 		width: 340,
 		marginBottom: 15,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 });
 

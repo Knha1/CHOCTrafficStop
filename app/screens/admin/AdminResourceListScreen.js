@@ -3,26 +3,21 @@ import { useEffect } from "react";
 import {
 	Text,
 	ScrollView,
-	SafeAreaView,
 	StyleSheet,
-	SectionList,
 	FlatList,
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
-	Image,
 } from "react-native";
 
 import colors from "../../config/colors";
-import back from "../../assets/backArrowBlack.png";
-import { readData, storeData } from "../../utils/DataHandler";
-import { firebase } from "../../firebase/config";
+import { readData } from "../../utils/DataHandler";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function ResourceListScreen({ navigation }) {
+function AdminResourceListScreen({ navigation }) {
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
@@ -57,7 +52,6 @@ function ResourceListScreen({ navigation }) {
 									name: resources[i].name,
 									description: resources[i].description,
 									resource_id: resources[i].resource_id,
-									tags: resources[i].tags,
 								},
 							],
 						});
@@ -68,7 +62,6 @@ function ResourceListScreen({ navigation }) {
 							name: resources[i].name,
 							description: resources[i].description,
 							resource_id: resources[i].resource_id,
-							tags: resources[i].tags,
 						});
 					}
 				}
@@ -88,10 +81,14 @@ function ResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
+					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.subtext}>
+						Based on your survey results, here are some resources that might be
+						helpful to you.
+					</Text>
+					<TouchableOpacity style={styles.button}>
+						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
-					<Text style={styles.header}>All Resources</Text>
 					<FlatList
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
@@ -111,58 +108,11 @@ function ResourceListScreen({ navigation }) {
 											<View style={styles.cards}>
 												<TouchableOpacity
 													style={styles.links}
-													onPress={() => {
-														// TODO: may conflict if multiple devices access and update num_data at the same time
-														firebase
-															.database()
-															.ref()
-															.child("data")
-															.child("num_data")
-															.get()
-															.then((snapshot) => {
-																if (snapshot.exists()) {
-																	var num_data = snapshot.val() + 1;
-
-																	const date = new Date();
-																	// Add 1 to month since getMonth() returns 0-11
-																	const month = date.getMonth() + 1;
-																	const year = date.getFullYear();
-
-																	readData("user_id").then((patient_id) => {
-																		readData("regCode").then((regCode) => {
-																			firebase
-																				.database()
-																				.ref()
-																				.child("data/" + num_data)
-																				.set({
-																					data_id: num_data,
-																					month: month,
-																					patient_id: parseInt(patient_id),
-																					resource_id: parseInt(
-																						innerData.resource_id
-																					),
-																					year: year,
-																				});
-																		});
-																	});
-
-																	// Update num_data count
-																	firebase
-																		.database()
-																		.ref()
-																		.child("data/num_data")
-																		.set(num_data);
-																} else {
-																	console.log(
-																		"No 'num_data' variable under 'data' found."
-																	);
-																}
-															});
-
+													onPress={() =>
 														navigation.navigate("Resource Details", {
 															resource_id: innerData.resource_id,
-														});
-													}}
+														})
+													}
 												>
 													<Text style={styles.resourceTitle}>
 														{innerData.name}
@@ -193,8 +143,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
-		position: "absolute",
-		marginTop: 40,
 	},
 	subtext: {
 		fontSize: 14,
@@ -253,15 +201,6 @@ const styles = StyleSheet.create({
 		width: 340,
 		marginBottom: 15,
 	},
-	backButton: {
-		resizeMode: "contain",
-		width: 50,
-		height: 50,
-		alignSelf: "flex-start",
-		marginBottom: "2%",
-		marginLeft: "4%",
-		marginTop: "11%",
-	},
 });
 
-export default ResourceListScreen;
+export default AdminResourceListScreen;

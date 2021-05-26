@@ -19,22 +19,28 @@ import mentalHealth from "../../assets/MentalHealthIcon.png";
 import physical from "../../assets/PhysicalHealthWellbeingIcon.png";
 import community from "../../assets/CommunityIcon.png";
 import bg from "../../assets/background.png";
+import back from "../../assets/backArrowBlack.png";
 
 function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
 
 	return (
-		<View style={[styles.container]}>
+		<ScrollView style={[styles.container]}>
 			<View
 				style={[
 					styles.base,
 					{
 						height: "100%",
-						alignItems: "center",
+						// alignItems: "center",
 						justifyContent: "space-evenly",
 					},
 				]}
 			>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
+				{/* <Button title="Back" onPress={() => navigation.goBack()} /> */}
+
 				<ImageBackground
 					source={bg}
 					style={{
@@ -76,7 +82,11 @@ function SurveyCategoriesScreen({ navigation }) {
 
 						<View style={styles.row}>
 							<TouchableOpacity
-								onPress={() => navigation.navigate("YesNo Question")}
+								onPress={() =>
+									navigation.navigate("YesNo Question", {
+										category: "Safety & Security",
+									})
+								}
 								style={[styles.card, { flexDirection: "column" }]}
 							>
 								<Image source={safetySecurity} style={styles.icon} />
@@ -86,7 +96,11 @@ function SurveyCategoriesScreen({ navigation }) {
 							</TouchableOpacity>
 
 							<TouchableOpacity
-								onPress={() => navigation.navigate("YesNo Question")}
+								onPress={() =>
+									navigation.navigate("YesNo Question", {
+										category: "Relationships & Support",
+									})
+								}
 								style={styles.card}
 							>
 								<Image source={relationshipsSupport} style={styles.icon} />
@@ -96,7 +110,11 @@ function SurveyCategoriesScreen({ navigation }) {
 							</TouchableOpacity>
 
 							<TouchableOpacity
-								onPress={() => navigation.navigate("YesNo Question")}
+								onPress={() =>
+									navigation.navigate("YesNo Question", {
+										category: "Mental Health",
+									})
+								}
 								style={styles.card}
 							>
 								<Image source={mentalHealth} style={styles.icon} />
@@ -106,7 +124,11 @@ function SurveyCategoriesScreen({ navigation }) {
 							</TouchableOpacity>
 
 							<TouchableOpacity
-								onPress={() => navigation.navigate("YesNo Question")}
+								onPress={() =>
+									navigation.navigate("YesNo Question", {
+										category: "Physical Health & Wellbeing",
+									})
+								}
 								style={styles.card}
 							>
 								<Image source={physical} style={styles.icon} />
@@ -116,7 +138,11 @@ function SurveyCategoriesScreen({ navigation }) {
 							</TouchableOpacity>
 
 							<TouchableOpacity
-								onPress={() => navigation.navigate("YesNo Question")}
+								onPress={() =>
+									navigation.navigate("YesNo Question", {
+										category: "Community",
+									})
+								}
 								style={[styles.card, { flexDirection: "column" }]}
 							>
 								<Image source={community} style={styles.icon} />
@@ -128,7 +154,7 @@ function SurveyCategoriesScreen({ navigation }) {
 					</ScrollView>
 				</ImageBackground>
 			</View>
-		</View>
+		</ScrollView>
 	);
 }
 
@@ -186,10 +212,18 @@ const styles = StyleSheet.create({
 		color: "#F1F2F2",
 	},
 	base: {
-		marginTop: "20%",
+		marginTop: "18%",
 		//backgroundColor: '#F1F2F2',
 		alignSelf: "stretch",
 		flex: 1,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		marginBottom: "8%",
+		marginLeft: "4%",
 	},
 	icon: {
 		resizeMode: "contain",

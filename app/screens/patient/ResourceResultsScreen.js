@@ -10,23 +10,81 @@ import {
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
-	Image,
+	TouchableHighlight,
 } from "react-native";
 
 import colors from "../../config/colors";
-import back from "../../assets/backArrowBlack.png";
-import { readData, storeData } from "../../utils/DataHandler";
+import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
-function ResourceListScreen({ navigation }) {
+function ResourceResultsScreen({ route, navigation }) {
+	var filter = route.params;
+	var resultText =
+		"Based on your survey results, here are some resources that might be helpful to you.";
+	const tags = filter["tags"];
+	console.log(tags);
+	const prevScreen = filter["prevScreen"];
+	// Change result text if the survey was empty
+	if (prevScreen == "empty survey") {
+		resultText = "No answers recorded, showing all resource.";
+	} else if (prevScreen == "youth services") {
+		resultText = "Youth support resources";
+	} else {
+		storeData("previousTags", tags);
+	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
+	var filterTags = [];
+
+	for (var o in tags) {
+		// Goes through each answer's list of tags
+		if (tags[o] != null) {
+			for (var j = 0; j < tags[o].length; j++) {
+				if (!(tags[o][j].trim in filterTags)) {
+					// If the tag hasn't been seen
+					filterTags.push(tags[o][j].trim());
+				}
+			}
+		}
+	}
+
+	// Review and Edit Survey Answers
+	const header = () => {
+		// TODO: fix footer, button isn't pressable
+		if (prevScreen == "home" || prevScreen == "youth services") {
+			return null;
+		} else {
+			return (
+				<TouchableOpacity
+					style={styles.button}
+					// onPress={() => navigation.navigate("Home")}
+					onPress={() => navigation.goBack()}
+					// TODO: Remove navigation to home -- temp for testing
+				>
+					<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
+				</TouchableOpacity>
+			);
+		}
+	};
+
+	const footer = () => {
+		// TODO: fix footer, button isn't pressable
+		return (
+			<TouchableHighlight
+				underlayColor="#A6E1FF"
+				style={styles.submitButton}
+				onPress={() => navigation.navigate("Home")}
+			>
+				<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
+			</TouchableHighlight>
+		);
+	};
 
 	useEffect(() => {
 		readData("resources")
@@ -40,36 +98,62 @@ function ResourceListScreen({ navigation }) {
 
 				var currentCategory = "";
 				var categoryIndex = 0;
+				var firstCatFound = false;
 				var sections = [];
 
 				for (var i = 0; i < resources.length; i++) {
 					// If there's a new category, push a new category title + innerData
-					if (resources[i].category != currentCategory) {
-						// Skip first category index increment, avoid OOB error
-						if (i != 0) {
-							categoryIndex++;
+
+					var validResource = false;
+					if (
+						prevScreen == "filled survey" ||
+						prevScreen == "home" ||
+						prevScreen == "youth services"
+					) {
+						for (var j = 0; j < resources[i].tags.length; j++) {
+							if (filterTags.includes(resources[i].tags[j])) {
+								// console.log("FOUND: " + resources[i].tags[j]);
+								validResource = true;
+							}
 						}
-						currentCategory = resources[i].category;
-						sections.push({
-							title: currentCategory,
-							innerData: [
-								{
-									name: resources[i].name,
-									description: resources[i].description,
-									resource_id: resources[i].resource_id,
-									tags: resources[i].tags,
-								},
-							],
-						});
 					}
-					// If category is the same, add to innerData
-					else {
-						sections[categoryIndex].innerData.push({
-							name: resources[i].name,
-							description: resources[i].description,
-							resource_id: resources[i].resource_id,
-							tags: resources[i].tags,
-						});
+
+					// If the survey was empty, add all resources
+					else if (prevScreen == "empty survey") {
+						validResource = true;
+					}
+					if (validResource == true) {
+						if (resources[i].category != currentCategory) {
+							// Skip the first case, only go to next category for every new category encountered after
+
+							if (firstCatFound == false) {
+								// CHANGED: Instead of checking for i=0, just check if this is the first category
+								firstCatFound = true;
+							} else {
+								categoryIndex++;
+							}
+							currentCategory = resources[i].category;
+							sections.push({
+								title: currentCategory,
+								innerData: [
+									{
+										name: resources[i].name,
+										description: resources[i].description,
+										resource_id: resources[i].resource_id,
+										tags: resources[i].tags,
+									},
+								],
+							});
+						}
+						// If category is the same, add to innerData
+						else {
+							sections[categoryIndex].innerData.push({
+								name: resources[i].name,
+								description: resources[i].description,
+								resource_id: resources[i].resource_id,
+								tags: resources[i].tags,
+							});
+						}
 					}
 				}
 				setData(sections);
@@ -88,11 +172,11 @@ function ResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
-					<Text style={styles.header}>All Resources</Text>
+					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.subtext}>{resultText}</Text>
 					<FlatList
+						ListHeaderComponent={header}
+						ListFooterComponent={footer}
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({ item }) => {
@@ -158,7 +242,6 @@ function ResourceListScreen({ navigation }) {
 																	);
 																}
 															});
-
 														navigation.navigate("Resource Details", {
 															resource_id: innerData.resource_id,
 														});
@@ -193,8 +276,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
-		position: "absolute",
-		marginTop: 40,
 	},
 	subtext: {
 		fontSize: 14,
@@ -253,15 +334,19 @@ const styles = StyleSheet.create({
 		width: 340,
 		marginBottom: 15,
 	},
-	backButton: {
-		resizeMode: "contain",
-		width: 50,
-		height: 50,
-		alignSelf: "flex-start",
-		marginBottom: "2%",
-		marginLeft: "4%",
-		marginTop: "11%",
+	submitButton: {
+		// top: 50,
+		marginTop: 25,
+		marginBottom: 50,
+		height: 45,
+		margin: 3,
+		width: 340,
+		borderRadius: 64,
+		alignSelf: "center",
+		backgroundColor: "#0E4B9D",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 
-export default ResourceListScreen;
+export default ResourceResultsScreen;
