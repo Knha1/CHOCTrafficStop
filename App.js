@@ -18,7 +18,7 @@ import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
 import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
 // SCREEN IMPORTS -- ADMIN
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
-import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
+// import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
 import ExportDataScreen from "./app/screens/admin/ExportDataScreen";
 import ViewResourceScreen from "./app/screens/admin/ViewResourceScreen";
 import StatisticsDetailsScreen from "./app/screens/admin/StatisticsDetailsScreen";
@@ -27,6 +27,7 @@ import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 import StatisticsResourceListScreen from "./app/screens/admin/StatisticsResourceListScreen";
 import AdminResourceListScreen from "./app/screens/admin/AdminResourceListScreen";
 import AdminLoginScreen from "./app/screens/admin/AdminLoginScreen";
+import EditResourceScreen from "./app/screens/admin/EditResourceScreen";
 
 const Stack = createStackNavigator();
 
@@ -211,6 +212,12 @@ export default function App() {
 				<Stack.Screen
 					name="Admin Login"
 					component={AdminLoginScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="Edit Resource"
+					component={EditResourceScreen}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
