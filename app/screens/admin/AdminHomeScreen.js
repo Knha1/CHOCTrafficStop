@@ -8,9 +8,11 @@ import {
 	ImageBackground,
 	TouchableOpacity,
 	Image,
+	TextInput,
+	KeyboardAvoidingView,
+	ScrollView
 } from "react-native";
 
-import colors from "../../config/colors";
 import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
@@ -42,6 +44,7 @@ function AdminHomeScreen({ navigation }) {
 						{ height: "70%", padding: 20, alignItems: "center" },
 					]}
 				>
+
 					<TouchableOpacity
 						onPress={() => navigation.navigate("Statistics Home")}
 						style={styles.card}
@@ -141,7 +144,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		// marginTop: "1%",
 		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "4%",
@@ -183,6 +185,11 @@ const styles = StyleSheet.create({
 		width: "40%",
 		height: "50%",
 	},
+	modalButton: {
+		borderRadius: 30,
+		width: 300,
+		height: 45,
+	}
 });
 
 export default AdminHomeScreen;
