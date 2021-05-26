@@ -81,14 +81,10 @@ function AdminResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.header}>Patient Resources</Text>
 					<Text style={styles.subtext}>
-						Based on your survey results, here are some resources that might be
-						helpful to you.
+						Tap on a resource to edit its details.
 					</Text>
-					<TouchableOpacity style={styles.button}>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-					</TouchableOpacity>
 					<FlatList
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
@@ -109,7 +105,7 @@ function AdminResourceListScreen({ navigation }) {
 												<TouchableOpacity
 													style={styles.links}
 													onPress={() =>
-														navigation.navigate("Resource Details", {
+														navigation.navigate("Edit Resource", {
 															resource_id: innerData.resource_id,
 														})
 													}

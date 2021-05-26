@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	View,
@@ -12,14 +12,16 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	ScrollView,
+	ActivityIndicator,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import colors from "../../config/colors";
 import backArrowWhite from "../../assets/backArrowWhite.png";
 import edit from "../../assets/close.png";
+import { storeData, readData } from "../../utils/DataHandler.js";
 
-function AddResourceScreen({ navigation }) {
+function EditResourceScreen({ route, navigation }) {
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState(null);
 	const [items, setItems] = useState([
@@ -28,14 +30,36 @@ function AddResourceScreen({ navigation }) {
 		{ label: "CHOC", value: "CHOC" },
 		{ label: "211OC", value: "211OC" },
 	]);
+	var resource = route.params;
+	const resource_id = resource["resource_id"];
+	// State variable to show loading screen if resource details aren't loaded yet
+	const [isLoading, setLoading] = useState(true);
+	// State variable to store data for resource details
+	const [data, setData] = useState([]);
 
+	useEffect(() => {
+		readData("resources")
+			.then((resources) => {
+				var resources = JSON.parse(resources);
+
+				// Index of resource is resource_id - 1
+				var current_resource = resources[resource_id - 1];
+
+				// Set value to 'N/A' if detail isn't supplied
+				for (var key in current_resource) {
+					if (current_resource[key] == "") {
+						current_resource[key] = "N/A";
+					}
+				}
+
+				setData(current_resource);
+			})
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
+	}, [isLoading]);
 	return (
 		<SafeAreaView style={styles.container}>
-			<Image
-				style={styles.backArrow}
-				source={backArrowWhite}
-				onPress={() => navigation.navigate("Admin Home")}
-			></Image>
+			<Image style={styles.backArrow} source={backArrowWhite}></Image>
 			<View
 				style={styles.bottomContainer}
 				contentContainerStyle={styles.contentContainer}
@@ -45,31 +69,25 @@ function AddResourceScreen({ navigation }) {
 					style={{ flex: 1 }}
 					enabled={true}
 				>
-					<Text style={styles.text}>Add Resource</Text>
+					<Text style={styles.text}>Edit Resource</Text>
 
 					<Text style={styles.text3}>Title</Text>
-					<TextInput style={styles.input} defaultValue="Enter resource title" />
+					<TextInput style={styles.input} defaultValue={data["name"]} />
 
 					{/* <Text style={styles.text3}>Tags</Text>
 					<TextInput style={styles.input} defaultValue="SLEEP" /> */}
 
 					<Text style={styles.text3}>Availability</Text>
-					<TextInput style={styles.input} defaultValue="Enter open hours" />
+					<TextInput style={styles.input} defaultValue={data["availability"]} />
 
 					<Text style={styles.text3}>Phone Number</Text>
-					<TextInput style={styles.input} defaultValue="Enter phone number" />
+					<TextInput style={styles.input} defaultValue={data["phone_num"]} />
 
 					<Text style={styles.text3}>Address</Text>
-					<TextInput
-						style={styles.input}
-						defaultValue="https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
-					/>
+					<TextInput style={styles.input} defaultValue={data["address"]} />
 
 					<Text style={styles.text3}>Description</Text>
-					<TextInput
-						style={styles.input}
-						defaultValue="Enter resource description"
-					/>
+					<TextInput style={styles.input} defaultValue={data["description"]} />
 
 					<Text style={styles.text3}>Organization</Text>
 					<DropDownPicker
@@ -90,19 +108,16 @@ function AddResourceScreen({ navigation }) {
 
 				<View style={{ position: "absolute", bottom: "15%" }}>
 					<TouchableOpacity
-						onPress={() => navigation.goBack()}
+						onPress={() => navigation.navigate("Statistics Details")}
 						style={styles.cancelButton}
 					>
 						<Text style={{ color: "#0E4B9D" }}>Cancel</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress={() => {
-							console.log(value);
-							navigation.navigate("Admin Home");
-						}}
+						onPress={() => navigation.navigate("Statistics Details")}
 						style={styles.saveButton}
 					>
-						<Text style={{ color: "white" }}>Add Resource</Text>
+						<Text style={{ color: "white" }}>Save Changes</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -197,9 +212,10 @@ const styles = StyleSheet.create({
 		height: 45,
 		width: 168,
 	},
+
 	dropdown: {
 		top: 50,
 	},
 });
 
-export default AddResourceScreen;
+export default EditResourceScreen;
