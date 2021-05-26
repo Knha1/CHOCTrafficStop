@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
+	TouchableHighlight,
 } from "react-native";
 
 import colors from "../../config/colors";
@@ -21,13 +22,21 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 function ResourceResultsScreen({ route, navigation }) {
 	var filter = route.params;
+	var resultText = "Based on your survey results, here are some resources that might be helpful to you.";
 	const tags = filter["tags"];
+	const prevScreen = filter["prevScreen"];
+	// Change result text if the survey was empty
+	if(prevScreen == "empty survey")
+	{
+		resultText = "No answers recorded, showing all resource.";
+	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
 	var filterTags = [];
 	storeData("previousTags", tags);
+
 	for (var o in tags) {
 		// Goes through each answer's list of tags
 		if (tags[o] != null) {
@@ -39,6 +48,43 @@ function ResourceResultsScreen({ route, navigation }) {
 			}
 		}
 	}
+
+	// Review and Edit Survey Answers
+	const header = () => {
+		// TODO: fix footer, button isn't pressable
+		if (prevScreen == "home")
+		{
+			return (null);
+		}
+		else
+		{
+			return (
+				<TouchableOpacity
+				style={styles.button}
+				// onPress={() => navigation.navigate("Home")}
+				onPress={() => navigation.goBack()}
+				// TODO: Remove navigation to home -- temp for testing
+				>
+						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
+				</TouchableOpacity>	
+			);
+		}
+	};
+
+	const footer = () => {
+		// TODO: fix footer, button isn't pressable
+		return (
+			<TouchableHighlight
+				underlayColor="#A6E1FF"
+				style={styles.submitButton}
+				onPress={() =>
+					navigation.navigate("Home")
+				}
+			>
+				<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
+			</TouchableHighlight>
+		);
+	};
 
 	useEffect(() => {
 		readData("resources")
@@ -54,16 +100,25 @@ function ResourceResultsScreen({ route, navigation }) {
 				var categoryIndex = 0;
 				var firstCatFound = false;
 				var sections = [];
-
+				
 				for (var i = 0; i < resources.length; i++) {
 					// If there's a new category, push a new category title + innerData
 					
 					var validResource = false;
-					for (var j = 0; j < resources[i].tags.length; j++) {
-						if (filterTags.includes(resources[i].tags[j])) {
-							// console.log("FOUND: " + resources[i].tags[j]);
-							validResource = true;
+					if(prevScreen == "filled survey" || prevScreen == "home")
+					{
+						for (var j = 0; j < resources[i].tags.length; j++) {
+							if (filterTags.includes(resources[i].tags[j])) {
+								// console.log("FOUND: " + resources[i].tags[j]);
+								validResource = true;
+							}
 						}
+					}
+
+					// If the survey was empty, add all resources
+					else if(prevScreen == "empty survey")
+					{
+						validResource = true;
 					}
 					if (validResource == true) {
 
@@ -119,17 +174,11 @@ function ResourceResultsScreen({ route, navigation }) {
 				<ScrollView>
 					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>
-						Based on your survey results, here are some resources that might be
-						helpful to you.
+						{resultText}
 					</Text>
-					<TouchableOpacity
-						style={styles.button}
-						onPress={() => navigation.navigate("Home")}
-						// TODO: Remove navigation to home -- temp for testing
-					>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-					</TouchableOpacity>
 					<FlatList
+						ListHeaderComponent={header}
+						ListFooterComponent={footer}
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({ item }) => {
@@ -242,6 +291,19 @@ const styles = StyleSheet.create({
 		height: 45,
 		width: 340,
 		marginBottom: 15,
+	},
+	submitButton: {
+		// top: 50,
+		marginTop: 25,
+		marginBottom: 50,
+		height: 45,
+		margin: 3,
+		width: 340,
+		borderRadius: 64,
+		alignSelf: "center",
+		backgroundColor: "#0E4B9D",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 

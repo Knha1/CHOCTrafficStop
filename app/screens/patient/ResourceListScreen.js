@@ -90,14 +90,7 @@ function ResourceListScreen({ navigation }) {
 					<TouchableOpacity onPress={() => navigation.goBack()}>
 						<Image source={back} style={styles.backButton}></Image>
 					</TouchableOpacity>
-					<Text style={styles.header}>Resources for You</Text>
-					<Text style={styles.subtext}>
-						Based on your survey results, here are some resources that might be
-						helpful to you.
-					</Text>
-					<TouchableOpacity style={styles.button}>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-					</TouchableOpacity>
+					<Text style={styles.header}>All Resources</Text>
 					<FlatList
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
