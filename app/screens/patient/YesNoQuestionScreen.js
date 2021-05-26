@@ -19,6 +19,7 @@ import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
 import logo from "../../assets/logo_nobg.png";
+import { RectButton } from "react-native-gesture-handler";
 
 function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
@@ -123,7 +124,9 @@ function YesNoQuestionScreen({ route, navigation }) {
 				<Image source={back} style={styles.backButton}></Image>
 			</TouchableOpacity>
 			<Text style={styles.topText}>{category_name} Survey</Text>
-			<View style={styles.rectangle}></View>
+			{/* <View style={styles.rectangle}>
+				<View style={progressBar()}></View>
+			</View> */}
 			<Text
 				style={styles.skipToResultsText}
 				onPress={() => {
@@ -162,7 +165,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 												answerCount++;
 											}
 										}
-
+										
 										setChosenTags(tempChosen);
 										setAnsweredQuestions(answerCount);
 									}}
@@ -180,16 +183,13 @@ var styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#0066BB",
-		// alignItems: "center",
-		//justifyContent: "flex-start",
-		//padding: 0,
 		paddingTop: 50,
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
-		fontSize: 14,
+		fontSize: 16,
 		position: "absolute",
-		top: 130,
+		top: '15%',
 		marginBottom: 100,
 		alignSelf: "center",
 	},
@@ -203,14 +203,6 @@ var styles = StyleSheet.create({
 		alignSelf: "center",
 	},
 	topText: {
-		// fontSize: 20,
-		// color: "#FFF",
-		// bottom: 70,
-		// alignSelf: "center",
-		// textAlign: "center",
-		// alignItems: "center",
-		// paddingTop: 40,
-		// position: "absolute"
 		color: "white",
 		alignSelf: "center",
 		fontSize: 20,
@@ -245,7 +237,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		marginTop: "20%",
+		marginTop: "16%",
 	},
 	buttonText: {
 		color: "#000",
@@ -264,15 +256,10 @@ var styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 40,
+		height: 40,
 		alignSelf: "flex-start",
-		// position: 'absolute',
-		// top: 0,
-		// paddingBottom: '10%'
-		// marginBottom: '2%',
-		// marginLeft: '4%',
-		// marginTop: '11%',
+		
 	},
 });
 
