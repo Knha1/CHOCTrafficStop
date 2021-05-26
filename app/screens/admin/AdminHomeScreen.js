@@ -22,6 +22,7 @@ import { storeData, readData } from "../../utils/DataHandler.js";
 
 function AdminHomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [signoutModal, setSignoutModal] = useState(false);
 	return (
 		<View style={[styles.container]}>
 			<ImageBackground
@@ -33,9 +34,83 @@ function AdminHomeScreen({ navigation }) {
 					width: "100%",
 				}}
 			>
-				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Image source={back} style={styles.backButton}></Image>
+				<TouchableOpacity onPress={() => setSignoutModal(true)}>
+					<Image source={back} style={styles.signoutButton}></Image>
 				</TouchableOpacity>
+
+				<Modal
+					animationType="none"
+					visible={signoutModal}
+					transparent={true}
+					onRequestClose={() => {
+						setSignoutModal(!signoutModal);
+					}}
+				>
+					<View
+						style={[
+							styles.container,
+							{ backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center" },
+						]}
+					>
+						<View style={styles.emergencyConfirm}>
+							<Text
+								style={{
+									textAlign: "center",
+									marginBottom: 10,
+									color: "#0E4B9D",
+									fontWeight: "bold",
+									fontSize: 24,
+								}}
+							>
+								Sign Out
+							</Text>
+							<Text
+								style={{
+									textAlign: "center",
+									marginBottom: 20,
+									marginHorizontal: "10%",
+								}}
+							>
+								Are you sure you want to sign out?
+							</Text>
+							<View
+								style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+							>
+								<TouchableOpacity
+									onPress={() => setSignoutModal(!signoutModal)}
+									style={{
+										width: "40%",
+										backgroundColor: "#D9D9D9",
+										borderRadius: 20,
+										padding: 10,
+										textAlign: "center",
+									}}
+								>
+									<Text style={{ color: "black", textAlign: "center" }}>
+										Cancel
+									</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => {
+										storeData("log", null);
+										navigation.navigate("Welcome");
+									}}
+									style={{
+										backgroundColor: "#0E4B9D",
+										width: "40%",
+										alignItems: "center",
+										borderRadius: 20,
+										padding: 10,
+									}}
+								>
+									<Text style={{ color: "white", textAlign: "center" }}>
+										Yes
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</View>
+				</Modal>
 				<View
 					style={[
 						styles.base,
@@ -54,15 +129,7 @@ function AdminHomeScreen({ navigation }) {
 						onPress={() => navigation.navigate("Admin Resource List")}
 						style={styles.card}
 					>
-						<Text style={styles.buttonText}>View Resource List</Text>
-						<Image source={charity} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Statistics Details")}
-						style={styles.card}
-					>
-						<Text style={styles.buttonText}>Edit/View Resource List</Text>
+						<Text style={styles.buttonText}>Edit / View Resource List</Text>
 						<Image source={schedule} style={styles.icon} />
 					</TouchableOpacity>
 
@@ -75,18 +142,7 @@ function AdminHomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						style={styles.card}
-						onPress={() => {
-							storeData("log", null);
-							navigation.navigate("Welcome");
-						}}
-					>
-						<Text style={styles.buttonText}>Clear Credentials</Text>
-						<Image source={cog} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => setModalVisible(true)}
+						onPress={() => navigation.navigate("Add Resource")}
 						style={{
 							alignSelf: "center",
 							alignItems: "center",
@@ -182,6 +238,15 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: "40%",
 		height: "50%",
+	},
+	signoutButton: {
+		resizeMode: "contain",
+		width: 50,
+		height: 50,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "84%",
+		marginTop: "11%",
 	},
 });
 
