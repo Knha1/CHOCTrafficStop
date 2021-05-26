@@ -129,9 +129,20 @@ function YesNoQuestionScreen({ route, navigation }) {
 				onPress={() => {
 					console.log("Naving to results");
 					console.log(chosenTags);
-					navigation.navigate("Resource Results", {
-						tags: chosenTags,
-					});
+					console.log(chosenTags.length);
+					
+					if(answeredQuestions >= 1){
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "filled survey",
+						});
+					}
+					else{
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "empty survey",
+						});
+					}
 				}}
 			>
 				Skip to Results? ({answeredQuestions} / {totalQuestions})

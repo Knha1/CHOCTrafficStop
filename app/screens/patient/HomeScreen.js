@@ -81,6 +81,7 @@ function HomeScreen({ navigation }) {
 									console.log(filterTags);
 									navigation.navigate("Resource Results", {
 										tags: filterTags,
+										prevScreen: "home",
 									});
 								});
 						}}
