@@ -36,11 +36,19 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
-				onPress={() =>
-					navigation.navigate("Resource List", {
-						tags: chosenTags,
-					})
-				}
+				onPress={() => {
+					if (answeredQuestions >= 1) {
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "filled survey",
+						});
+					} else {
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "empty survey",
+						});
+					}
+				}}
 			>
 				<Text style={{ color: "#FFF" }}>SUBMIT SURVEY</Text>
 			</TouchableHighlight>
@@ -127,17 +135,12 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<Text
 				style={styles.skipToResultsText}
 				onPress={() => {
-					console.log("Naving to results");
-					console.log(chosenTags);
-					console.log(chosenTags.length);
-					
-					if(answeredQuestions >= 1){
+					if (answeredQuestions >= 1) {
 						navigation.navigate("Resource Results", {
 							tags: chosenTags,
 							prevScreen: "filled survey",
 						});
-					}
-					else{
+					} else {
 						navigation.navigate("Resource Results", {
 							tags: chosenTags,
 							prevScreen: "empty survey",
