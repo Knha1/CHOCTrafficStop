@@ -22,20 +22,24 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 function ResourceResultsScreen({ route, navigation }) {
 	var filter = route.params;
-	var resultText = "Based on your survey results, here are some resources that might be helpful to you.";
+	var resultText =
+		"Based on your survey results, here are some resources that might be helpful to you.";
 	const tags = filter["tags"];
+	console.log(tags);
 	const prevScreen = filter["prevScreen"];
 	// Change result text if the survey was empty
-	if(prevScreen == "empty survey")
-	{
+	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resource.";
+	} else if (prevScreen == "youth services") {
+		resultText = "Youth support resources";
+	} else {
+		storeData("previousTags", tags);
 	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
 	var filterTags = [];
-	storeData("previousTags", tags);
 
 	for (var o in tags) {
 		// Goes through each answer's list of tags
@@ -52,21 +56,18 @@ function ResourceResultsScreen({ route, navigation }) {
 	// Review and Edit Survey Answers
 	const header = () => {
 		// TODO: fix footer, button isn't pressable
-		if (prevScreen == "home")
-		{
-			return (null);
-		}
-		else
-		{
+		if (prevScreen == "home" || prevScreen == "youth services") {
+			return null;
+		} else {
 			return (
 				<TouchableOpacity
-				style={styles.button}
-				// onPress={() => navigation.navigate("Home")}
-				onPress={() => navigation.goBack()}
-				// TODO: Remove navigation to home -- temp for testing
+					style={styles.button}
+					// onPress={() => navigation.navigate("Home")}
+					onPress={() => navigation.goBack()}
+					// TODO: Remove navigation to home -- temp for testing
 				>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-				</TouchableOpacity>	
+					<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
+				</TouchableOpacity>
 			);
 		}
 	};
@@ -77,9 +78,7 @@ function ResourceResultsScreen({ route, navigation }) {
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
-				onPress={() =>
-					navigation.navigate("Home")
-				}
+				onPress={() => navigation.navigate("Home")}
 			>
 				<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
 			</TouchableHighlight>
@@ -100,13 +99,16 @@ function ResourceResultsScreen({ route, navigation }) {
 				var categoryIndex = 0;
 				var firstCatFound = false;
 				var sections = [];
-				
+
 				for (var i = 0; i < resources.length; i++) {
 					// If there's a new category, push a new category title + innerData
-					
+
 					var validResource = false;
-					if(prevScreen == "filled survey" || prevScreen == "home")
-					{
+					if (
+						prevScreen == "filled survey" ||
+						prevScreen == "home" ||
+						prevScreen == "youth services"
+					) {
 						for (var j = 0; j < resources[i].tags.length; j++) {
 							if (filterTags.includes(resources[i].tags[j])) {
 								// console.log("FOUND: " + resources[i].tags[j]);
@@ -116,19 +118,17 @@ function ResourceResultsScreen({ route, navigation }) {
 					}
 
 					// If the survey was empty, add all resources
-					else if(prevScreen == "empty survey")
-					{
+					else if (prevScreen == "empty survey") {
 						validResource = true;
 					}
 					if (validResource == true) {
-
 						if (resources[i].category != currentCategory) {
 							// Skip the first case, only go to next category for every new category encountered after
 
-							if (firstCatFound == false) { // CHANGED: Instead of checking for i=0, just check if this is the first category
+							if (firstCatFound == false) {
+								// CHANGED: Instead of checking for i=0, just check if this is the first category
 								firstCatFound = true;
-							}
-							else{
+							} else {
 								categoryIndex++;
 							}
 							currentCategory = resources[i].category;
@@ -154,7 +154,6 @@ function ResourceResultsScreen({ route, navigation }) {
 							});
 						}
 					}
-
 				}
 				setData(sections);
 			})
@@ -173,9 +172,7 @@ function ResourceResultsScreen({ route, navigation }) {
 				// If done loading
 				<ScrollView>
 					<Text style={styles.header}>Resources for You</Text>
-					<Text style={styles.subtext}>
-						{resultText}
-					</Text>
+					<Text style={styles.subtext}>{resultText}</Text>
 					<FlatList
 						ListHeaderComponent={header}
 						ListFooterComponent={footer}
