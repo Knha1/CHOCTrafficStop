@@ -1,130 +1,172 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, Button, Modal, Linking, Image, TouchableOpacity} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 
+
 import colors from "../../config/colors";
-import bg from "../../assets/background.png";
-//===========================================================================
-// IGNORE THIS WHOLE PAGE. DID IT ON ACCIDENT WHEN I WASN'T SUPPOSED TO. -KIM
-//===========================================================================
+import backArrowWhite from "../../assets/backArrowWhite.png";
+import edit from "../../assets/edit.png";
+
 function ViewResourceScreen({ navigation }) {
 	return (
-        <View style={styles.container}>
-		<ImageBackground source={bg} style={{overflow: "hidden",resizeMode: "stretch",height: "100%", width: "100%"}}>
-		<View style={[styles.base,{ height: "70%", padding: 20, alignItems: "center"}]}>
+			<View style={styles.container}>
+				<Image style={styles.backArrow} source={backArrowWhite}></Image>
+				<View style={styles.bottomContainer}>
+					<View>
+						<Text style={styles.text}>Getting Enough Sleep</Text>
+						<TouchableOpacity style={styles.iconButton} onPress = {() => navigation.navigate("Edit Resource")}>
+							<Image style={{ width: 25, height: 25, alignSelf: 'center' }} source={edit}></Image>
+						</TouchableOpacity>
+						
+						<Text style={styles.text3}>SLEEP</Text>
+						<Text style={styles.text2}>Organization: CHOC</Text>
+						<Text style={styles.text2}>Availability: 24/7; Online Resource</Text>
+						<Text style={styles.text2}>Phone Number: 714-997-3000</Text>
+						<Text style={styles.text2}>Address: n/a</Text>
+						<Text
+							style={styles.text2}
+							onPress={() =>
+								Linking.openURL(
+									"https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
+								)
+							}
+						>
+							Website: https://kidshealth.org/CHOC/en/teens/how-much-sleep.html
+						</Text>
+						<Text style={styles.description}>
+							Getting Enough Sleep provides tips for sleeping better at night... Nulla
+							ultrices sed commodo in id arcu iaculis in urna.{"\n"}
+							{"\n"}
+							Est, massa tristique nunc egestas urna commodo fames duis. Aliquam curabitur
+							congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed
+							tellus amet. Dictum massa elementum sagittis iaculis proin.
+						</Text>
+					</View>
+					<View style={{position:"absolute", bottom: '7%', alignContent: 'center', alignSelf: 'center'}}>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("Statistics Details")}
+							style={styles.deleteButton}>
+							<Text style={{color: 'white'}}>Delete Resource</Text>
+						</TouchableOpacity>
 
-		
-        <Text style = {styles.textTitle}>Example Resource Name</Text>
-        <Text style = {styles.textLight}>[LOCATION]: Example Location, Orange County, CA </Text>
-        <Text style = {styles.textLight}>[HOURS]: Mon - Fri (7:00am - 10:00pm)</Text>      
-        <Text style = {styles.textLight}>[PHONE]: (555) 555-5555 </Text>
-        <Text style = {styles.textLight}>[WEBSITE]: examplewebsite.com </Text>
-
-        <Text style = {styles.textBody}>[DESCRIPTION]: Food Resource is an organization dedicated to providing food...Nulla ultrices sed commodo in id arcu iaculis in urna. Euismod proin massa sed scelerisque nisi, tristique nisl sem cras. Sed arcu erat nullam in in phasellus sem arcu. Dui purus, malesuada dis elit aenean pulvinar arcu. 
-Sed eget rhoncus laoreet ullamcorper suspendisse viverra tincidunt. Tortor diam id a dui aliquet a vulputate tellus. Est, massa tristique nunc egestas urna commodo fames duis. Aliquam curabitur congue vel lectus ornare risus lectus. Tortor, sed sed dictum sed tellus amet. Dictum massa elementum sagittis iaculis proin. </Text>
-
-		<TouchableOpacity
-						onPress={() => navigation.navigate('Admin Home')}
-						style={{
-							alignSelf: "center",
-							alignItems: "center",
-							backgroundColor: "#A32E2E",
-							width: "50%",
-							padding: 10,
-							borderRadius: 20,
-							position: "absolute",
-							bottom: "5%",
-							shadowColor: "#000",
-							shadowOffset: { width: 0, height: 2 },
-							shadowOpacity: 0.25,
-							shadowRadius: 4,
-						}}
-					>
-						<Text style={{ color: "white" }}>Delete Resource</Text>
-					</TouchableOpacity>
-        </View>
-		</ImageBackground>
-       </View>
-    );
-    
-}
+						</View>
+				</View>
+			</View>
+		);
+	}
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#0066BB",
+		alignItems: "center",
+		justifyContent: "flex-start",
+		padding: 0,
+		paddingTop: 100,
+	},
+	backArrow: {
+		height: 34,
+		width: 34,
+		alignSelf: "flex-start",
+		left: 30,
+		bottom: 25,
+	},
+	skipToResultsText: {
+		color: "#CAEDFF",
+		fontSize: 14,
+		position: "absolute",
+		top: 96,
+		paddingBottom: 100,
+	},
+	iconButton: {
+		position: 'absolute',
+		left: '78%',
+		top: '10%',
+		borderColor:'rgba(0,0,0,0.2)',
+		justifyContent:'center',
+		width:55,
+		height:55,
+		backgroundColor:'#d8d8d8',
+		borderRadius:50,
+	},
+	rectangle: {
+		height: 4,
+		width: 320,
+		borderRadius: 10,
+		position: "absolute",
+		top: 80,
+		backgroundColor: "#FFF",
+	},
+	topText: {
+		fontSize: 20,
+		color: "#FFF",
+		bottom: 40,
+		alignSelf: "center",
+		textAlign: "center",
+		alignItems: "center",
+	},
+	text: {
+		color: "#003C98",
+		top: 34,
+		left: 40,
+		fontWeight: "bold",
+		fontSize: 24,
+	},
+	button: {
+		top: 55,
+		height: 45,
+		margin: 3,
+		width: 280,
+		borderRadius: 64,
+		alignSelf: "center",
+		backgroundColor: "#F8F8F8",
 		alignItems: "center",
 		justifyContent: "center",
+		borderColor: "#D6D6D6",
+		borderWidth: 1,
 	},
-	emergency: {
+	bottomContainer: {
 		flex: 1,
-		justifyContent: "flex-end",
-		marginBottom: 30,
-	},
-	emergencyConfirm: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		padding: 35,
-		alignItems: "center",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
-	buttonSpacing: {
-		margin: 5,
-	},
-	emergencyChoice: {
-		flexDirection: "row",
-	},
-	base: {
-		marginTop: "20%",
-		backgroundColor: "#F1F2F2",
+		alignSelf: "stretch",
+		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		alignSelf: "stretch",
-		flex: 1,
 	},
-	textTitle: {
-		marginTop: "2%",
-		fontSize: 26,
-		alignSelf: "flex-start",
-		textAlign: "left",
-		marginLeft: "8%",
-		marginBottom: "5%",
-		color: "#003C98",
-		fontWeight: 'bold'
+	buttonText: {
+		color: "#000",
+		alignSelf: "center",
 	},
-	textLight:{
-		marginTop: "2%",
+	text2: {
+		color: "black",
+		top: 50,
+		left: 40,
 		fontSize: 14,
-		alignSelf: "flex-start",
-		textAlign: "left",
-		marginLeft: "8%",
-		color: "#797979",
-		marginBottom: "1%"
+		width: 300,
+		marginTop: 5
 	},
-	textBody:{
-		marginTop: "10%",
+	text3: {
 		fontSize: 16,
-		alignSelf: "flex-start",
-		textAlign: "left",
-		marginLeft: "8%",
-		color: "black"
+		color: "black",
+		top: 30,
+		left: 40,
 	},
-	textDetails:{
-		marginVertical: '4%',
-		fontSize: 18,
-		alignSelf: "flex-start",
-		textAlign: "left",
-		marginLeft: "8%",
-		marginBottom: "5%",
-		color: "#292929",
+	description: {
+		fontSize: 14,
+		width: 320,
+		left: 40,
+		top: 75,
 	},
+	deleteButton: {
+		position: 'absolute',
+		bottom: '15%',
+		alignItems: "center",
+		alignSelf: "center",
+		justifyContent: "center",
+		backgroundColor: "#A32E2E",
+		borderRadius: 30,
+		height: 45,
+		width: 340,
+	}
 });
 
 export default ViewResourceScreen;

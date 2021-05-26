@@ -18,7 +18,7 @@ import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
 import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
 // SCREEN IMPORTS -- ADMIN
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
-import EditResourcesScreen from "./app/screens/admin/ExportDataScreen";
+import EditResourcesScreen from "./app/screens/admin/EditResourceScreen";
 import ExportDataScreen from "./app/screens/admin/ExportDataScreen";
 import ViewResourceScreen from "./app/screens/admin/ViewResourceScreen";
 import StatisticsDetailsScreen from "./app/screens/admin/StatisticsDetailsScreen";
@@ -160,7 +160,11 @@ export default function App() {
 					component={ViewResourceScreen}
 					options={{ headerShown: false }}
 				/>
-
+				<Stack.Screen
+					name="Edit Resource"
+					component={EditResourcesScreen}
+					options={{ headerShown: false }}
+				/>
 				<Stack.Screen
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
