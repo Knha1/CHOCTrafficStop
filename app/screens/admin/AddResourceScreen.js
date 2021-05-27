@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
 	Text,
@@ -12,6 +13,7 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	ScrollView,
+	Picker,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -20,15 +22,14 @@ import backArrowWhite from "../../assets/backArrowWhite.png";
 import edit from "../../assets/close.png";
 
 function AddResourceScreen({ navigation }) {
-	const [open, setOpen] = useState(false);
-	const [value, setValue] = useState(null);
-	const [items, setItems] = useState([
-		{ label: "Project Choice", value: "Project Choice" },
-		{ label: "Waymakers", value: "Waymakers" },
-		{ label: "CHOC", value: "CHOC" },
-		{ label: "211OC", value: "211OC" },
-	]);
-
+	const [selectedOrganization, setSelectedOrganization] = useState("Project Choice");
+	const [title, setTitle] = useState("NO TITLE RECEIVED");
+	const [description, setDescription] = useState("NO DESCRIPTION RECEIVED");
+	const [phone, setPhone] = useState("NO PHONE # RECEIVED");
+	const [address, setAddress] = useState("NO ADDRESS RECEIVED");
+	const [availability, setAvailability] = useState("NO AVAILABILITY RECEIVED");
+	const [URL, setURL] = useState("NO URL RECEIVED");
+	
 	return (
 		<SafeAreaView style={styles.container}>
 			<Image
@@ -48,44 +49,50 @@ function AddResourceScreen({ navigation }) {
 					<Text style={styles.text}>Add Resource</Text>
 
 					<Text style={styles.text3}>Title</Text>
-					<TextInput style={styles.input} defaultValue="Enter resource title" />
+					<TextInput style={styles.input} placeholder="Enter resource title" onChangeText={setTitle} />
 
 					{/* <Text style={styles.text3}>Tags</Text>
 					<TextInput style={styles.input} defaultValue="SLEEP" /> */}
 
 					<Text style={styles.text3}>Availability</Text>
-					<TextInput style={styles.input} defaultValue="Enter open hours" />
+					<TextInput style={styles.input} placeholder="Enter open hours" onChangeText={setAvailability} />
 
 					<Text style={styles.text3}>Phone Number</Text>
-					<TextInput style={styles.input} defaultValue="Enter phone number" />
+					<TextInput style={styles.input} placeholder="Enter phone number" onChangeText={setPhone} />
 
 					<Text style={styles.text3}>Address</Text>
 					<TextInput
 						style={styles.input}
-						defaultValue="https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
+						placeholder="Enter street address (if applicable)"
+						onChangeText={setAddress} 
+					/>
+
+					<Text style={styles.text3}>Website</Text>
+					<TextInput
+						style={styles.input}
+						placeholder="Enter URL"
+						onChangeText={setURL} 
 					/>
 
 					<Text style={styles.text3}>Description</Text>
 					<TextInput
 						style={styles.input}
-						defaultValue="Enter resource description"
+						placeholder="Enter resource description"
+						onChangeText={setDescription} 
 					/>
 
 					<Text style={styles.text3}>Organization</Text>
-					<DropDownPicker
-						style={styles.dropdown}
-						open={open}
-						value={value}
-						items={items}
-						setOpen={setOpen}
-						setValue={setValue}
-						setItems={setItems}
-						containerStyle={{ marginHorizontal: "10%", height: "5%" }}
-						itemStyle={{
-							marginHorizontal: "10%",
-							justifyContent: "flex-start",
-						}}
-					/>
+					<Picker
+					selectedValue={selectedOrganization}
+					style={styles.dropdown}
+					onValueChange={(itemValue, itemIndex) =>
+						setSelectedOrganization(itemValue)
+					}>
+						<Picker.Item label="Project Choice" value="Project Choice" />
+						<Picker.Item label="CHOC" value="CHOC" />
+						<Picker.Item label="Waymakers" value="Waymakers" />
+						<Picker.Item label="211OC" value="211OC" />
+					</Picker>
 				</KeyboardAvoidingView>
 
 				<View style={{ position: "absolute", bottom: "15%" }}>
@@ -97,7 +104,17 @@ function AddResourceScreen({ navigation }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
-							console.log(value);
+							
+							var tagString = selectedOrganization.toLowerCase().replace(" ", "-"); // Format to a tag
+							var tag = { 0: tagString};
+							console.log(selectedOrganization);
+							console.log(title); 
+							console.log(phone);
+							console.log(address);
+							console.log(availability);
+							console.log(description);
+							console.log(URL);
+							console.log(tag);
 							navigation.navigate("Admin Home");
 						}}
 						style={styles.saveButton}

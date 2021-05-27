@@ -13,6 +13,7 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 	ActivityIndicator,
+	Picker,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -22,20 +23,21 @@ import edit from "../../assets/close.png";
 import { storeData, readData } from "../../utils/DataHandler.js";
 
 function EditResourceScreen({ route, navigation }) {
-	const [open, setOpen] = useState(false);
-	const [value, setValue] = useState(null);
-	const [items, setItems] = useState([
-		{ label: "Project Choice", value: "Project Choice" },
-		{ label: "Waymakers", value: "Waymakers" },
-		{ label: "CHOC", value: "CHOC" },
-		{ label: "211OC", value: "211OC" },
-	]);
+	
 	var resource = route.params;
 	const resource_id = resource["resource_id"];
 	// State variable to show loading screen if resource details aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource details
 	const [data, setData] = useState([]);
+	const [selectedOrganization, setSelectedOrganization] = useState("");
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [phone, setPhone] = useState("");
+	const [address, setAddress] = useState("");
+	const [availability, setAvailability] = useState("");
+	const [URL, setURL] = useState("");
+
 
 	useEffect(() => {
 		readData("resources")
@@ -53,6 +55,15 @@ function EditResourceScreen({ route, navigation }) {
 				}
 
 				setData(current_resource);
+
+				setSelectedOrganization(data["organization"]);
+				setTitle(data["name"]);
+				setDescription(data["description"]);
+				setPhone(data["phone_num"]);
+				setAddress(data["address"]);
+				setAvailability(data["availability"]);
+				setURL(data["website"]);
+
 			})
 			.catch((error) => console.error(error))
 			.finally(() => setLoading(false));
@@ -72,49 +83,86 @@ function EditResourceScreen({ route, navigation }) {
 					<Text style={styles.text}>Edit Resource</Text>
 
 					<Text style={styles.text3}>Title</Text>
-					<TextInput style={styles.input} defaultValue={data["name"]} />
+					<TextInput
+						style={styles.input}
+						onChangeText={setTitle} 
+						defaultValue={data["name"]}
+					/>
 
 					{/* <Text style={styles.text3}>Tags</Text>
 					<TextInput style={styles.input} defaultValue="SLEEP" /> */}
 
 					<Text style={styles.text3}>Availability</Text>
-					<TextInput style={styles.input} defaultValue={data["availability"]} />
+					<TextInput
+						style={styles.input}
+						onChangeText={setAvailability} 
+						defaultValue={data["availability"]}
+					/>
 
 					<Text style={styles.text3}>Phone Number</Text>
-					<TextInput style={styles.input} defaultValue={data["phone_num"]} />
+					<TextInput
+						style={styles.input}
+						onChangeText={setPhone} 
+						defaultValue={data["phone"]}
+					/>
 
 					<Text style={styles.text3}>Address</Text>
-					<TextInput style={styles.input} defaultValue={data["address"]} />
+					<TextInput
+						style={styles.input}
+						onChangeText={setAddress} 
+						defaultValue={data["address"]}
+					/>
+
+					<Text style={styles.text3}>Website</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setURL} 
+						defaultValue={data["website"]}
+					/>
 
 					<Text style={styles.text3}>Description</Text>
-					<TextInput style={styles.input} defaultValue={data["description"]} />
+					<TextInput
+						style={styles.input}
+						onChangeText={setDescription} 
+						defaultValue={data["description"]}
+					/>
 
 					<Text style={styles.text3}>Organization</Text>
-					<DropDownPicker
-						style={styles.dropdown}
-						open={open}
-						value={value}
-						items={items}
-						setOpen={setOpen}
-						setValue={setValue}
-						setItems={setItems}
-						containerStyle={{ marginHorizontal: "10%", height: "5%" }}
-						itemStyle={{
-							marginHorizontal: "10%",
-							justifyContent: "flex-start",
-						}}
-					/>
+					<Picker
+					selectedValue={selectedOrganization}
+					style={styles.dropdown}
+					onValueChange={(itemValue, itemIndex) =>
+						setSelectedOrganization(itemValue)
+					}>
+						<Picker.Item label="Project Choice" value="Project Choice" />
+						<Picker.Item label="CHOC" value="CHOC" />
+						<Picker.Item label="Waymakers" value="Waymakers" />
+						<Picker.Item label="211OC" value="211OC" />
+					</Picker>
 				</KeyboardAvoidingView>
 
 				<View style={{ position: "absolute", bottom: "15%" }}>
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Statistics Details")}
+						onPress={() => navigation.goBack()}
 						style={styles.cancelButton}
 					>
 						<Text style={{ color: "#0E4B9D" }}>Cancel</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Statistics Details")}
+						onPress={() => {
+							
+							var tagString = selectedOrganization.toLowerCase().replace(" ", "-"); // Format to a tag
+							var tag = { 0: tagString};
+							console.log(selectedOrganization);
+							console.log(title); 
+							console.log(phone);
+							console.log(address);
+							console.log(availability);
+							console.log(description);
+							console.log(URL);
+							console.log(tag);
+							navigation.navigate("Admin Home");
+						}}
 						style={styles.saveButton}
 					>
 						<Text style={{ color: "white" }}>Save Changes</Text>
