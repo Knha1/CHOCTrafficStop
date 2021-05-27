@@ -15,15 +15,16 @@ import {
 	ActivityIndicator,
 	Picker,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "react-native-dropdown-picker";
+// TODO: Remove Picker import, replace with @react-native-community/picker
 
 import colors from "../../config/colors";
 import backArrowWhite from "../../assets/backArrowWhite.png";
 import edit from "../../assets/close.png";
 import { storeData, readData } from "../../utils/DataHandler.js";
+import { firebase } from "../../firebase/config";
 
 function EditResourceScreen({ route, navigation }) {
-	
 	var resource = route.params;
 	const resource_id = resource["resource_id"];
 	// State variable to show loading screen if resource details aren't loaded yet
@@ -36,8 +37,9 @@ function EditResourceScreen({ route, navigation }) {
 	const [phone, setPhone] = useState("");
 	const [address, setAddress] = useState("");
 	const [availability, setAvailability] = useState("");
-	const [URL, setURL] = useState("");
-
+	const [website, setWebsite] = useState("");
+	const [category, setCategory] = useState("");
+	const [email, setEmail] = useState("");
 
 	useEffect(() => {
 		readData("resources")
@@ -62,13 +64,15 @@ function EditResourceScreen({ route, navigation }) {
 				setPhone(data["phone_num"]);
 				setAddress(data["address"]);
 				setAvailability(data["availability"]);
-				setURL(data["website"]);
-
+				setWebsite(data["website"]);
+				setEmail(data["email"]);
+				setCategory(data["category"]);
 			})
 			.catch((error) => console.error(error))
 			.finally(() => setLoading(false));
 	}, [isLoading]);
 	return (
+		// TODO: Potentially change this to ScrollView if fields get too long
 		<SafeAreaView style={styles.container}>
 			<Image style={styles.backArrow} source={backArrowWhite}></Image>
 			<View
@@ -85,55 +89,67 @@ function EditResourceScreen({ route, navigation }) {
 					<Text style={styles.text3}>Title</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setTitle} 
+						onChangeText={setTitle}
 						defaultValue={data["name"]}
 					/>
-
-					{/* <Text style={styles.text3}>Tags</Text>
-					<TextInput style={styles.input} defaultValue="SLEEP" /> */}
 
 					<Text style={styles.text3}>Availability</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setAvailability} 
+						onChangeText={setAvailability}
 						defaultValue={data["availability"]}
 					/>
 
 					<Text style={styles.text3}>Phone Number</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setPhone} 
-						defaultValue={data["phone"]}
+						onChangeText={setPhone}
+						defaultValue={data["phone_num"]}
+					/>
+
+					<Text style={styles.text3}>Email</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setEmail}
+						defaultValue={data["email"]}
 					/>
 
 					<Text style={styles.text3}>Address</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setAddress} 
+						onChangeText={setAddress}
 						defaultValue={data["address"]}
 					/>
 
 					<Text style={styles.text3}>Website</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setURL} 
+						onChangeText={setWebsite}
 						defaultValue={data["website"]}
+					/>
+
+					<Text style={styles.text3}>Category</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setCategory}
+						defaultValue={data["category"]}
 					/>
 
 					<Text style={styles.text3}>Description</Text>
 					<TextInput
 						style={styles.input}
-						onChangeText={setDescription} 
+						onChangeText={setDescription}
 						defaultValue={data["description"]}
 					/>
 
 					<Text style={styles.text3}>Organization</Text>
 					<Picker
-					selectedValue={selectedOrganization}
-					style={styles.dropdown}
-					onValueChange={(itemValue, itemIndex) =>
-						setSelectedOrganization(itemValue)
-					}>
+						selectedValue={selectedOrganization}
+						style={styles.dropdown}
+						onValueChange={(itemValue, itemIndex) =>
+							setSelectedOrganization(itemValue)
+						}
+					>
 						<Picker.Item label="Project Choice" value="Project Choice" />
 						<Picker.Item label="CHOC" value="CHOC" />
 						<Picker.Item label="Waymakers" value="Waymakers" />
@@ -150,17 +166,49 @@ function EditResourceScreen({ route, navigation }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
-							
-							var tagString = selectedOrganization.toLowerCase().replace(" ", "-"); // Format to a tag
-							var tag = { 0: tagString};
-							console.log(selectedOrganization);
-							console.log(title); 
-							console.log(phone);
-							console.log(address);
-							console.log(availability);
-							console.log(description);
-							console.log(URL);
-							console.log(tag);
+							var tagString = selectedOrganization
+								.toLowerCase()
+								.replace(" ", "-"); // Format to a tag
+							var tag = { 0: tagString };
+
+							firebase
+								.database()
+								.ref()
+								.child("resource/" + data["resource_id"])
+								.get()
+								.then((snapshot) => {
+									// Make sure resource exists in DB before replacing
+									if (snapshot.exists()) {
+										// Create resource object
+										const edited_resource_data = {
+											address: address,
+											availability: availability,
+											category: category,
+											description: description,
+											email: email,
+											name: title,
+											organization: selectedOrganization,
+											phone_num: phone,
+											resource_id: data["resource_id"],
+											tags: tag,
+											website: website,
+										};
+
+										firebase
+											.database()
+											.ref()
+											.child("resource/" + data["resource_id"])
+											.set(edited_resource_data);
+									} else {
+										console.log(
+											"Resource with resource_id " +
+												data["resource_id"] +
+												" was not found in the database."
+										);
+									}
+								});
+
+							// TODO: Display confirmation that resource was successfully edited
 							navigation.navigate("Admin Home");
 						}}
 						style={styles.saveButton}
@@ -262,7 +310,7 @@ const styles = StyleSheet.create({
 	},
 
 	dropdown: {
-		top: 50,
+		top: 30,
 	},
 });
 
