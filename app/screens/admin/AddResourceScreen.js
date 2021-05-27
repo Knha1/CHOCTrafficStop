@@ -43,6 +43,7 @@ function AddResourceScreen({ navigation }) {
 				source={backArrowWhite}
 				onPress={() => navigation.navigate("Admin Home")}
 			></Image>
+			
 			<View
 				style={styles.bottomContainer}
 				contentContainerStyle={styles.contentContainer}
