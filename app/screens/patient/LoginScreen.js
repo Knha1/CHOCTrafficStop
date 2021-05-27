@@ -29,8 +29,6 @@ function LoginScreen({ navigation }) {
 			.then(
 				function (value) {
 					var loggedIn = value;
-					// console.log(loggedIn);
-
 					if (loggedIn == "User") {
 						navigation.navigate("Home");
 					} else if (loggedIn == "Admin") {
@@ -60,7 +58,7 @@ function LoginScreen({ navigation }) {
 							paddingTop: 40,
 							fontSize: 20,
 							alignSelf: "flex-start",
-							paddingLeft: 36,
+							paddingLeft: 36
 						}}
 					>
 						Get Started
@@ -68,6 +66,7 @@ function LoginScreen({ navigation }) {
 					<TextInput
 						style={{
 							margin: 40,
+							borderRadius: 5,
 							padding: 5,
 							paddingLeft: 15,
 							borderWidth: 1.0,

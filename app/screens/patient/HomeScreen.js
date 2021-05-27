@@ -24,6 +24,9 @@ import { storeData, readData } from "../../utils/DataHandler.js";
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [signoutModal, setSignoutModal] = useState(false);
+
+	const youthServicesTags = { 0: ["project-choice"], 1: ["waymakers"] };
+
 	return (
 		<View style={[styles.container]}>
 			<ImageBackground
@@ -65,14 +68,14 @@ function HomeScreen({ navigation }) {
 								Sign Out
 							</Text>
 							<Text
-										style={{
-											textAlign: "center",
-											marginBottom: 20,
-											marginHorizontal: "10%",
-										}}
-									>
-										Are you sure you want to sign out?
-									</Text>
+								style={{
+									textAlign: "center",
+									marginBottom: 20,
+									marginHorizontal: "10%",
+								}}
+							>
+								Are you sure you want to sign out?
+							</Text>
 							<View
 								style={{ flexDirection: "row", justifyContent: "space-evenly" }}
 							>
@@ -106,7 +109,6 @@ function HomeScreen({ navigation }) {
 									<Text style={{ color: "white", textAlign: "center" }}>
 										Yes
 									</Text>
-									
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -120,7 +122,12 @@ function HomeScreen({ navigation }) {
 					]}
 				>
 					<TouchableOpacity
-						onPress={() => navigation.navigate("Youth Support Services")}
+						onPress={() =>
+							navigation.navigate("Resource Results", {
+								tags: youthServicesTags,
+								prevScreen: "youth services",
+							})
+						}
 						style={[styles.card, { backgroundColor: "#4B9E76" }]}
 					>
 						<Text style={[styles.buttonText, { color: "white" }]}>
@@ -335,8 +342,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "4%",

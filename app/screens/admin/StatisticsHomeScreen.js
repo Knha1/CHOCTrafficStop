@@ -31,17 +31,16 @@ function StatisticsHomeScreen({ navigation }) {
 				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<Image source = {back} style = {styles.backButton}></Image>
 				</TouchableOpacity>
-				<Text style={{
-						marginTop: "14%",
+				{/* <Text style={{
+						marginTop: "11%",
 						fontSize: 20,
 						alignSelf: "center",
 						color: "white",
-						fontWeight: "bold",
 						position: 'absolute',
 					}}
 				>
 					Resources Accessed
-				</Text>
+				</Text> */}
 
 			
 				{/* <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text> */}
@@ -67,11 +66,13 @@ function StatisticsHomeScreen({ navigation }) {
 				<View style={styles.base}>
 					<Text
 						style={{
+							marginTop: "10%",
+							fontSize: 24,
+							alignSelf: "flex-start",
+							textAlign: "left",
 							marginLeft: "10%",
-							marginTop: "8%",
-							fontSize: 18,
-							marginBottom: 5,
 							color: "#003C98",
+							fontWeight: 'bold'
 						}}
 					>
 						Top 3 Resources Accessed
@@ -79,7 +80,7 @@ function StatisticsHomeScreen({ navigation }) {
 					<Text
 						style={{
 							marginLeft: "10%",
-							fontSize: 14,
+							fontSize: 16,
 							marginBottom: 15,
 							color: "#888888",
 						}}
@@ -103,7 +104,7 @@ function StatisticsHomeScreen({ navigation }) {
 							style={{
 								backgroundColor: "#DFDFDF",
 								alignSelf: "center",
-								borderRadius: 20,
+								borderRadius: 64,
 								padding: 15,
 								marginHorizontal: 10,
 							}}
@@ -117,7 +118,7 @@ function StatisticsHomeScreen({ navigation }) {
 							style={{
 								backgroundColor: "#0E4B9D",
 								alignSelf: "center",
-								borderRadius: 20,
+								borderRadius: 64,
 								padding: 15,
 								marginHorizontal: 10,
 							}}
@@ -140,26 +141,6 @@ const styles = StyleSheet.create({
 		// alignItems: "center",
 		flexDirection: 'row'
 	},
-	emergency: {
-		flex: 1,
-		justifyContent: "flex-end",
-		marginBottom: 30,
-	},
-	emergencyConfirm: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		padding: 35,
-		alignItems: "center",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
 	buttonSpacing: {
 		margin: 5,
 	},
@@ -176,8 +157,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: 'flex-start',
 		marginBottom: '2%',
 		marginLeft: '4%',
