@@ -2,7 +2,6 @@ import * as React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Settings } from "react-native";
 import { firebase } from "./app/firebase/config";
 import { storeData } from "./app/utils/DataHandler";
 // SCREEN IMPORTS -- PATIENT
@@ -10,11 +9,11 @@ import LoginScreen from "./app/screens/patient/LoginScreen";
 import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
 import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
 import HomeScreen from "./app/screens/patient/HomeScreen";
-import SettingsScreen from "./app/screens/patient/SettingsScreen";
+// import SettingsScreen from "./app/screens/patient/SettingsScreen";
 import ResourceDetailScreen from "./app/screens/patient/ResourceDetailScreen";
 import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
 import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
-import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
+// import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
 import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
 // SCREEN IMPORTS -- ADMIN
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
@@ -105,21 +104,10 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
+				{/* PATIENT SCREENS  */}
 				<Stack.Screen
 					name="Welcome"
 					component={WelcomeScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Login"
-					component={LoginScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Resource List"
-					component={ResourceListScreen}
 					options={{ headerShown: false }}
 				/>
 
@@ -130,8 +118,8 @@ export default function App() {
 				/>
 
 				<Stack.Screen
-					name="Settings"
-					component={SettingsScreen}
+					name="Login"
+					component={LoginScreen}
 					options={{ headerShown: false }}
 				/>
 
@@ -142,20 +130,62 @@ export default function App() {
 				/>
 
 				<Stack.Screen
+					name="Resource List"
+					component={ResourceListScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="Resource Results"
+					component={ResourceResultsScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="YesNo Question"
+					component={YesNoQuestionScreen}
+					options={{ headerShown: false }}
+				/>
+
+				{/* <Stack.Screen
+					// CURRENTLY UNUSED
+					name="Settings"
+					component={SettingsScreen}
+					options={{ headerShown: false }}
+				/> */}
+
+				{/* <Stack.Screen
+					// CURRENTLY UNUSED
+					name="Youth Support Services"
+					component={YouthServicesScreen}
+					options={{ headerShown: false }}
+				/> */}
+
+				{/* ADMIN SCREENS  */}
+				<Stack.Screen
+					name="Add Resource"
+					component={AddResourceScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
 					name="Survey Categories"
 					component={SurveyCategoriesScreen}
 					options={{ headerShown: false }}
 				/>
+
 				<Stack.Screen
 					name="Admin Home"
 					component={AdminHomeScreen}
 					options={{ headerShown: false }}
 				/>
+
 				<Stack.Screen
 					name="Export Data"
 					component={ExportDataScreen}
 					options={{ headerShown: false }}
 				/>
+
 				<Stack.Screen
 					name="View Resource"
 					component={ViewResourceScreen}
@@ -177,30 +207,6 @@ export default function App() {
 				<Stack.Screen
 					name="Statistics List"
 					component={StatisticsResourceListScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Add Resource"
-					component={AddResourceScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="YesNo Question"
-					component={YesNoQuestionScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Youth Support Services"
-					component={YouthServicesScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Resource Results"
-					component={ResourceResultsScreen}
 					options={{ headerShown: false }}
 				/>
 
