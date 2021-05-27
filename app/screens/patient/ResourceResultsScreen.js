@@ -25,6 +25,7 @@ function ResourceResultsScreen({ route, navigation }) {
 	var filter = route.params;
 	var resultText =
 		"Based on your survey results, here are some resources that might be helpful to you.";
+	var titleText = "Resources for you";
 	const tags = filter["tags"];
 	console.log(tags);
 	const prevScreen = filter["prevScreen"];
@@ -32,7 +33,8 @@ function ResourceResultsScreen({ route, navigation }) {
 	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resource.";
 	} else if (prevScreen == "youth services") {
-		resultText = "Youth support resources";
+		titleText = "Youth support resources";
+		resultText = null;
 	} else {
 		storeData("previousTags", tags);
 	}
@@ -75,15 +77,21 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	const footer = () => {
 		// TODO: fix footer, button isn't pressable
-		return (
-			<TouchableHighlight
-				underlayColor="#A6E1FF"
-				style={styles.submitButton}
-				onPress={() => navigation.navigate("Home")}
-			>
-				<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
-			</TouchableHighlight>
-		);
+		if(prevScreen == "filled survey" || prevScreen == "empty survey")
+		{
+			return (
+				<TouchableHighlight
+					underlayColor="#A6E1FF"
+					style={styles.submitButton}
+					onPress={() => navigation.navigate("Home")}
+				>
+					<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
+				</TouchableHighlight>
+			);
+		}
+		else{
+			return null;
+		}
 	};
 
 	useEffect(() => {
@@ -172,7 +180,7 @@ function ResourceResultsScreen({ route, navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.header}>{titleText}</Text>
 					<Text style={styles.subtext}>{resultText}</Text>
 					<FlatList
 						ListHeaderComponent={header}

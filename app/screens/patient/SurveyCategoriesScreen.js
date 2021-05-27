@@ -77,6 +77,7 @@ function SurveyCategoriesScreen({ navigation }) {
 									marginBottom: '5%'
 								},
 							]}
+							onPress={() => navigation.navigate("Resource List")}
 						>
 							Or, you can see your past resources here.
 						</Text>
