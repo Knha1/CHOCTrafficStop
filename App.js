@@ -29,6 +29,10 @@ import AdminResourceListScreen from "./app/screens/admin/AdminResourceListScreen
 import AdminLoginScreen from "./app/screens/admin/AdminLoginScreen";
 import EditResourceScreen from "./app/screens/admin/EditResourceScreen";
 
+import { LogBox } from "react-native"; // REMOVE THIS -- ONLY FOR DEBUG
+LogBox.ignoreLogs(["Setting a timer"]); // REMOVE THIS -- ONLY FOR DEBUG
+LogBox.ignoreLogs(["VirtualizedLists"]); // REMOVE THIS -- ONLY FOR DEBUG
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -56,6 +60,7 @@ export default function App() {
 							availability: child.val().availability,
 							website: child.val().website,
 							tags: child.val().tags,
+							email: child.val().email,
 						});
 					}
 				});
