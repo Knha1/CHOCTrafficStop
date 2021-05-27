@@ -50,36 +50,40 @@ function ResourceDetailScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
-		<View>
+		<View style={styles.container}>
+			<Text style={styles.topText}>Resource Details</Text>
+			<Image
+						style={styles.backArrow}
+						source={backArrowWhite}
+						onPress={() => navigation.navigate("Resource List")}
+						// TODO: Check if navigating back works
+			></Image>
+					
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
 				// If done loading
-				<View style={styles.container}>
-					<Text style={styles.topText}>Resource Details</Text>
-					<Image
-						style={styles.backArrow}
-						source={backArrowWhite}
-						onPress={() => navigation.navigate("Resource List")}
-						// TODO: Check if navigating back works
-					></Image>
-					<View style={styles.bottomContainer}>
+				
+				<View style={styles.bottomContainer}>
+					
+					
 						<View>
+						<Text style={styles.categoryText}>{data["category"]}</Text>
 							<Text style={styles.text}>{data["name"]}</Text>
-							<Text style={styles.text3}>{data["category"]}</Text>
-							<Text style={styles.text2}>
+							
+							<Text style={styles.infoText}>
 								Organization: {data["organization"]}
 							</Text>
-							<Text style={styles.text2}>
+							<Text style={styles.infoText}>
 								Availability: {data["availability"]}
 							</Text>
-							<Text style={styles.text2}>
+							<Text style={styles.infoText}>
 								Phone Number: {data["phone_num"]}
 							</Text>
-							<Text style={styles.text2}>Address: {data["address"]}</Text>
+							<Text style={styles.infoText}>Address: {data["address"]}</Text>
 							<Text
-								style={styles.text2}
+								style={styles.infoText}
 								onPress={() => {
 									Linking.openURL(data["website"]);
 									// TODO: Check if URL opening works
@@ -87,10 +91,10 @@ function ResourceDetailScreen({ route, navigation }) {
 							>
 								Website: {data["website"]}
 							</Text>
-							<Text style={styles.text4}>{data["description"]}</Text>
+							<Text style={styles.descriptionText}>{data["description"]}</Text>
 						</View>
 					</View>
-				</View>
+				 
 			)}
 		</View>
 	);
@@ -102,15 +106,16 @@ var styles = StyleSheet.create({
 		backgroundColor: "#0066BB",
 		alignItems: "center",
 		justifyContent: "flex-start",
-		padding: 0,
-		paddingTop: 100,
+		paddingTop: 130,
+		
 	},
 	backArrow: {
 		height: 34,
 		width: 34,
 		alignSelf: "flex-start",
 		left: 30,
-		bottom: 25,
+		top: '12%',
+		position: 'absolute'
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
@@ -128,17 +133,17 @@ var styles = StyleSheet.create({
 		backgroundColor: "#FFF",
 	},
 	topText: {
-		fontSize: 20,
-		color: "#FFF",
-		bottom: 40,
+		fontSize: 22,
+		color: "white",
+		top: '12%',
 		alignSelf: "center",
-		textAlign: "center",
-		alignItems: "center",
+		position: "absolute"
 	},
 	text: {
 		color: "#003C98",
-		top: 34,
+		top: 0,
 		left: 40,
+		width: 300,
 		fontWeight: "bold",
 		fontSize: 24,
 	},
@@ -157,33 +162,35 @@ var styles = StyleSheet.create({
 	},
 	bottomContainer: {
 		flex: 1,
-		alignSelf: "stretch",
-		backgroundColor: "#fff",
+		height: '100%',
+		alignSelf:"stretch",
+		backgroundColor: "white",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-	},
+		paddingTop: 35
+		},
 	buttonText: {
 		color: "#000",
 		alignSelf: "center",
 	},
-	text2: {
+	infoText: {
 		color: "black",
-		top: 50,
+		top: 20,
+		marginTop: 5,
 		left: 40,
-		fontSize: 14,
+		fontSize: 16,
 		width: 300,
 	},
-	text3: {
+	categoryText: {
 		fontSize: 16,
 		color: "black",
-		top: 30,
 		left: 40,
 	},
-	text4: {
-		fontSize: 14,
-		width: 320,
+	descriptionText: {
+		fontSize: 16,
+		width: 300,
 		left: 40,
-		top: 70,
+		top: 60,
 	},
 });
 

@@ -8,9 +8,11 @@ import {
 	ImageBackground,
 	TouchableOpacity,
 	Image,
+	TextInput,
+	KeyboardAvoidingView,
+	ScrollView,
 } from "react-native";
 
-import colors from "../../config/colors";
 import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
@@ -205,7 +207,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	base: {
-		// marginTop: "1%",
 		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
@@ -214,8 +215,8 @@ const styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "4%",
@@ -255,6 +256,11 @@ const styles = StyleSheet.create({
 		marginBottom: "2%",
 		marginLeft: "84%",
 		marginTop: "11%",
+	},
+	modalButton: {
+		borderRadius: 30,
+		width: 300,
+		height: 45,
 	},
 });
 
