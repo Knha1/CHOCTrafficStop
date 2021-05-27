@@ -11,7 +11,8 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
-import { readData } from "../../utils/DataHandler";
+import { storeData, readData } from "../../utils/DataHandler";
+import { firebase } from "../../firebase/config";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -24,6 +25,41 @@ function AdminResourceListScreen({ navigation }) {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
+		// Make sure latest list of resources is loaded in
+		firebase
+			.database()
+			.ref()
+			.child("resource")
+			.get()
+			.then((snapshot) => {
+				if (snapshot.exists()) {
+					var tempResources = [];
+
+					snapshot.forEach((child) => {
+						// Ignore the num_resources variable, store the rest of the resource
+						if (!Number.isInteger(child.val())) {
+							tempResources.push({
+								resource_id: child.val().resource_id,
+								name: child.val().name,
+								description: child.val().description,
+								category: child.val().category,
+								organization: child.val().organization,
+								address: child.val().address,
+								phone_num: child.val().phone_num,
+								availability: child.val().availability,
+								website: child.val().website,
+								tags: child.val().tags,
+								email: child.val().email,
+							});
+						}
+					});
+					storeData("resources", tempResources);
+				} else {
+					console.log("'resource' data retrieval from DB was unsuccessful.");
+				}
+			})
+			.catch((err) => console.log(err));
+
 		readData("resources")
 			.then((resources) => {
 				// Load 'resources' from AsyncStorage
