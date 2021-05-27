@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
 	Text,
@@ -15,22 +14,29 @@ import {
 	ScrollView,
 	Picker,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "react-native-dropdown-picker";
+// TODO: Remove Picker import, replace with @react-native-community/picker
 
 import colors from "../../config/colors";
 import backArrowWhite from "../../assets/backArrowWhite.png";
 import edit from "../../assets/close.png";
+import { firebase } from "../../firebase/config";
 
 function AddResourceScreen({ navigation }) {
-	const [selectedOrganization, setSelectedOrganization] = useState("Project Choice");
-	const [title, setTitle] = useState("NO TITLE RECEIVED");
-	const [description, setDescription] = useState("NO DESCRIPTION RECEIVED");
-	const [phone, setPhone] = useState("NO PHONE # RECEIVED");
-	const [address, setAddress] = useState("NO ADDRESS RECEIVED");
-	const [availability, setAvailability] = useState("NO AVAILABILITY RECEIVED");
-	const [URL, setURL] = useState("NO URL RECEIVED");
-	
+	// Defaulting org to Project Choice in case user doesn't select org
+	const [selectedOrganization, setSelectedOrganization] =
+		useState("Project Choice");
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [phone, setPhone] = useState("");
+	const [address, setAddress] = useState("");
+	const [availability, setAvailability] = useState("");
+	const [website, setWebsite] = useState("");
+	const [category, setCategory] = useState("");
+	const [email, setEmail] = useState("");
+
 	return (
+		// Potentially change this to ScrollView if fields get too long
 		<SafeAreaView style={styles.container}>
 			<Image
 				style={styles.backArrow}
@@ -49,45 +55,69 @@ function AddResourceScreen({ navigation }) {
 					<Text style={styles.text}>Add Resource</Text>
 
 					<Text style={styles.text3}>Title</Text>
-					<TextInput style={styles.input} placeholder="Enter resource title" onChangeText={setTitle} />
-
-					{/* <Text style={styles.text3}>Tags</Text>
-					<TextInput style={styles.input} defaultValue="SLEEP" /> */}
+					<TextInput
+						style={styles.input}
+						placeholder="Enter resource title"
+						onChangeText={setTitle}
+					/>
 
 					<Text style={styles.text3}>Availability</Text>
-					<TextInput style={styles.input} placeholder="Enter open hours" onChangeText={setAvailability} />
+					<TextInput
+						style={styles.input}
+						placeholder="Enter open hours"
+						onChangeText={setAvailability}
+					/>
 
 					<Text style={styles.text3}>Phone Number</Text>
-					<TextInput style={styles.input} placeholder="Enter phone number" onChangeText={setPhone} />
+					<TextInput
+						style={styles.input}
+						placeholder="Enter phone number (if applicable)"
+						onChangeText={setPhone}
+					/>
+
+					<Text style={styles.text3}>Email</Text>
+					<TextInput
+						style={styles.input}
+						placeholder="Enter email (if applicable)"
+						onChangeText={setEmail}
+					/>
 
 					<Text style={styles.text3}>Address</Text>
 					<TextInput
 						style={styles.input}
 						placeholder="Enter street address (if applicable)"
-						onChangeText={setAddress} 
+						onChangeText={setAddress}
 					/>
 
 					<Text style={styles.text3}>Website</Text>
 					<TextInput
 						style={styles.input}
-						placeholder="Enter URL"
-						onChangeText={setURL} 
+						placeholder="Enter website URL (if applicable)"
+						onChangeText={setWebsite}
+					/>
+
+					<Text style={styles.text3}>Category</Text>
+					<TextInput
+						style={styles.input}
+						placeholder="Enter resource category"
+						onChangeText={setCategory}
 					/>
 
 					<Text style={styles.text3}>Description</Text>
 					<TextInput
 						style={styles.input}
 						placeholder="Enter resource description"
-						onChangeText={setDescription} 
+						onChangeText={setDescription}
 					/>
 
 					<Text style={styles.text3}>Organization</Text>
 					<Picker
-					selectedValue={selectedOrganization}
-					style={styles.dropdown}
-					onValueChange={(itemValue, itemIndex) =>
-						setSelectedOrganization(itemValue)
-					}>
+						selectedValue={selectedOrganization}
+						style={styles.dropdown}
+						onValueChange={(itemValue, itemIndex) =>
+							setSelectedOrganization(itemValue)
+						}
+					>
 						<Picker.Item label="Project Choice" value="Project Choice" />
 						<Picker.Item label="CHOC" value="CHOC" />
 						<Picker.Item label="Waymakers" value="Waymakers" />
@@ -104,17 +134,66 @@ function AddResourceScreen({ navigation }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
-							
-							var tagString = selectedOrganization.toLowerCase().replace(" ", "-"); // Format to a tag
-							var tag = { 0: tagString};
-							console.log(selectedOrganization);
-							console.log(title); 
-							console.log(phone);
-							console.log(address);
-							console.log(availability);
-							console.log(description);
-							console.log(URL);
-							console.log(tag);
+							// TODO: Add checking to make sure specific fields have data
+							var tagString = selectedOrganization
+								.toLowerCase()
+								.replace(" ", "-"); // Format to a tag
+							var tag = { 0: tagString };
+							var new_resource_id = null;
+							firebase
+								.database()
+								.ref()
+								.child("resource")
+								.child("num_resources")
+								.get()
+								.then((snapshot) => {
+									if (snapshot.exists()) {
+										// Get the current resource_id and increment by 1 for new resource
+										new_resource_id = snapshot.val() + 1;
+									} else {
+										console.log(
+											"No 'num_resources' variable under 'resource' exists in the database"
+										);
+									}
+								});
+
+							firebase
+								.database()
+								.ref()
+								.child("resource")
+								.get()
+								.then((snapshot) => {
+									if (snapshot.exists()) {
+										// Make sure resource_id is generated properly
+										if (new_resource_id != null) {
+											// Create resource object
+											const new_resource_data = {
+												address: address,
+												availability: availability,
+												category: category,
+												description: description,
+												email: email,
+												name: title,
+												organization: selectedOrganization,
+												phone_num: phone,
+												resource_id: new_resource_id,
+												tags: tag,
+												website: website,
+											};
+
+											firebase
+												.database()
+												.ref()
+												.child("resource/" + new_resource_id)
+												.set(new_resource_data);
+										}
+									} else {
+										console.log("'resource' not found in database.");
+									}
+								});
+
+							// TODO: Display confirmation that resource has been added
+
 							navigation.navigate("Admin Home");
 						}}
 						style={styles.saveButton}
@@ -215,7 +294,7 @@ const styles = StyleSheet.create({
 		width: 168,
 	},
 	dropdown: {
-		top: 50,
+		top: 30,
 	},
 });
 
