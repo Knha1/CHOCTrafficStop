@@ -131,15 +131,7 @@ function AdminHomeScreen({ navigation }) {
 						onPress={() => navigation.navigate("Admin Resource List")}
 						style={styles.card}
 					>
-						<Text style={styles.buttonText}>View Resource List</Text>
-						<Image source={charity} style={styles.icon} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => navigation.navigate("Statistics Details")}
-						style={styles.card}
-					>
-						<Text style={styles.buttonText}>Edit/View Resource List</Text>
+						<Text style={styles.buttonText}>Edit / View Resource List</Text>
 						<Image source={schedule} style={styles.icon} />
 					</TouchableOpacity>
 
@@ -152,7 +144,10 @@ function AdminHomeScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => setModalVisible(true)}
+						onPress={() => {
+              navigation.navigate("Add Resource"); 
+						  setModalVisible(true);
+            }
 						style={{
 							alignSelf: "center",
 							alignItems: "center",

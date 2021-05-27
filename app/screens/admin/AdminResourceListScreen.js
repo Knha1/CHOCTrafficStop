@@ -11,7 +11,8 @@ import {
 } from "react-native";
 
 import colors from "../../config/colors";
-import { readData } from "../../utils/DataHandler";
+import { storeData, readData } from "../../utils/DataHandler";
+import { firebase } from "../../firebase/config";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -24,51 +25,87 @@ function AdminResourceListScreen({ navigation }) {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		readData("resources")
-			.then((resources) => {
-				// Load 'resources' from AsyncStorage
-				var resources = JSON.parse(resources);
-				// Sort resources by category
-				resources = resources.sort((a, b) =>
-					a.category > b.category ? 1 : -1
-				);
+		// Make sure latest list of resources is loaded in from Firebase, THEN read from asyncstorage
+		firebase
+			.database()
+			.ref()
+			.child("resource")
+			.get()
+			.then((snapshot) => {
+				if (snapshot.exists()) {
+					var tempResources = [];
 
-				var currentCategory = "";
-				var categoryIndex = 0;
-				var sections = [];
-
-				for (var i = 0; i < resources.length; i++) {
-					// If there's a new category, push a new category title + innerData
-					if (resources[i].category != currentCategory) {
-						// Skip first category index increment, avoid OOB error
-						if (i != 0) {
-							categoryIndex++;
+					snapshot.forEach((child) => {
+						// Ignore the num_resources variable, store the rest of the resource
+						if (!Number.isInteger(child.val())) {
+							tempResources.push({
+								resource_id: child.val().resource_id,
+								name: child.val().name,
+								description: child.val().description,
+								category: child.val().category,
+								organization: child.val().organization,
+								address: child.val().address,
+								phone_num: child.val().phone_num,
+								availability: child.val().availability,
+								website: child.val().website,
+								tags: child.val().tags,
+								email: child.val().email,
+							});
 						}
-						currentCategory = resources[i].category;
-						sections.push({
-							title: currentCategory,
-							innerData: [
-								{
+					});
+					storeData("resources", tempResources);
+				} else {
+					console.log("'resource' data retrieval from DB was unsuccessful.");
+				}
+			})
+			.then(() => {
+				readData("resources")
+					.then((resources) => {
+						// Load 'resources' from AsyncStorage
+						var resources = JSON.parse(resources);
+						// Sort resources by category
+						resources = resources.sort((a, b) =>
+							a.category > b.category ? 1 : -1
+						);
+
+						var currentCategory = "";
+						var categoryIndex = 0;
+						var sections = [];
+
+						for (var i = 0; i < resources.length; i++) {
+							// If there's a new category, push a new category title + innerData
+							if (resources[i].category != currentCategory) {
+								// Skip first category index increment, avoid OOB error
+								if (i != 0) {
+									categoryIndex++;
+								}
+								currentCategory = resources[i].category;
+								sections.push({
+									title: currentCategory,
+									innerData: [
+										{
+											name: resources[i].name,
+											description: resources[i].description,
+											resource_id: resources[i].resource_id,
+										},
+									],
+								});
+							}
+							// If category is the same, add to innerData
+							else {
+								sections[categoryIndex].innerData.push({
 									name: resources[i].name,
 									description: resources[i].description,
 									resource_id: resources[i].resource_id,
-								},
-							],
-						});
-					}
-					// If category is the same, add to innerData
-					else {
-						sections[categoryIndex].innerData.push({
-							name: resources[i].name,
-							description: resources[i].description,
-							resource_id: resources[i].resource_id,
-						});
-					}
-				}
-				setData(sections);
+								});
+							}
+						}
+						setData(sections);
+					})
+					.catch((error) => console.error(error))
+					.finally(() => setLoading(false));
 			})
-			.catch((error) => console.error(error))
-			.finally(() => setLoading(false));
+			.catch((err) => console.log(err));
 	}, [isLoading]);
 
 	return (
@@ -81,14 +118,10 @@ function AdminResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
-					<Text style={styles.header}>Resources for You</Text>
+					<Text style={styles.header}>Patient Resources</Text>
 					<Text style={styles.subtext}>
-						Based on your survey results, here are some resources that might be
-						helpful to you.
+						Tap on a resource to edit its details.
 					</Text>
-					<TouchableOpacity style={styles.button}>
-						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
-					</TouchableOpacity>
 					<FlatList
 						data={data} // Loading in data from useState variable
 						keyExtractor={(item, index) => index.toString()}
@@ -109,7 +142,7 @@ function AdminResourceListScreen({ navigation }) {
 												<TouchableOpacity
 													style={styles.links}
 													onPress={() =>
-														navigation.navigate("Resource Details", {
+														navigation.navigate("Edit Resource", {
 															resource_id: innerData.resource_id,
 														})
 													}
