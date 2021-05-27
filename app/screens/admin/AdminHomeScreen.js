@@ -145,9 +145,9 @@ function AdminHomeScreen({ navigation }) {
 
 					<TouchableOpacity
 						onPress={() => {
-              navigation.navigate("Add Resource"); 
-						  setModalVisible(true);
-            }
+							navigation.navigate("Add Resource");
+							setModalVisible(true);
+						}}
 						style={{
 							alignSelf: "center",
 							alignItems: "center",

@@ -161,11 +161,7 @@ export default function App() {
 					component={ViewResourceScreen}
 					options={{ headerShown: false }}
 				/>
-				<Stack.Screen
-					name="Edit Resource"
-					component={EditResourcesScreen}
-					options={{ headerShown: false }}
-				/>
+
 				<Stack.Screen
 					name="Statistics Details"
 					component={StatisticsDetailsScreen}
