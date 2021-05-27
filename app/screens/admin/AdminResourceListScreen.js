@@ -25,7 +25,7 @@ function AdminResourceListScreen({ navigation }) {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		// Make sure latest list of resources is loaded in
+		// Make sure latest list of resources is loaded in from Firebase, THEN read from asyncstorage
 		firebase
 			.database()
 			.ref()
@@ -58,53 +58,54 @@ function AdminResourceListScreen({ navigation }) {
 					console.log("'resource' data retrieval from DB was unsuccessful.");
 				}
 			})
-			.catch((err) => console.log(err));
+			.then(() => {
+				readData("resources")
+					.then((resources) => {
+						// Load 'resources' from AsyncStorage
+						var resources = JSON.parse(resources);
+						// Sort resources by category
+						resources = resources.sort((a, b) =>
+							a.category > b.category ? 1 : -1
+						);
 
-		readData("resources")
-			.then((resources) => {
-				// Load 'resources' from AsyncStorage
-				var resources = JSON.parse(resources);
-				// Sort resources by category
-				resources = resources.sort((a, b) =>
-					a.category > b.category ? 1 : -1
-				);
+						var currentCategory = "";
+						var categoryIndex = 0;
+						var sections = [];
 
-				var currentCategory = "";
-				var categoryIndex = 0;
-				var sections = [];
-
-				for (var i = 0; i < resources.length; i++) {
-					// If there's a new category, push a new category title + innerData
-					if (resources[i].category != currentCategory) {
-						// Skip first category index increment, avoid OOB error
-						if (i != 0) {
-							categoryIndex++;
-						}
-						currentCategory = resources[i].category;
-						sections.push({
-							title: currentCategory,
-							innerData: [
-								{
+						for (var i = 0; i < resources.length; i++) {
+							// If there's a new category, push a new category title + innerData
+							if (resources[i].category != currentCategory) {
+								// Skip first category index increment, avoid OOB error
+								if (i != 0) {
+									categoryIndex++;
+								}
+								currentCategory = resources[i].category;
+								sections.push({
+									title: currentCategory,
+									innerData: [
+										{
+											name: resources[i].name,
+											description: resources[i].description,
+											resource_id: resources[i].resource_id,
+										},
+									],
+								});
+							}
+							// If category is the same, add to innerData
+							else {
+								sections[categoryIndex].innerData.push({
 									name: resources[i].name,
 									description: resources[i].description,
 									resource_id: resources[i].resource_id,
-								},
-							],
-						});
-					}
-					// If category is the same, add to innerData
-					else {
-						sections[categoryIndex].innerData.push({
-							name: resources[i].name,
-							description: resources[i].description,
-							resource_id: resources[i].resource_id,
-						});
-					}
-				}
-				setData(sections);
+								});
+							}
+						}
+						setData(sections);
+					})
+					.catch((error) => console.error(error))
+					.finally(() => setLoading(false));
 			})
-			.catch((error) => console.error(error))
-			.finally(() => setLoading(false));
+			.catch((err) => console.log(err));
 	}, [isLoading]);
 
 	return (
