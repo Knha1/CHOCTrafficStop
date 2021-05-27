@@ -36,7 +36,7 @@ function AddResourceScreen({ navigation }) {
 	const [email, setEmail] = useState("");
 
 	return (
-		// Potentially change this to ScrollView if fields get too long
+		// TODO: Potentially change this to ScrollView if fields get too long
 		<SafeAreaView style={styles.container}>
 			<Image
 				style={styles.backArrow}
@@ -185,7 +185,15 @@ function AddResourceScreen({ navigation }) {
 												.database()
 												.ref()
 												.child("resource/" + new_resource_id)
-												.set(new_resource_data);
+												.set(new_resource_data)
+												.then(() => {
+													// Update num of resources (same as newly created resource_id)
+													firebase
+														.database()
+														.ref()
+														.child("resource/num_resources")
+														.set(new_resource_id);
+												});
 										}
 									} else {
 										console.log("'resource' not found in database.");
@@ -193,6 +201,7 @@ function AddResourceScreen({ navigation }) {
 								});
 
 							// TODO: Display confirmation that resource has been added
+							// TODO: Redownload data from Firebase to refresh AsyncStorage
 
 							navigation.navigate("Admin Home");
 						}}
