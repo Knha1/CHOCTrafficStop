@@ -17,20 +17,41 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import back from "../../assets/backArrowWhite.png";
 import { firebase } from "../../firebase/config";
 import { Picker } from "@react-native-picker/picker";
+import { readData } from "../../utils/DataHandler";
 
-function processData(data) {
+async function processData(data) {
 	var processed_data = {};
+	var indexed_resources = {};
 
-	for (var resource_id in data) {
-		const total_views = data[resource_id].length;
-		const unique_views = new Set(data[resource_id]).size;
+	// Add on related info to be displayed
+	readData("resources")
+		.then((resource) => {
+			var resources = JSON.parse(resource);
 
-		processed_data[resource_id] = {
-			total_views: total_views,
-			unique_views: unique_views,
-		};
-	}
+			// Index resources based on resource_id for faster retrieval
+			for (var r in resources) {
+				indexed_resources[resources[r]["resource_id"]] = resources[r];
+			}
+		})
+		.then(() => {
+			for (var resource_id in data) {
+				// Process view count and grab name for each resource
+				const total_views = data[resource_id].length;
+				const unique_views = new Set(data[resource_id]).size;
+				const name = indexed_resources[resource_id]["name"];
 
+				processed_data[resource_id] = {
+					resource_id: resource_id,
+					name: name,
+					total_views: total_views,
+					unique_views: unique_views,
+				};
+			}
+		})
+		.finally(() => {
+			console.log("done processing data");
+			console.log(processed_data);
+		});
 	return processed_data;
 }
 
@@ -247,12 +268,17 @@ function ExportDataScreen({ navigation }) {
 														}
 													}
 												});
-
-												// TODO: process data
-												console.log(processData(raw_data));
 											} else {
 												console.log("'data' doesn't exist in database.");
 											}
+										})
+										.then(() => {
+											// console.log("passing in:");
+											// console.log(raw_data);
+											processData(raw_data).then((pd) => {
+												console.log("results: ");
+												console.log(pd);
+											});
 										});
 								}
 							}}
