@@ -18,6 +18,7 @@
     "expo-file-system": "^9.3.0",
     "expo-font": "~8.4.0",
     "expo-linear-gradient": "^8.4.0",
+    "expo-sharing": "^8.5.0",
     "expo-status-bar": "~1.0.3",
     "firebase": "^8.4.2",
     "radio-buttons-react-native": "^1.0.4",
