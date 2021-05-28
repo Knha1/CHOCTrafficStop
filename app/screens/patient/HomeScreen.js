@@ -24,7 +24,7 @@ import { storeData, readData } from "../../utils/DataHandler.js";
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [signoutModal, setSignoutModal] = useState(false);
-
+	
 	const youthServicesTags = { 0: ["project-choice"], 1: ["waymakers"] };
 
 	return (

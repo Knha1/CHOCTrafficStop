@@ -22,20 +22,21 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 
 function ResourceResultsScreen({ route, navigation }) {
+	
+	const [resultText, setResultText] = useState("Based on your survey results, here are some resources that might be helpful to you.");
 	var filter = route.params;
-	var resultText =
-		"Based on your survey results, here are some resources that might be helpful to you.";
 	var titleText = "Resources for you";
 	const tags = filter["tags"];
 	console.log(tags);
 	const prevScreen = filter["prevScreen"];
 	// Change result text if the survey was empty
 	if (prevScreen == "empty survey") {
-		resultText = "No answers recorded, showing all resource.";
+		setResultText("No answers recorded, showing all resource.");
 	} else if (prevScreen == "youth services") {
 		titleText = "Youth support resources";
-		resultText = null;
+		setResultText(null);
 	} else {
+		if(prevScreen == "filledSurvey" && tags)
 		storeData("previousTags", tags);
 	}
 	// State variable to show loading screen if resources aren't loaded yet
@@ -163,6 +164,10 @@ function ResourceResultsScreen({ route, navigation }) {
 							});
 						}
 					}
+				}
+				if(firstCatFound == false)
+				{
+					setResultText("No results currently match your answers.");
 				}
 				setData(sections);
 			})
