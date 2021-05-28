@@ -16,8 +16,9 @@ import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
 import cog from "../../assets/settings1.png";
 import logo from "../../assets/logo_nobg.png";
-import back from "../../assets/backArrowWhite.png";
+import exit from "../../assets/exitWhite.png";
 import heart from "../../assets/heart.png";
+
 import { Linking } from "react-native";
 import { storeData, readData } from "../../utils/DataHandler.js";
 
@@ -38,7 +39,7 @@ function HomeScreen({ navigation }) {
 				}}
 			>
 				<TouchableOpacity onPress={() => setSignoutModal(true)}>
-					<Image source={back} style={styles.signoutButton}></Image>
+					<Image source={exit} style={styles.signoutButton}></Image>
 				</TouchableOpacity>
 
 				<Modal
@@ -370,8 +371,8 @@ const styles = StyleSheet.create({
 	},
 	signoutButton: {
 		resizeMode: "contain",
-		width: 50,
-		height: 50,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "84%",

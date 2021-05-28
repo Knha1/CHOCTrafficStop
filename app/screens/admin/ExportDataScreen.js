@@ -6,8 +6,11 @@ import colors from "../../config/colors";
 import bg from "../../assets/background.png";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import back from "../../assets/backArrowWhite.png";
+import check from "../../assets/greenCheck.png";
 
 function ExportDataScreen({ navigation }) {
+	const [modalVisible, setModalVisible] = useState(false);
+	
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={bg} style={{overflow: "hidden",resizeMode: "stretch",height: "100%", width: "100%"}}>
@@ -42,28 +45,71 @@ function ExportDataScreen({ navigation }) {
 						]}
 					/>
 
-					<View style={{flexDirection: "row", position: "absolute", bottom: 30, left: 40 }}>
+<View style={{flexDirection: "row", position: "absolute", bottom: 30, left: 40 }}>
 						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')} 
 						style={{
 							backgroundColor: "#DFDFDF",
 							alignSelf: "center",
-							borderRadius: 64,
+							borderRadius: 20,
 							padding: 15,
 							marginHorizontal: 10
 						}}>
 							<Text style={[styles.buttonText, {color: "#003C98"}]}>Cancel</Text>
 
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() =>navigation.navigate('Statistics Home')}
+						<TouchableOpacity onPress={() => setModalVisible(true)}
 						style={{
 							backgroundColor: "#0E4B9D",
 							alignSelf: "center",
-							borderRadius: 64,
+							borderRadius: 20,
 							padding: 15,
 							marginHorizontal: 10
 						}}>
 							<Text style={[styles.buttonText, {color: "#FFFFFF"}]}>Export Data</Text>
 						</TouchableOpacity>
+
+						<Modal
+					animationType="none"
+					visible={modalVisible}
+					transparent={true}
+					onRequestClose={() => {
+						setModalVisible(!modalVisible);
+					}}
+				>
+					<View
+						style={[styles.container,]}
+					>
+						<View style={[styles.popup, { flexDirection: "row"}]}>
+							<Image source={check} style = {{resizeMode: "contain", width: 30, height: 30, marginRight: 10}}></Image>
+							<Text
+								style={{
+									textAlign: "center",
+									marginVertical: 10,
+									color: "white",
+									fontWeight: "bold",
+									fontSize: 20,
+									marginLeft: "2%"
+								}}
+							>
+								Exported Data Successfully!
+							</Text>
+							
+								<TouchableOpacity
+									onPress={() => setModalVisible(!modalVisible)}
+									style={{
+										borderRadius: 20,
+										padding: 10,
+									}}
+								>
+									<Text style={{ color: "white", textAlign: "right", fontSize: 24, bottom: "75%", marginLeft: 10 }}>
+										x
+									</Text>
+								</TouchableOpacity>
+		
+							
+						</View>
+					</View>
+				</Modal>
 					</View>
 						
 
@@ -71,42 +117,6 @@ function ExportDataScreen({ navigation }) {
 				</View>
 			</ImageBackground>
 		</View>
-    //     <View style={{padding: 10}}>
-
-    //     <Text>File Name: </Text>
-    //     <TextInput 
-    //     style={{height: 40}}
-    //     placeholder = "File Name" />
-	// 	<View style ={{marginTop: 10, margin:5}}/>
-	// 	<Text>File Type: </Text>
-	// 	<DropDownPicker
-	// 		items={[
-	// 			{label: '.pdf', value: 'pdf'},
-	// 			{label: '.docx', value: 'docx'},
-	// 			{label: '.txt', value: 'txt'},
-	// 			{label: '.odt', value: 'odt'},
-	// 		]}
-	// 	/>
-
-    //     <View style ={{marginTop: 10, margin:5}}>
-    //     <Button
-    //       title="Export Data"
-    //       onPress={() =>
-    //         navigation.navigate('Admin Home')
-    //       }
-    //     />
-    //     </View>
-
-    //     <View style ={{marginTop: 10, margin:5}}>
-    //     <Button
-    //       title="Cancel"
-	// 	  color = "grey"
-    //       onPress={() =>
-    //         navigation.navigate('Admin Home')
-    //       }
-    //     />
-    //     </View>
-    //    </View>
     );
     
 }
@@ -178,6 +188,15 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		textAlign: "center",
 		minWidth: "30%"
+	},
+	popup: {
+		backgroundColor: "rgba(0,0,0,0.5)",
+		justifyContent: "center",
+		alignItems:"center",
+		padding: 10,
+		borderRadius: 20,
+		position: "absolute",
+		bottom: '5%'
 	}
 });
 

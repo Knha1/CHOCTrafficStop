@@ -141,7 +141,7 @@ function AdminLoginScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", marginTop: 110 }}
+						style={{ color: "#003C98", alignSelf: "center", marginTop: "10%" }}
 						onPress={() => navigation.navigate("Login")}
 					>
 						Not an Admin? Go Back
@@ -170,8 +170,9 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 	},
 	button: {
-		position: "absolute",
-		top: 310,
+		// position: "absolute",
+		// top: 310,
+		marginTop: "10%",
 		alignItems: "center",
 		alignSelf: "center",
 		justifyContent: "center",
