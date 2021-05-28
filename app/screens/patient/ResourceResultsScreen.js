@@ -33,7 +33,7 @@ function ResourceResultsScreen({ route, navigation }) {
 	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resource.";
 	} else if (prevScreen == "youth services") {
-		titleText = "Youth support resources";
+		titleText = "Youth Support Resources";
 		resultText = null;
 	} else {
 		storeData("previousTags", tags);
@@ -77,8 +77,7 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	const footer = () => {
 		// TODO: fix footer, button isn't pressable
-		if(prevScreen == "filled survey" || prevScreen == "empty survey")
-		{
+		if (prevScreen == "filled survey" || prevScreen == "empty survey") {
 			return (
 				<TouchableHighlight
 					underlayColor="#A6E1FF"
@@ -88,8 +87,7 @@ function ResourceResultsScreen({ route, navigation }) {
 					<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
 				</TouchableHighlight>
 			);
-		}
-		else{
+		} else {
 			return null;
 		}
 	};
