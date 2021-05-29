@@ -181,7 +181,6 @@ function ExportDataScreen({ navigation }) {
 						</TouchableOpacity>
 						<TouchableOpacity
 							onPress={() => {
-								setModalVisible(true);
 								if (startYear > endYear) {
 									// Checks if ending year happens before starting year
 									setMessage(
@@ -288,6 +287,7 @@ function ExportDataScreen({ navigation }) {
 															unique_views: unique_views,
 														});
 													}
+													console.log(processed_data);
 												})
 												.finally(() => {
 													// Write to Excel sheet
@@ -309,6 +309,7 @@ function ExportDataScreen({ navigation }) {
 														bookType: "xlsx",
 													});
 
+													var fname = filename;
 													if (fname.length == 0) {
 														setMessage(
 															"Exported file name cannot be empty. Enter a file name."
@@ -318,7 +319,6 @@ function ExportDataScreen({ navigation }) {
 															"No usage data was found for this date range. Please choose a different date range."
 														);
 													} else {
-														var fname = filename;
 														fname = fname.replace(".xlsx", "");
 														const uri =
 															FileSystem.documentDirectory + fname + ".xlsx";
@@ -338,6 +338,7 @@ function ExportDataScreen({ navigation }) {
 															dialogTitle: "Resource Usage Statistics",
 															UTI: "com.microsoft.excel.xlsx",
 														});
+														setModalVisible(true);
 													}
 												});
 										});
