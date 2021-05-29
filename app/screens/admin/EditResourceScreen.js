@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	inner: {
-		backgroundColor: "#F1F2F2",
+		// backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
@@ -424,13 +424,13 @@ const styles = StyleSheet.create({
 		fontSize: 36,
 		marginBottom: 48,
 	},
-	textInput: {
-		height: 40,
-		fontSize: 12,
-		borderColor: "#000000",
-		borderBottomWidth: 1,
-		marginBottom: 36,
-	},
+	// textInput: {
+	// 	height: 40,
+	// 	fontSize: 12,
+	// 	borderColor: "#000000",
+	// 	borderBottomWidth: 1,
+	// 	marginBottom: 36
+	// },
 	btnContainer: {
 		backgroundColor: "white",
 		marginTop: 12,
@@ -451,12 +451,11 @@ const styles = StyleSheet.create({
 		// top: 38,
 		// left: 40,
 		marginHorizontal: "5%",
-
 		fontWeight: "bold",
 	},
 	input: {
 		maxHeight: "10%",
-		marginVertical: "4%",
+		//marginVertical: "4%",
 		// backgroundColor: "gray",
 		// width: "80%",
 		// marginVertical: 10,
@@ -464,6 +463,7 @@ const styles = StyleSheet.create({
 		// left: 40,
 		// top: 36,
 		fontSize: 18,
+		marginBottom: "4%",
 	},
 	cancelButton: {
 		//  position: "absolute",

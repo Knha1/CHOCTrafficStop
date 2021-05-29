@@ -8,12 +8,11 @@ import {
 	TextInput,
 	ImageBackground,
 	Image,
+	TouchableOpacity,
 } from "react-native";
-// import DropDownPicker from "react-native-dropdown-picker";
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import back from "../../assets/backArrowWhite.png";
 import check from "../../assets/greenCheck.png";
 import { firebase } from "../../firebase/config";

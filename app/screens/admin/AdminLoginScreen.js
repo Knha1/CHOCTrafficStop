@@ -49,7 +49,7 @@ function AdminLoginScreen({ navigation }) {
 							borderWidth: 1.0,
 							borderColor: "#D1D1D1",
 						}}
-						autoCapitalize="characters"
+						autoCapitalize="none"
 						placeholder="Enter Username"
 						onChangeText={(text) => setUsername(text)}
 					/>
@@ -65,7 +65,7 @@ function AdminLoginScreen({ navigation }) {
 							borderWidth: 1.0,
 							borderColor: "#D1D1D1",
 						}}
-						autoCapitalize="characters"
+						autoCapitalize="none"
 						placeholder="Enter Password"
 						onChangeText={(text) => setPassword(text)}
 						secureTextEntry={true}

@@ -28,6 +28,9 @@ function SurveyCategoriesScreen({ navigation }) {
 	
 	return (
 		<ScrollView style={[styles.container]}>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
 			<View
 				style={[
 					styles.base,
@@ -35,14 +38,11 @@ function SurveyCategoriesScreen({ navigation }) {
 						height: "100%",
 						// alignItems: "center",
 						justifyContent: "space-evenly",
+						
 					},
 				]}
 			>
-				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Image source={back} style={styles.backButton}></Image>
-				</TouchableOpacity>
 				{/* <Button title="Back" onPress={() => navigation.goBack()} /> */}
-
 				<ImageBackground
 					source={bg}
 					style={{
@@ -54,7 +54,6 @@ function SurveyCategoriesScreen({ navigation }) {
 						borderTopLeftRadius: 30,
 					}}
 				>
-					<ScrollView>
 						<Text
 							style={{
 								marginTop: "10%",
@@ -170,7 +169,6 @@ function SurveyCategoriesScreen({ navigation }) {
 								</Text>
 							</TouchableOpacity>
 						</View>
-					</ScrollView>
 				</ImageBackground>
 			</View>
 		</ScrollView>
@@ -232,18 +230,19 @@ const styles = StyleSheet.create({
 		color: "#F1F2F2",
 	},
 	base: {
-		marginTop: "18%",
+		// marginTop: "18%",
 		//backgroundColor: '#F1F2F2',
 		alignSelf: "stretch",
-		flex: 1,
+		// flex: 1,
 	},
 	backButton: {
 		resizeMode: "contain",
 		width: 34,
 		height: 34,
 		alignSelf: "flex-start",
-		marginBottom: "8%",
+		marginBottom: "2%",
 		marginLeft: "4%",
+		marginTop: '11%'
 	},
 	icon: {
 		resizeMode: "contain",
@@ -255,6 +254,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-evenly",
+		marginBottom: "30%"
+		
 	},
 });
 

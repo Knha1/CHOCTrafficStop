@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		maxHeight: "10%",
-		marginVertical: "4%",
+		// marginVertical: "4%",
 		// backgroundColor: "gray",
 		// width: "80%",
 		// marginVertical: 10,
@@ -451,6 +451,7 @@ const styles = StyleSheet.create({
 		// left: 40,
 		// top: 36,
 		fontSize: 18,
+		marginBottom: "4%"
 	},
 	cancelButton: {
 		//  position: "absolute",
