@@ -22,7 +22,7 @@ import {
 // TODO: Remove Picker import, replace with @react-native-community/picker
 
 import colors from "../../config/colors";
-import backArrowWhite from "../../assets/backArrowWhite.png";
+import back from "../../assets/backArrowWhite.png";
 import edit from "../../assets/close.png";
 import { storeData, readData } from "../../utils/DataHandler.js";
 import { firebase } from "../../firebase/config";
@@ -234,6 +234,9 @@ function EditResourceScreen({ route, navigation }) {
       style={styles.container}
     >
 	<ScrollView>
+		<TouchableOpacity onPress={() => navigation.goBack()}>
+			<Image source={back} style={styles.backButton}></Image>
+		</TouchableOpacity>
 	  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<View style={styles.inner}>
           {/* <Text style={styles.header}>Header</Text>
@@ -318,7 +321,7 @@ function EditResourceScreen({ route, navigation }) {
 						<Picker.Item label="Waymakers" value="Waymakers" />
 						<Picker.Item label="211OC" value="211OC" />
 					</Picker>
-				<View style={{flexDirection: "row", position: "absolute", bottom: 10 , marginHorizontal: "10%" , alignContent: "space-around" }}>
+				<View style={{flexDirection: "row", position: "absolute", bottom: 10, marginLeft: "15%", alignContent: "space-around" }}>
 					<TouchableOpacity
 						onPress={() => navigation.goBack()}
 						style={styles.cancelButton}
@@ -395,12 +398,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	inner: {
-		marginTop: "20%",
-		padding: 24,
-		flex: 1,
-		justifyContent: "space-around",
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
+		alignSelf: "stretch",
+		flex: 1,
+		paddingBottom: 24,
 		backgroundColor: "#FFFFFF"
 	},
 	header: {
@@ -421,6 +424,7 @@ const styles = StyleSheet.create({
 	text: {
 		color: "#003C98",
 		// top: 34,
+		marginTop: "10%",
 		marginHorizontal: "5%",
 		// left: 40,
 		fontWeight: "bold",
@@ -461,7 +465,7 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		// padding: 10
 		// height: 45,
-		width: "50%",
+		width: "40%",
 		alignSelf: "center",
 		// borderRadius: 20,
 		padding: 15,
@@ -479,12 +483,21 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		// padding: 10
 		// height: 45,
-		width: "50%",
+		width: "40%",
 		alignSelf: "center",
 		// borderRadius: 20,
 		padding: 15,
 		// paddingHorizontal: 25,
 		// marginHorizontal: 10
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		// marginBottom: "2%",
+		marginLeft: "2%",
+		marginTop: "14%",
 	},
 	});
 // 	container: {
