@@ -19,41 +19,9 @@ import { firebase } from "../../firebase/config";
 import { Picker } from "@react-native-picker/picker";
 import { readData } from "../../utils/DataHandler";
 
-async function processData(data) {
-	var processed_data = {};
-	var indexed_resources = {};
-
-	// Add on related info to be displayed
-	readData("resources")
-		.then((resource) => {
-			var resources = JSON.parse(resource);
-
-			// Index resources based on resource_id for faster retrieval
-			for (var r in resources) {
-				indexed_resources[resources[r]["resource_id"]] = resources[r];
-			}
-		})
-		.then(() => {
-			for (var resource_id in data) {
-				// Process view count and grab name for each resource
-				const total_views = data[resource_id].length;
-				const unique_views = new Set(data[resource_id]).size;
-				const name = indexed_resources[resource_id]["name"];
-
-				processed_data[resource_id] = {
-					resource_id: resource_id,
-					name: name,
-					total_views: total_views,
-					unique_views: unique_views,
-				};
-			}
-		})
-		.finally(() => {
-			console.log("done processing data");
-			console.log(processed_data);
-		});
-	return processed_data;
-}
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import XLSX from "xlsx";
 
 function createDateStr(month, year) {
 	// Convert ints to strings before checking length
@@ -67,12 +35,12 @@ function createDateStr(month, year) {
 }
 
 function ExportDataScreen({ navigation }) {
-	const [data, setData] = useState([]);
 	const [startMonth, setStartMonth] = useState("1");
 	const [startYear, setStartYear] = useState("2021");
 	const [endMonth, setEndMonth] = useState("1");
 	const [endYear, setEndYear] = useState("2021");
 	const [message, setMessage] = useState("");
+	const [filename, setFilename] = useState("");
 
 	var num_patients = 0;
 	var raw_data = {};
@@ -104,10 +72,10 @@ function ExportDataScreen({ navigation }) {
 							fontWeight: "bold",
 						}}
 					>
-						Export Data
+						Export Data as Excel Sheet
 					</Text>
 
-					<Text style={styles.subheader}>Export Date Range From: </Text>
+					<Text style={styles.subheader}>Usage Data From: </Text>
 
 					<Picker
 						selectedValue={startMonth}
@@ -177,8 +145,12 @@ function ExportDataScreen({ navigation }) {
 						<Picker.Item label="2023" value="2023" />
 					</Picker>
 
-					<Text style={styles.subheader}>File Name: </Text>
-					<TextInput style={styles.baseText} placeholder=" Enter File Name" />
+					<Text style={styles.subheader}>Exported File Name: </Text>
+					<TextInput
+						style={styles.baseText}
+						placeholder=" Enter File Name"
+						onChangeText={(text) => setFilename(text)}
+					/>
 
 					{/* Status message if month/year is entered wrong */}
 					<Text style={styles.subheader}>{message}</Text>
@@ -273,12 +245,88 @@ function ExportDataScreen({ navigation }) {
 											}
 										})
 										.then(() => {
-											// console.log("passing in:");
-											// console.log(raw_data);
-											processData(raw_data).then((pd) => {
-												console.log("results: ");
-												console.log(pd);
-											});
+											// Process data into JSON format
+											var processed_data = [];
+											var supplemental_data = [
+												{
+													num_patients: num_patients,
+													start_year: startYear,
+													start_month: startMonth,
+													end_year: endYear,
+													end_month: endMonth,
+												},
+											];
+											var indexed_resources = {};
+											// num_patients start_month start_year end_month end_year
+
+											// Add on related info to be displayed
+											readData("resources")
+												.then((resource) => {
+													var resources = JSON.parse(resource);
+
+													// Index resources based on resource_id for faster retrieval
+													for (var r in resources) {
+														indexed_resources[resources[r]["resource_id"]] =
+															resources[r];
+													}
+												})
+												.then(() => {
+													for (var resource_id in raw_data) {
+														// Process view count and grab name for each resource
+														const total_views = raw_data[resource_id].length;
+														const unique_views = new Set(raw_data[resource_id])
+															.size;
+														const name = indexed_resources[resource_id]["name"];
+
+														processed_data.push({
+															resource_id: resource_id,
+															name: name,
+															total_views: total_views,
+															unique_views: unique_views,
+														});
+													}
+												})
+												.finally(() => {
+													// Write to Excel sheet
+													var ws1 = XLSX.utils.json_to_sheet(processed_data);
+													var ws2 = XLSX.utils.json_to_sheet(supplemental_data);
+													var wb = XLSX.utils.book_new();
+													XLSX.utils.book_append_sheet(
+														wb,
+														ws1,
+														"Resource Usage"
+													);
+													XLSX.utils.book_append_sheet(
+														wb,
+														ws2,
+														"Supplemental Data"
+													);
+													const wbout = XLSX.write(wb, {
+														type: "base64",
+														bookType: "xlsx",
+													});
+
+													// TODO: make sure filename doesn't end in .xlsx already
+
+													const uri =
+														FileSystem.documentDirectory + "ResourceUsage.xlsx";
+													console.log(
+														`Writing to ${JSON.stringify(
+															uri
+														)} with text: ${wbout}`
+													);
+													FileSystem.writeAsStringAsync(uri, wbout, {
+														encoding: FileSystem.EncodingType.Base64,
+													});
+
+													Sharing.shareAsync(uri, {
+														mimeType:
+															"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+														dialogTitle: "Resource Usage Statistics",
+														UTI: "com.microsoft.excel.xlsx",
+													});
+													console.log("finito");
+												});
 										});
 								}
 							}}
