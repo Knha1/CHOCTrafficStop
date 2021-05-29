@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		fontSize: 20,
 		paddingTop: 20,
-		paddingBottom: 12,
+		marginBottom: 12,
 		position: "absolute",
 		marginTop: 40,
 	},

@@ -165,6 +165,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 								<Text style={styles.text}>{item.text}</Text>
 								<RadioButtonRN
 									data={item.choices}
+									boxStyle = {{marginHorizontal: "10%"}}
 									selectedBtn={(e) => {
 										// finalTags[item.order] = e.tags;
 
