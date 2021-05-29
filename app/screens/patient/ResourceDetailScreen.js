@@ -17,6 +17,7 @@ import {
 import backArrowWhite from "../../assets/backArrowWhite.png";
 
 import colors from "../../config/colors";
+import LinearGradient from "expo-linear-gradient";
 import bg from "../../assets/background.png";
 import { readData } from "../../utils/DataHandler";
 
@@ -50,22 +51,29 @@ function ResourceDetailScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
+		
 		<View style={styles.container}>
+			
 			<Text style={styles.topText}>Resource Details</Text>
+			
 			<Image
 						style={styles.backArrow}
 						source={backArrowWhite}
 						onPress={() => navigation.navigate("Resource List")}
 						// TODO: Check if navigating back works
 			></Image>
-					
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
 				// If done loading
 				
-				<View style={styles.bottomContainer}>
+				<View
+					style={[
+						styles.bottomContainer,
+						{ height: "70%", padding: 20 },
+					]}
+				>
 					
 					
 						<View>
@@ -107,7 +115,6 @@ var styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "flex-start",
 		paddingTop: 130,
-		
 	},
 	backArrow: {
 		height: 34,
@@ -116,21 +123,6 @@ var styles = StyleSheet.create({
 		left: 30,
 		top: '12%',
 		position: 'absolute'
-	},
-	skipToResultsText: {
-		color: "#CAEDFF",
-		fontSize: 14,
-		position: "absolute",
-		top: 96,
-		paddingBottom: 100,
-	},
-	rectangle: {
-		height: 4,
-		width: 320,
-		borderRadius: 10,
-		position: "absolute",
-		top: 80,
-		backgroundColor: "#FFF",
 	},
 	topText: {
 		fontSize: 22,
@@ -142,7 +134,7 @@ var styles = StyleSheet.create({
 	text: {
 		color: "#003C98",
 		top: 0,
-		left: 40,
+		left: 35,
 		width: 300,
 		fontWeight: "bold",
 		fontSize: 24,
@@ -162,7 +154,7 @@ var styles = StyleSheet.create({
 	},
 	bottomContainer: {
 		flex: 1,
-		height: '100%',
+		//height: '100%',
 		alignSelf:"stretch",
 		backgroundColor: "white",
 		borderTopRightRadius: 30,
@@ -177,19 +169,19 @@ var styles = StyleSheet.create({
 		color: "black",
 		top: 20,
 		marginTop: 5,
-		left: 40,
+		left: 35,
 		fontSize: 16,
 		width: 300,
 	},
 	categoryText: {
 		fontSize: 16,
 		color: "black",
-		left: 40,
+		left: 35,
 	},
 	descriptionText: {
 		fontSize: 16,
 		width: 300,
-		left: 40,
+		left: 35,
 		top: 60,
 	},
 });
