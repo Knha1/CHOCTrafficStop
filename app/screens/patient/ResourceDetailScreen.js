@@ -51,14 +51,11 @@ function ResourceDetailScreen({ route, navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.topText}>Resource Details</Text>
-			<Image
-						style={styles.backArrow}
-						source={backArrowWhite}
-						onPress={() => navigation.navigate("Resource List")}
-						// TODO: Check if navigating back works
-			></Image>
-					
+			<View>
+			<TouchableOpacity onPress={() => navigation.goBack()} style={styles.backArrow}>
+				<Image source={backArrowWhite} style={styles.backArrow}></Image>
+			</TouchableOpacity>
+			</View>
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
@@ -110,19 +107,20 @@ function ResourceDetailScreen({ route, navigation }) {
 var styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		//flexDirection: 'row',
 		backgroundColor: "#0066BB",
 		alignItems: "center",
-		justifyContent: "flex-start",
+		justifyContent: "center",
 		paddingTop: 130,
-		
 	},
 	backArrow: {
-		height: 34,
 		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
-		left: 30,
-		top: '12%',
-		position: 'absolute'
+		justifyContent: 'center',
+		marginBottom: "2%",
+		marginTop: "-12%",
+		marginLeft: "-40%",
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
@@ -138,13 +136,6 @@ var styles = StyleSheet.create({
 		position: "absolute",
 		top: 80,
 		backgroundColor: "#FFF",
-	},
-	topText: {
-		fontSize: 22,
-		color: "white",
-		top: '12%',
-		alignSelf: "center",
-		position: "absolute"
 	},
 	text: {
 		color: "#003C98",
