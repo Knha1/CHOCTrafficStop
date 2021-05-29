@@ -15,6 +15,7 @@ import colors from "../../config/colors";
 import bg from "../../assets/background.png";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import back from "../../assets/backArrowWhite.png";
+import check from "../../assets/greenCheck.png";
 import { firebase } from "../../firebase/config";
 import { Picker } from "@react-native-picker/picker";
 import { readData } from "../../utils/DataHandler";
@@ -35,6 +36,7 @@ function createDateStr(month, year) {
 }
 
 function ExportDataScreen({ navigation }) {
+	const [modalVisible, setModalVisible] = useState(false);
 	const [startMonth, setStartMonth] = useState("1");
 	const [startYear, setStartYear] = useState("2021");
 	const [endMonth, setEndMonth] = useState("1");
@@ -179,6 +181,7 @@ function ExportDataScreen({ navigation }) {
 						</TouchableOpacity>
 						<TouchableOpacity
 							onPress={() => {
+								setModalVisible(true);
 								if (startYear > endYear) {
 									// Checks if ending year happens before starting year
 									setMessage(
@@ -352,6 +355,62 @@ function ExportDataScreen({ navigation }) {
 								Export Data
 							</Text>
 						</TouchableOpacity>
+
+						{/* Pop-up for successful data export */}
+						<Modal
+							animationType="none"
+							visible={modalVisible}
+							transparent={true}
+							onRequestClose={() => {
+								setModalVisible(!modalVisible);
+							}}
+						>
+							<View style={[styles.container]}>
+								<View style={[styles.popup, { flexDirection: "row" }]}>
+									<Image
+										source={check}
+										style={{
+											resizeMode: "contain",
+											width: 30,
+											height: 30,
+											marginRight: 10,
+										}}
+									></Image>
+									<Text
+										style={{
+											textAlign: "center",
+											marginVertical: 10,
+											color: "white",
+											fontWeight: "bold",
+											fontSize: 20,
+											marginLeft: "2%",
+										}}
+									>
+										Exported Data Successfully!
+									</Text>
+
+									<TouchableOpacity
+										onPress={() => setModalVisible(!modalVisible)}
+										style={{
+											borderRadius: 20,
+											padding: 10,
+										}}
+									>
+										<Text
+											style={{
+												color: "white",
+												textAlign: "right",
+												fontSize: 24,
+												bottom: "75%",
+												marginLeft: 10,
+											}}
+										>
+											x
+										</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+						</Modal>
 					</View>
 				</View>
 			</ImageBackground>
@@ -463,15 +522,20 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		minWidth: "30%",
 	},
-	monthPicker: {
-		// For month picker
-		marginLeft: "10%",
-		marginRight: "10%",
+	popup: {
+		backgroundColor: "rgba(0,0,0,0.5)",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 10,
+		borderRadius: 20,
+		position: "absolute",
+		bottom: "5%",
 	},
 	yearPicker: {
-		// For year picker
-		marginLeft: "10%",
-		marginRight: "10%",
+		marginLeft: "8%",
+	},
+	monthPicker: {
+		marginLeft: "8%",
 	},
 });
 

@@ -213,6 +213,7 @@ export default function App() {
 				<Stack.Screen
 					name="Admin Resource List"
 					component={AdminResourceListScreen}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen

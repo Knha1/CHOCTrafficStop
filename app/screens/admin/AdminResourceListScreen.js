@@ -8,11 +8,13 @@ import {
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
+	Image,
 } from "react-native";
 
 import colors from "../../config/colors";
 import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
+import back from "../../assets/backArrowBlack.png";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -118,6 +120,9 @@ function AdminResourceListScreen({ navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
+					<TouchableOpacity onPress={() => navigation.goBack()}>
+						<Image source={back} style={styles.backButton}></Image>
+					</TouchableOpacity>
 					<Text style={styles.header}>Patient Resources</Text>
 					<Text style={styles.subtext}>
 						Tap on a resource to edit its details.
@@ -176,6 +181,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		paddingTop: 20,
 		paddingBottom: 12,
+		marginTop: "10%",
+		position: "absolute",
 	},
 	subtext: {
 		fontSize: 14,
@@ -233,6 +240,15 @@ const styles = StyleSheet.create({
 		height: 45,
 		width: 340,
 		marginBottom: 15,
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 });
 

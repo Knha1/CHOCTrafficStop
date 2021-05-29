@@ -165,6 +165,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 								<Text style={styles.text}>{item.text}</Text>
 								<RadioButtonRN
 									data={item.choices}
+									boxStyle={{ marginHorizontal: "10%" }}
 									selectedBtn={(e) => {
 										// finalTags[item.order] = e.tags;
 
@@ -179,7 +180,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 												answerCount++;
 											}
 										}
-										
+
 										setChosenTags(tempChosen);
 										setAnsweredQuestions(answerCount);
 									}}
@@ -203,7 +204,7 @@ var styles = StyleSheet.create({
 		color: "#CAEDFF",
 		fontSize: 16,
 		position: "absolute",
-		top: '15%',
+		top: "15%",
 		marginBottom: 100,
 		alignSelf: "center",
 	},
@@ -226,7 +227,7 @@ var styles = StyleSheet.create({
 	},
 	text: {
 		color: "#003C98",
-		width: '80%',
+		width: "80%",
 		left: 40,
 		fontWeight: "bold",
 		fontSize: 16,
@@ -274,7 +275,6 @@ var styles = StyleSheet.create({
 		width: 40,
 		height: 40,
 		alignSelf: "flex-start",
-		
 	},
 });
 

@@ -11,11 +11,13 @@ import {
 	View,
 	ActivityIndicator,
 	TouchableHighlight,
+	Image,
 } from "react-native";
 
 import colors from "../../config/colors";
 import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
+import back from "../../assets/backArrowBlack.png";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
@@ -182,6 +184,9 @@ function ResourceResultsScreen({ route, navigation }) {
 			) : (
 				// If done loading
 				<ScrollView>
+					<TouchableOpacity onPress={() => navigation.goBack()}>
+						<Image source={back} style={styles.backButton}></Image>
+					</TouchableOpacity>
 					<Text style={styles.header}>{titleText}</Text>
 					<Text style={styles.subtext}>{resultText}</Text>
 					<FlatList
@@ -285,7 +290,9 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		fontSize: 20,
 		paddingTop: 20,
-		paddingBottom: 12,
+		marginBottom: 12,
+		position: "absolute",
+		marginTop: 40,
 	},
 	subtext: {
 		fontSize: 14,
@@ -356,6 +363,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "#0E4B9D",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 });
 

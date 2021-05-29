@@ -37,7 +37,7 @@ function AdminLoginScreen({ navigation }) {
 					>
 						Admin Login
 					</Text>
-					<Text style={{left: 40, top:25}}>Username</Text>
+					<Text style={{ left: 40, top: 25 }}>Username</Text>
 					<TextInput
 						style={{
 							margin: 40,
@@ -53,7 +53,7 @@ function AdminLoginScreen({ navigation }) {
 						placeholder="Enter Username"
 						onChangeText={(text) => setUsername(text)}
 					/>
-					<Text style={{left: 40, top:15}}>Password</Text>
+					<Text style={{ left: 40, top: 15 }}>Password</Text>
 					<TextInput
 						style={{
 							margin: 40,
@@ -71,7 +71,9 @@ function AdminLoginScreen({ navigation }) {
 						secureTextEntry={true}
 					/>
 
-					<Text style={{color: 'red', alignSelf: 'center', top:10}}>{message}</Text>
+					<Text style={{ color: "red", alignSelf: "center", top: 10 }}>
+						{message}
+					</Text>
 
 					<TouchableOpacity
 						style={styles.button}
@@ -141,7 +143,7 @@ function AdminLoginScreen({ navigation }) {
 					</TouchableOpacity>
 
 					<Text
-						style={{ color: "#003C98", alignSelf: "center", marginTop: 110 }}
+						style={{ color: "#003C98", alignSelf: "center", marginTop: "10%" }}
 						onPress={() => navigation.navigate("Login")}
 					>
 						Not an Admin? Go Back
@@ -170,8 +172,9 @@ const styles = StyleSheet.create({
 		color: "#003C98",
 	},
 	button: {
-		position: "absolute",
-		top: 310,
+		// position: "absolute",
+		// top: 310,
+		marginTop: "10%",
 		alignItems: "center",
 		alignSelf: "center",
 		justifyContent: "center",
