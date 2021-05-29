@@ -21,9 +21,11 @@ import community from "../../assets/CommunityIcon.png";
 import bg from "../../assets/background.png";
 import back from "../../assets/backArrowBlack.png";
 
+import { storeData, readData } from "../../utils/DataHandler.js";
+
 function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
-
+	
 	return (
 		<ScrollView style={[styles.container]}>
 			<View
@@ -77,7 +79,22 @@ function SurveyCategoriesScreen({ navigation }) {
 									marginBottom: '5%'
 								},
 							]}
-							onPress={() => navigation.navigate("Resource List")}
+							onPress={() => {
+								var filterTags = [];
+								readData("previousTags")
+									.then((value) => {
+										filterTags = JSON.parse(value);
+										console.log(filterTags);
+									})
+									.finally(() => {
+										console.log("navigating");
+										console.log(filterTags);
+										navigation.navigate("Resource Results", {
+											tags: filterTags,
+											prevScreen: "home",
+										});
+									});
+							}}
 						>
 							Or, you can see your past resources here.
 						</Text>
