@@ -83,7 +83,14 @@ function ResourceDetailScreen({ route, navigation }) {
 							</Text>
 							<Text style={styles.infoText}>Address: {data["address"]}</Text>
 							<Text
-								style={styles.infoText}
+								style={{
+								color: 'blue',
+								textDecorationLine: 'underline',
+								top: 20,
+								marginTop: 5,
+								left: 40,
+								fontSize: 16,
+								width: 300,}}
 								onPress={() => {
 									Linking.openURL(data["website"]);
 									// TODO: Check if URL opening works
