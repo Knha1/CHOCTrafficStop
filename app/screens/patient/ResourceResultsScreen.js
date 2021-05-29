@@ -22,8 +22,9 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 
 function ResourceResultsScreen({ route, navigation }) {
-	
-	const [resultText, setResultText] = useState("Based on your survey results, here are some resources that might be helpful to you.");
+	const [resultText, setResultText] = useState(
+		"Based on your survey results, here are some resources that might be helpful to you."
+	);
 	var filter = route.params;
 	var titleText = "Resources for you";
 	const tags = filter["tags"];
@@ -33,11 +34,10 @@ function ResourceResultsScreen({ route, navigation }) {
 	if (prevScreen == "empty survey") {
 		setResultText("No answers recorded, showing all resource.");
 	} else if (prevScreen == "youth services") {
-		titleText = "Youth support resources";
-		setResultText(null);
+		titleText = "Youth Support Resources";
+		resultText = null;
 	} else {
-		if(prevScreen == "filledSurvey" && tags)
-		storeData("previousTags", tags);
+		if (prevScreen == "filledSurvey" && tags) storeData("previousTags", tags);
 	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
@@ -78,8 +78,7 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	const footer = () => {
 		// TODO: fix footer, button isn't pressable
-		if(prevScreen == "filled survey" || prevScreen == "empty survey")
-		{
+		if (prevScreen == "filled survey" || prevScreen == "empty survey") {
 			return (
 				<TouchableHighlight
 					underlayColor="#A6E1FF"
@@ -89,8 +88,7 @@ function ResourceResultsScreen({ route, navigation }) {
 					<Text style={{ color: "#FFF" }}>RETURN TO HOME</Text>
 				</TouchableHighlight>
 			);
-		}
-		else{
+		} else {
 			return null;
 		}
 	};
@@ -165,8 +163,7 @@ function ResourceResultsScreen({ route, navigation }) {
 						}
 					}
 				}
-				if(firstCatFound == false)
-				{
+				if (firstCatFound == false) {
 					setResultText("No results currently match your answers.");
 				}
 				setData(sections);

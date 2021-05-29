@@ -53,48 +53,45 @@ function ResourceDetailScreen({ route, navigation }) {
 		<View style={styles.container}>
 			<Text style={styles.topText}>Resource Details</Text>
 			<Image
-						style={styles.backArrow}
-						source={backArrowWhite}
-						onPress={() => navigation.navigate("Resource List")}
-						// TODO: Check if navigating back works
+				style={styles.backArrow}
+				source={backArrowWhite}
+				onPress={() => navigation.navigate("Resource List")}
+				// TODO: Check if navigating back works
 			></Image>
-					
+
 			{isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />
 			) : (
 				// If done loading
-				
+
 				<View style={styles.bottomContainer}>
-					
-					
-						<View>
+					<View>
 						<Text style={styles.categoryText}>{data["category"]}</Text>
-							<Text style={styles.text}>{data["name"]}</Text>
-							
-							<Text style={styles.infoText}>
-								Organization: {data["organization"]}
-							</Text>
-							<Text style={styles.infoText}>
-								Availability: {data["availability"]}
-							</Text>
-							<Text style={styles.infoText}>
-								Phone Number: {data["phone_num"]}
-							</Text>
-							<Text style={styles.infoText}>Address: {data["address"]}</Text>
-							<Text
-								style={styles.infoText}
-								onPress={() => {
-									Linking.openURL(data["website"]);
-									// TODO: Check if URL opening works
-								}}
-							>
-								Website: {data["website"]}
-							</Text>
-							<Text style={styles.descriptionText}>{data["description"]}</Text>
-						</View>
+						<Text style={styles.text}>{data["name"]}</Text>
+
+						<Text style={styles.infoText}>
+							Organization: {data["organization"]}
+						</Text>
+						<Text style={styles.infoText}>
+							Availability: {data["availability"]}
+						</Text>
+						<Text style={styles.infoText}>
+							Phone Number: {data["phone_num"]}
+						</Text>
+						<Text style={styles.infoText}>Address: {data["address"]}</Text>
+						<Text
+							style={styles.infoText}
+							onPress={() => {
+								Linking.openURL(data["website"]);
+								// TODO: Check if URL opening works
+							}}
+						>
+							Website: {data["website"]}
+						</Text>
+						<Text style={styles.descriptionText}>{data["description"]}</Text>
 					</View>
-				 
+				</View>
 			)}
 		</View>
 	);
@@ -107,15 +104,14 @@ var styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "flex-start",
 		paddingTop: 130,
-		
 	},
 	backArrow: {
 		height: 34,
 		width: 34,
 		alignSelf: "flex-start",
 		left: 30,
-		top: '12%',
-		position: 'absolute'
+		top: "12%",
+		position: "absolute",
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
@@ -135,9 +131,9 @@ var styles = StyleSheet.create({
 	topText: {
 		fontSize: 22,
 		color: "white",
-		top: '12%',
+		top: "12%",
 		alignSelf: "center",
-		position: "absolute"
+		position: "absolute",
 	},
 	text: {
 		color: "#003C98",
@@ -162,13 +158,13 @@ var styles = StyleSheet.create({
 	},
 	bottomContainer: {
 		flex: 1,
-		height: '100%',
-		alignSelf:"stretch",
+		height: "100%",
+		alignSelf: "stretch",
 		backgroundColor: "white",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		paddingTop: 35
-		},
+		paddingTop: 35,
+	},
 	buttonText: {
 		color: "#000",
 		alignSelf: "center",

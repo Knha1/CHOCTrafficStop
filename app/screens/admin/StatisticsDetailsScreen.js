@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Modal, ImageBackground, TouchableOpacity, Image} from "react-native";
-import DropDownPicker from 'react-native-dropdown-picker';
+import {
+	Text,
+	View,
+	StyleSheet,
+	Button,
+	Modal,
+	ImageBackground,
+	TouchableOpacity,
+	Image,
+} from "react-native";
+// import DropDownPicker from 'react-native-dropdown-picker';
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
@@ -8,8 +17,7 @@ import back from "../../assets/backArrowWhite.png";
 
 function StatisticsDetailsScreen({ navigation }) {
 	return (
-        <View style={styles.container}>
-			
+		<View style={styles.container}>
 			<ImageBackground
 				source={bg}
 				style={{
@@ -19,43 +27,93 @@ function StatisticsDetailsScreen({ navigation }) {
 				}}
 			>
 				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Image source = {back} style = {styles.backButton}></Image>
+					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
-				<View style={[
-						styles.base,
-						{ height: "70%", alignItems: "center"},
-					]}>
-				<Text style = {{marginTop: "8%", fontSize: 16, alignSelf: "flex-start", textAlign: "left", marginLeft: "8%", color: "#797979", fontWeight: 'bold'}}>Details</Text>
-				<Text style = {styles.textTitle}>Resource Name</Text>
-				{/* <View
+				<View style={[styles.base, { height: "70%", alignItems: "center" }]}>
+					<Text
+						style={{
+							marginTop: "8%",
+							fontSize: 16,
+							alignSelf: "flex-start",
+							textAlign: "left",
+							marginLeft: "8%",
+							color: "#797979",
+							fontWeight: "bold",
+						}}
+					>
+						Details
+					</Text>
+					<Text style={styles.textTitle}>Resource Name</Text>
+					{/* <View
 					style={{
 						borderBottomColor: 'white',
 						borderBottomWidth: 1,
 						marginBottom: 15
 					}}
 					/> */}
-				<View style={{flexDirection: 'row', alignItems: 'center'}}>
- 					<View style={{flex: 1, height: 1, backgroundColor: '#D2D2D2', marginHorizontal: '5%'}}/>
-				</View>
-				<Text style={styles.textDetails}> Most Viewed: 35 times </Text>
-				<View style={{flexDirection: 'row', alignItems: 'center'}}>
- 					<View style={{flex: 1, height: 1, backgroundColor: '#D2D2D2', marginHorizontal: '5%'}}/>
-				</View>
-				<Text style={styles.textDetails}> Least Viewed: 12 times </Text>   
-				<View style={{flexDirection: 'row', alignItems: 'center'}}>
- 					<View style={{flex: 1, height: 1, backgroundColor: '#D2D2D2', marginHorizontal: '5%'}}/>
-				</View>
-				<Text style={styles.textDetails}> Current views for today: 14 times </Text>   
-				<View style={{flexDirection: 'row', alignItems: 'center'}}>
- 					<View style={{flex: 1, height: 1, backgroundColor: '#D2D2D2', marginHorizontal: '5%'}}/>
-				</View>
-				<Text style={styles.textDetails}> Total times accessed: 264 times </Text>   
-				<View style={{flexDirection: 'row', alignItems: 'center'}}>
- 					<View style={{flex: 1, height: 1, backgroundColor: '#D2D2D2', marginHorizontal: '5%'}}/>
-				</View>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View
+							style={{
+								flex: 1,
+								height: 1,
+								backgroundColor: "#D2D2D2",
+								marginHorizontal: "5%",
+							}}
+						/>
+					</View>
+					<Text style={styles.textDetails}> Most Viewed: 35 times </Text>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View
+							style={{
+								flex: 1,
+								height: 1,
+								backgroundColor: "#D2D2D2",
+								marginHorizontal: "5%",
+							}}
+						/>
+					</View>
+					<Text style={styles.textDetails}> Least Viewed: 12 times </Text>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View
+							style={{
+								flex: 1,
+								height: 1,
+								backgroundColor: "#D2D2D2",
+								marginHorizontal: "5%",
+							}}
+						/>
+					</View>
+					<Text style={styles.textDetails}>
+						{" "}
+						Current views for today: 14 times{" "}
+					</Text>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View
+							style={{
+								flex: 1,
+								height: 1,
+								backgroundColor: "#D2D2D2",
+								marginHorizontal: "5%",
+							}}
+						/>
+					</View>
+					<Text style={styles.textDetails}>
+						{" "}
+						Total times accessed: 264 times{" "}
+					</Text>
+					<View style={{ flexDirection: "row", alignItems: "center" }}>
+						<View
+							style={{
+								flex: 1,
+								height: 1,
+								backgroundColor: "#D2D2D2",
+								marginHorizontal: "5%",
+							}}
+						/>
+					</View>
 
-				{/* <View style={styles.buttonSpacing}> */}
-				{/* <Button
+					{/* <View style={styles.buttonSpacing}> */}
+					{/* <Button
 				title="View Resource ->"
 				color = "blue"
 				onPress={() =>
@@ -63,8 +121,8 @@ function StatisticsDetailsScreen({ navigation }) {
 				}
 				/> */}
 
-				<TouchableOpacity
-						onPress={() => navigation.navigate('View Resource')}
+					<TouchableOpacity
+						onPress={() => navigation.navigate("View Resource")}
 						style={{
 							alignSelf: "center",
 							alignItems: "center",
@@ -83,12 +141,11 @@ function StatisticsDetailsScreen({ navigation }) {
 						<Text style={{ color: "white" }}>View Resource</Text>
 					</TouchableOpacity>
 				</View>
-			
+
 				{/* </View> */}
-		</ImageBackground>
-       </View>
-    );
-    
+			</ImageBackground>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -140,10 +197,10 @@ const styles = StyleSheet.create({
 		marginLeft: "8%",
 		marginBottom: "5%",
 		color: "#003C98",
-		fontWeight: 'bold'
+		fontWeight: "bold",
 	},
-	textDetails:{
-		marginVertical: '5%',
+	textDetails: {
+		marginVertical: "5%",
 		fontSize: 18,
 		alignSelf: "flex-start",
 		textAlign: "left",
@@ -155,9 +212,9 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 50,
 		height: 50,
-		alignSelf: 'flex-start',
-		marginLeft: '4%',
-		marginTop: '11%'
+		alignSelf: "flex-start",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 });
 

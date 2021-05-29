@@ -11,11 +11,14 @@
     "@expo-google-fonts/inter": "^0.1.0",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-picker/picker": "^1.9.2",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
     "expo": "^40.0.1",
+    "expo-file-system": "^9.3.0",
     "expo-font": "~8.4.0",
     "expo-linear-gradient": "^8.4.0",
+    "expo-sharing": "^8.5.0",
     "expo-status-bar": "~1.0.3",
     "firebase": "^8.4.2",
     "radio-buttons-react-native": "^1.0.4",
@@ -30,7 +33,8 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-toast-message": "^1.4.9",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

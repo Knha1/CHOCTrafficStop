@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 	Image,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "react-native-dropdown-picker";
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
@@ -29,7 +29,7 @@ function StatisticsHomeScreen({ navigation }) {
 				}}
 			>
 				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Image source = {back} style = {styles.backButton}></Image>
+					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
 				{/* <Text style={{
 						marginTop: "11%",
@@ -42,7 +42,6 @@ function StatisticsHomeScreen({ navigation }) {
 					Resources Accessed
 				</Text> */}
 
-			
 				{/* <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text> */}
 				<View style={{ alignItems: "center" }}>
 					{/* <PureChart  data={[
@@ -72,7 +71,7 @@ function StatisticsHomeScreen({ navigation }) {
 							textAlign: "left",
 							marginLeft: "10%",
 							color: "#003C98",
-							fontWeight: 'bold'
+							fontWeight: "bold",
 						}}
 					>
 						Top 3 Resources Accessed
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		// backgroundColor: colors.bg,
 		// alignItems: "center",
-		flexDirection: 'row'
+		flexDirection: "row",
 	},
 	buttonSpacing: {
 		margin: 5,
@@ -159,10 +158,10 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 		width: 34,
 		height: 34,
-		alignSelf: 'flex-start',
-		marginBottom: '2%',
-		marginLeft: '4%',
-		marginTop: '11%'
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	resourceText: {
 		marginTop: "2%",
