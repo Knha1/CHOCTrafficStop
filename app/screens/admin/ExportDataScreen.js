@@ -306,26 +306,36 @@ function ExportDataScreen({ navigation }) {
 														bookType: "xlsx",
 													});
 
-													// TODO: make sure filename doesn't end in .xlsx already
+													if (fname.length == 0) {
+														setMessage(
+															"Exported file name cannot be empty. Enter a file name."
+														);
+													} else if (processed_data.length == 0) {
+														setMessage(
+															"No usage data was found for this date range. Please choose a different date range."
+														);
+													} else {
+														var fname = filename;
+														fname = fname.replace(".xlsx", "");
+														const uri =
+															FileSystem.documentDirectory + fname + ".xlsx";
 
-													const uri =
-														FileSystem.documentDirectory + "ResourceUsage.xlsx";
-													console.log(
-														`Writing to ${JSON.stringify(
-															uri
-														)} with text: ${wbout}`
-													);
-													FileSystem.writeAsStringAsync(uri, wbout, {
-														encoding: FileSystem.EncodingType.Base64,
-													});
+														console.log(
+															`Writing to ${JSON.stringify(
+																uri
+															)} with text: ${wbout}`
+														);
+														FileSystem.writeAsStringAsync(uri, wbout, {
+															encoding: FileSystem.EncodingType.Base64,
+														});
 
-													Sharing.shareAsync(uri, {
-														mimeType:
-															"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-														dialogTitle: "Resource Usage Statistics",
-														UTI: "com.microsoft.excel.xlsx",
-													});
-													console.log("finito");
+														Sharing.shareAsync(uri, {
+															mimeType:
+																"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+															dialogTitle: "Resource Usage Statistics",
+															UTI: "com.microsoft.excel.xlsx",
+														});
+													}
 												});
 										});
 								}
