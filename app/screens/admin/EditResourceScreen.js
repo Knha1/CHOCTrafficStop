@@ -235,14 +235,16 @@ function EditResourceScreen({ route, navigation }) {
 					width: "100%",
 				}}
 			>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
+
 				<KeyboardAvoidingView
 					behavior={Platform.OS === "ios" ? "padding" : "height"}
 					style={styles.container}
 				>
 					<ScrollView>
-						<TouchableOpacity onPress={() => navigation.goBack()}>
-							<Image source={back} style={styles.backButton}></Image>
-						</TouchableOpacity>
+						
 						<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 							<View style={styles.inner}>
 								{/* <Text style={styles.header}>Header</Text>

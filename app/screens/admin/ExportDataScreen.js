@@ -9,6 +9,8 @@ import {
 	ImageBackground,
 	Image,
 	TouchableOpacity,
+	ScrollView,
+	KeyboardAvoidingView
 } from "react-native";
 
 import colors from "../../config/colors";
@@ -60,7 +62,12 @@ function ExportDataScreen({ navigation }) {
 				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
-				<View style={[styles.base]}>
+
+				<KeyboardAvoidingView
+					behavior={Platform.OS === "ios" ? "padding" : "height"}
+					style={styles.container}
+				>
+				<ScrollView style={[styles.base]}>
 					<Text
 						style={{
 							marginTop: "10%",
@@ -84,6 +91,7 @@ function ExportDataScreen({ navigation }) {
 							setStartMonth(itemValue);
 						}}
 						style={styles.monthPicker}
+						itemStyle={{ fontSize: 16 }}
 					>
 						<Picker.Item label="January" value="1" />
 						<Picker.Item label="February" value="2" />
@@ -105,6 +113,7 @@ function ExportDataScreen({ navigation }) {
 							setStartYear(itemValue);
 						}}
 						style={styles.yearPicker}
+						itemStyle={{ fontSize: 16 }}
 					>
 						<Picker.Item label="2021" value="2021" />
 						<Picker.Item label="2022" value="2022" />
@@ -119,6 +128,7 @@ function ExportDataScreen({ navigation }) {
 							setEndMonth(itemValue);
 						}}
 						style={styles.monthPicker}
+						itemStyle={{ fontSize: 16 }}
 					>
 						<Picker.Item label="January" value="1" />
 						<Picker.Item label="February" value="2" />
@@ -140,6 +150,7 @@ function ExportDataScreen({ navigation }) {
 							setEndYear(itemValue);
 						}}
 						style={styles.yearPicker}
+						itemStyle={{ fontSize: 16 }}
 					>
 						<Picker.Item label="2021" value="2021" />
 						<Picker.Item label="2022" value="2022" />
@@ -148,20 +159,22 @@ function ExportDataScreen({ navigation }) {
 
 					<Text style={styles.subheader}>Exported File Name: </Text>
 					<TextInput
-						style={styles.baseText}
+						style={[styles.baseText, {marginBottom: "2%"}]}
 						placeholder=" Enter File Name"
 						onChangeText={(text) => setFilename(text)}
 					/>
 
 					{/* Status message if month/year is entered wrong */}
-					<Text style={styles.subheader}>{message}</Text>
+					<Text style={[styles.subheader, {marginBottom: "2%"}]}>{message}</Text>
 
 					<View
 						style={{
 							flexDirection: "row",
-							position: "absolute",
-							bottom: 30,
-							left: 40,
+							// position: "absolute",
+							bottom: 20,
+							marginLeft: "15%",
+							alignContent: "space-around",
+							marginTop: "40%"
 						}}
 					>
 						<TouchableOpacity
@@ -412,45 +425,10 @@ function ExportDataScreen({ navigation }) {
 							</View>
 						</Modal>
 					</View>
-				</View>
+				</ScrollView>
+				</KeyboardAvoidingView>
 			</ImageBackground>
 		</View>
-		//     <View style={{padding: 10}}>
-
-		//     <Text>File Name: </Text>
-		//     <TextInput
-		//     style={{height: 40}}
-		//     placeholder = "File Name" />
-		// 	<View style ={{marginTop: 10, margin:5}}/>
-		// 	<Text>File Type: </Text>
-		// 	<DropDownPicker
-		// 		items={[
-		// 			{label: '.pdf', value: 'pdf'},
-		// 			{label: '.docx', value: 'docx'},
-		// 			{label: '.txt', value: 'txt'},
-		// 			{label: '.odt', value: 'odt'},
-		// 		]}
-		// 	/>
-
-		//     <View style ={{marginTop: 10, margin:5}}>
-		//     <Button
-		//       title="Export Data"
-		//       onPress={() =>
-		//         navigation.navigate('Admin Home')
-		//       }
-		//     />
-		//     </View>
-
-		//     <View style ={{marginTop: 10, margin:5}}>
-		//     <Button
-		//       title="Cancel"
-		// 	  color = "grey"
-		//       onPress={() =>
-		//         navigation.navigate('Admin Home')
-		//       }
-		//     />
-		//     </View>
-		//    </View>
 	);
 }
 
@@ -507,7 +485,8 @@ const styles = StyleSheet.create({
 		marginLeft: "10%",
 		marginRight: "10%",
 		marginBottom: "5%",
-		height: "5%",
+		// height: "5%",
+		paddingVertical: "2%",
 		borderWidth: 1,
 		borderRadius: 5,
 		borderColor: "#D1D1D1",
@@ -533,9 +512,18 @@ const styles = StyleSheet.create({
 	},
 	yearPicker: {
 		marginLeft: "8%",
+		marginVertical: "1%",
+		width: "80%",
+		// height: "10%" ,
+		alignSelf: "center"
 	},
 	monthPicker: {
 		marginLeft: "8%",
+		width: "80%",
+		marginTop: "2%",
+		// height: "8%" ,
+		alignSelf: "center"
+		
 	},
 });
 
