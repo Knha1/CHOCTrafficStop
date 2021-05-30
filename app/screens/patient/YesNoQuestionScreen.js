@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
 		marginTop: "15%",
 	},
 	submitButton: {
-		top: 50,
+		marginTop: 50,
 		height: 45,
 		margin: 3,
 		width: 340,

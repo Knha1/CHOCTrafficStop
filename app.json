@@ -28,6 +28,6 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": "2021-05-29 | Fixed resource details screen, question formatting"
+    "description": "2021-05-29 | Added suicide hotline button, question screen UI fix"
   }
 }
