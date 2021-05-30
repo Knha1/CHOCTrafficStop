@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
+	ImageBackground,
+	SimpleSurvey,
 	StyleSheet,
 	Text,
+	TextInput,
 	View,
+	Button,
 	TouchableOpacity,
+	Icon,
 	TouchableHighlight,
 	Image,
-	ImageBackground,
+	ScrollView,
 	FlatList,
+	ActivityIndicator,
 } from "react-native";
 import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
+import logo from "../../assets/logo_nobg.png";
+import { RectButton } from "react-native-gesture-handler";
 import bg from "../../assets/background.png";
 
 function YesNoQuestionScreen({ route, navigation }) {
@@ -30,11 +38,19 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
-				onPress={() =>
-					navigation.navigate("Resource List", {
-						tags: chosenTags,
-					})
-				}
+				onPress={() => {
+					if (answeredQuestions >= 1) {
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "filled survey",
+						});
+					} else {
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+							prevScreen: "empty survey",
+						});
+					}
+				}}
 			>
 				<Text style={{ color: "#FFF" }}>SUBMIT SURVEY</Text>
 			</TouchableHighlight>
@@ -111,10 +127,8 @@ function YesNoQuestionScreen({ route, navigation }) {
 			.finally(() => setLoading(false));
 	}, [isLoading]);
 
-	//OTHER CODE TO USE
-
 	return (
-		<View style={[styles.container]}>
+		<View style={styles.container}>
 			<ImageBackground
 				source={bg}
 				style={{
@@ -127,20 +141,27 @@ function YesNoQuestionScreen({ route, navigation }) {
 					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
 				<Text style={styles.topText}>{category_name} Survey</Text>
-
+				{/* <View style={styles.rectangle}>
+				<View style={progressBar()}></View>
+			</View> */}
 				<Text
 					style={styles.skipToResultsText}
 					onPress={() => {
-						console.log("Naving to results");
-						console.log(chosenTags);
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-						});
+						if (answeredQuestions >= 1) {
+							navigation.navigate("Resource Results", {
+								tags: chosenTags,
+								prevScreen: "filled survey",
+							});
+						} else {
+							navigation.navigate("Resource Results", {
+								tags: chosenTags,
+								prevScreen: "empty survey",
+							});
+						}
 					}}
 				>
 					Skip to Results? ({answeredQuestions} / {totalQuestions})
 				</Text>
-
 				<View
 					style={[
 						styles.base,
@@ -148,43 +169,41 @@ function YesNoQuestionScreen({ route, navigation }) {
 					]}
 				>
 					<View style={styles.bottomContainer}>
-						<View>
-							<FlatList
-								contentContainerStyle={{ paddingBottom: 100 }}
-								data={data}
-								keyExtractor={(item, index) => index.toString()}
-								ListFooterComponent={footer}
-								renderItem={({ item }) => {
-									return (
-										<View style={{ alignContent: "flex-start" }}>
-											<Text style={styles.text}>{item.text}</Text>
-											<RadioButtonRN
-												data={item.choices}
-												boxStyle={{ marginHorizontal: "10%" }}
-												selectedBtn={(e) => {
-													// finalTags[item.order] = e.tags;
+						<FlatList
+							contentContainerStyle={{ paddingBottom: 100 }}
+							data={data}
+							keyExtractor={(item, index) => index.toString()}
+							ListFooterComponent={footer}
+							renderItem={({ item }) => {
+								return (
+									<View style={{ alignContent: "flex-start" }}>
+										<Text style={styles.text}>{item.text}</Text>
+										<RadioButtonRN
+											data={item.choices}
+											boxStyle={{ marginHorizontal: "10%" }}
+											selectedBtn={(e) => {
+												// finalTags[item.order] = e.tags;
 
-													var tempChosen = chosenTags;
-													var answerCount = 0;
+												var tempChosen = chosenTags;
+												var answerCount = 0;
 
-													tempChosen[item.order - 1] = e.tags;
+												tempChosen[item.order - 1] = e.tags;
 
-													// Update answer count if temp value is overriden by actual tags
-													for (var ans in tempChosen) {
-														if (tempChosen[ans] != "none") {
-															answerCount++;
-														}
+												// Update answer count if temp value is overriden by actual tags
+												for (var ans in tempChosen) {
+													if (tempChosen[ans] != "none") {
+														answerCount++;
 													}
+												}
 
-													setChosenTags(tempChosen);
-													setAnsweredQuestions(answerCount);
-												}}
-											/>
-										</View>
-									);
-								}}
-							/>
-						</View>
+												setChosenTags(tempChosen);
+												setAnsweredQuestions(answerCount);
+											}}
+										/>
+									</View>
+								);
+							}}
+						/>
 					</View>
 				</View>
 			</ImageBackground>
