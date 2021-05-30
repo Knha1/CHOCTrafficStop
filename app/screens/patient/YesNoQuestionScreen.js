@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-	ImageBackground,
-	SimpleSurvey,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
-	Icon,
 	TouchableHighlight,
 	Image,
-	ScrollView,
 	FlatList,
-	ActivityIndicator,
 } from "react-native";
 import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
-import logo from "../../assets/logo_nobg.png";
-import { RectButton } from "react-native-gesture-handler";
 
 function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
@@ -124,9 +115,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 				<Image source={back} style={styles.backButton}></Image>
 			</TouchableOpacity>
 			<Text style={styles.topText}>{category_name} Survey</Text>
-			{/* <View style={styles.rectangle}>
-				<View style={progressBar()}></View>
-			</View> */}
+			
 			<Text
 				style={styles.skipToResultsText}
 				onPress={() => {
@@ -189,9 +178,11 @@ var styles = StyleSheet.create({
 		color: "#CAEDFF",
 		fontSize: 16,
 		position: "absolute",
-		top: '15%',
+		top: '17%',
+		bottom: '10%',
 		marginBottom: 100,
 		alignSelf: "center",
+		//marginTop: 12
 	},
 	rectangle: {
 		height: 4,
@@ -208,7 +199,9 @@ var styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 12,
 		position: "absolute",
-		marginTop: 60,
+		marginTop: '15%',
+		width: 250,
+		textAlign: 'center'
 	},
 	text: {
 		color: "#003C98",
@@ -237,7 +230,7 @@ var styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		marginTop: "16%",
+		marginTop: "20%",
 	},
 	buttonText: {
 		color: "#000",
@@ -256,9 +249,11 @@ var styles = StyleSheet.create({
 	},
 	backButton: {
 		resizeMode: "contain",
-		width: 40,
-		height: 40,
+		width: 34,
+		height: 34,
 		alignSelf: "flex-start",
+		marginLeft: "4%",
+		marginTop: '2%',
 		
 	},
 });
