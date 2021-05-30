@@ -62,7 +62,6 @@ function ResourceDetailScreen({ route, navigation }) {
 					]}
 				>
 
-
 {isLoading ? (
 				// If still loading
 				<ActivityIndicator size="small" color="#0000ff" />

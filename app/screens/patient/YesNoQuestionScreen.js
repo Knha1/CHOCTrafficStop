@@ -6,11 +6,13 @@ import {
 	TouchableOpacity,
 	TouchableHighlight,
 	Image,
+	ImageBackground,
 	FlatList,
 } from "react-native";
 import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
+import bg from "../../assets/background.png";
 
 function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
@@ -109,8 +111,19 @@ function YesNoQuestionScreen({ route, navigation }) {
 			.finally(() => setLoading(false));
 	}, [isLoading]);
 
-	return (
-		<View style={styles.container}>
+
+//OTHER CODE TO USE
+
+return (
+	<View style={[styles.container]}>
+		<ImageBackground
+			source={bg}
+			style={{
+				overflow: "hidden",
+				resizeMode: "stretch",
+				height: "100%",
+			}}
+		>
 			<TouchableOpacity onPress={() => navigation.goBack()}>
 				<Image source={back} style={styles.backButton}></Image>
 			</TouchableOpacity>
@@ -128,15 +141,27 @@ function YesNoQuestionScreen({ route, navigation }) {
 			>
 				Skip to Results? ({answeredQuestions} / {totalQuestions})
 			</Text>
+
+
+			<View
+				style={[
+					styles.base,
+					{ height: "70%", marginTop: 40, alignItems: "flex-start" },
+				]}
+			>
+
 			<View style={styles.bottomContainer}>
-				<FlatList
+				
+				
+					<View>
+					<FlatList
 					contentContainerStyle={{ paddingBottom: 100 }}
 					data={data}
 					keyExtractor={(item, index) => index.toString()}
 					ListFooterComponent={footer}
 					renderItem={({ item }) => {
 						return (
-							<View>
+							<View style={{alignContent: 'flex-start'}}>
 								<Text style={styles.text}>{item.text}</Text>
 								<RadioButtonRN
 									data={item.choices}
@@ -163,78 +188,64 @@ function YesNoQuestionScreen({ route, navigation }) {
 						);
 					}}
 				/>
+					</View>
+				</View>
 			</View>
-		</View>
-	);
+		</ImageBackground>
+	</View>
+);
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#0066BB",
-		paddingTop: 50,
+	},
+	buttonSpacing: {
+		margin: 5,
 	},
 	skipToResultsText: {
-		color: "#CAEDFF",
-		fontSize: 16,
-		position: "absolute",
-		top: '17%',
-		bottom: '10%',
-		marginBottom: 100,
-		alignSelf: "center",
-		//marginTop: 12
-	},
-	rectangle: {
-		height: 4,
-		width: 320,
-		borderRadius: 10,
-		position: "absolute",
-		top: 115,
-		backgroundColor: "#FFF",
-		alignSelf: "center",
+				color: "#CAEDFF",
+				fontSize: 16,
+				position: "absolute",
+				top: '15%',
+				alignSelf: "center",
 	},
 	topText: {
-		color: "white",
-		alignSelf: "center",
-		fontSize: 20,
-		marginBottom: 12,
-		position: "absolute",
-		marginTop: '15%',
-		width: 250,
-		textAlign: 'center'
+				color: "white",
+				alignSelf: "center",
+				fontSize: 20,
+				marginBottom: 12,
+				position: "absolute",
+				marginTop: '15%',
+				width: 250,
+				textAlign: 'center'
 	},
 	text: {
 		color: "#003C98",
 		width: '80%',
-		left: 40,
+		left: 20,
 		fontWeight: "bold",
 		fontSize: 16,
 		marginTop: 40,
 	},
-	button: {
-		top: 20,
-		height: 45,
-		margin: 3,
-		width: 280,
-		borderRadius: 64,
-		alignSelf: "center",
-		backgroundColor: "#F8F8F8",
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#D6D6D6",
-		borderWidth: 1,
-	},
-	bottomContainer: {
-		flex: 1,
-		alignSelf: "stretch",
-		backgroundColor: "#fff",
+	base: {
+		backgroundColor: "white",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		marginTop: "20%",
+		alignSelf: "stretch",
+		flex: 1,
+		//paddingTop: '10%',
+		paddingRight: '5%',
+		paddingLeft: '5%'
 	},
-	buttonText: {
-		color: "#000",
-		alignSelf: "center",
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "15%",
 	},
 	submitButton: {
 		top: 50,
@@ -246,15 +257,6 @@ var styles = StyleSheet.create({
 		backgroundColor: "#0E4B9D",
 		alignItems: "center",
 		justifyContent: "center",
-	},
-	backButton: {
-		resizeMode: "contain",
-		width: 34,
-		height: 34,
-		alignSelf: "flex-start",
-		marginLeft: "4%",
-		marginTop: '2%',
-		
 	},
 });
 
