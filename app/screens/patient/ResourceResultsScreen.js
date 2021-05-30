@@ -19,13 +19,14 @@ import colors from "../../config/colors";
 import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
 import back from "../../assets/backArrowBlack.png";
-
+import { Linking } from "react-native";
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
 	<Text style={[styles.title, textColor]}>{item.title}</Text>
 );
 
 function ResourceResultsScreen({ route, navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [hotlineModal, setHotlineModal] = useState(false);
 	var resultText =
 		"Based on your survey results, here are some resources that might be helpful to you.";
 	// const [resultText, setResultText] = useState(
@@ -36,6 +37,7 @@ function ResourceResultsScreen({ route, navigation }) {
 	const tags = filter["tags"];
 	console.log(tags);
 	const prevScreen = filter["prevScreen"];
+	var crisis = false;
 	// Change result text if the survey was empty
 	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resources.";
@@ -59,6 +61,9 @@ function ResourceResultsScreen({ route, navigation }) {
 				}
 			}
 		}
+		if (filterTags.includes("suicide")) {
+			crisis = true;
+		}
 	}
 
 	// Review and Edit Survey Answers
@@ -66,6 +71,41 @@ function ResourceResultsScreen({ route, navigation }) {
 		// TODO: fix footer, button isn't pressable
 		if (prevScreen == "home" || prevScreen == "youth services") {
 			return null;
+		} else if (crisis == true) {
+			return (
+				<View>
+					<TouchableOpacity
+						style={styles.button}
+						// onPress={() => navigation.navigate("Home")}
+						onPress={() => navigation.goBack()}
+						// TODO: Remove navigation to home -- temp for testing
+					>
+						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => setHotlineModal(true)}
+						style={{
+							alignSelf: "center",
+							alignItems: "center",
+							backgroundColor: "#A32E2E",
+							width: "80%",
+							padding: 5,
+							borderRadius: 20,
+							position: "absolute",
+							bottom: "-20%",
+							shadowColor: "#000",
+							shadowOffset: { width: 0, height: 2 },
+							shadowOpacity: 0.25,
+							shadowRadius: 4,
+							marginTop: 40,
+							marginBottom: 15,
+						}}
+					>
+						<Text style={{ color: "white" }}>CALL SUICIDE HOTLINE</Text>
+					</TouchableOpacity>
+				</View>
+			);
 		} else {
 			return (
 				<TouchableOpacity
@@ -170,6 +210,9 @@ function ResourceResultsScreen({ route, navigation }) {
 				if (prevScreen == "filled survey" && firstCatFound == true) {
 					storeData("previousTags", tags);
 				} else if (firstCatFound == false) {
+					console.log("-------------");
+					console.log(filterTags);
+					console.log("-------------");
 					setModalVisible(true);
 				}
 				setData(sections);
@@ -194,6 +237,82 @@ function ResourceResultsScreen({ route, navigation }) {
 					<Text style={styles.header}>{titleText}</Text>
 					<Text style={styles.subtext}>{resultText}</Text>
 
+					<Modal
+						animationType="none"
+						visible={hotlineModal}
+						transparent={true}
+						onRequestClose={() => {
+							setHotlineModal(!hotlineModal);
+						}}
+					>
+						<View
+							style={[
+								styles.container,
+								{
+									backgroundColor: "rgba(0,0,0,0.5)",
+									justifyContent: "center",
+								},
+							]}
+						>
+							<View style={styles.emergencyConfirm}>
+								<Text
+									style={{
+										textAlign: "center",
+										marginBottom: 10,
+										color: "#9C0000",
+										fontWeight: "bold",
+										fontSize: 24,
+									}}
+								>
+									Warning!
+								</Text>
+								<Text
+									style={{
+										textAlign: "center",
+										marginBottom: 20,
+										marginHorizontal: "10%",
+									}}
+								>
+									Would you like to dial the suicide hotline?
+								</Text>
+								<View
+									style={{
+										flexDirection: "row",
+										justifyContent: "space-evenly",
+									}}
+								>
+									<TouchableOpacity
+										onPress={() => setHotlineModal(!hotlineModal)}
+										style={{
+											width: "40%",
+											backgroundColor: "#D9D9D9",
+											borderRadius: 20,
+											padding: 10,
+											textAlign: "center",
+										}}
+									>
+										<Text style={{ color: "black", textAlign: "center" }}>
+											Cancel
+										</Text>
+									</TouchableOpacity>
+									<TouchableOpacity
+										onPress={() => Linking.openURL(`tel:${18002738255}`)}
+										style={{
+											backgroundColor: "#A32E2E",
+											width: "40%",
+											alignItems: "center",
+											borderRadius: 20,
+											padding: 10,
+										}}
+									>
+										<Text style={{ color: "white", textAlign: "center" }}>
+											Yes
+										</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+						</View>
+					</Modal>
 					{/* Pop-up for no resources found */}
 					<Modal
 						animationType="none"
@@ -400,7 +519,7 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		height: 45,
 		width: 340,
-		marginBottom: 15,
+		marginBottom: 40,
 	},
 	submitButton: {
 		// top: 50,
@@ -437,6 +556,12 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		position: "absolute",
 		bottom: "5%",
+	},
+	emergencyConfirm: {
+		backgroundColor: "white",
+		borderRadius: 20,
+		marginHorizontal: "5%",
+		paddingVertical: "5%",
 	},
 });
 
