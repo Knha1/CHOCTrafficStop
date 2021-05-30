@@ -144,7 +144,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 				<View
 					style={[
 						styles.base,
-						{ height: "70%", marginTop: 40, alignItems: "flex-start" },
+						{ height: "70%", marginTop: 40, alignItems: "center" },
 					]}
 				>
 					<View style={styles.bottomContainer}>
@@ -160,6 +160,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 											<Text style={styles.text}>{item.text}</Text>
 											<RadioButtonRN
 												data={item.choices}
+												boxStyle={{ marginHorizontal: "10%" }}
 												selectedBtn={(e) => {
 													// finalTags[item.order] = e.tags;
 
@@ -201,8 +202,8 @@ const styles = StyleSheet.create({
 	skipToResultsText: {
 		color: "#CAEDFF",
 		fontSize: 16,
-		position: "absolute",
-		top: "15%",
+		// position: "absolute",
+		marginTop: "2%",
 		alignSelf: "center",
 	},
 	topText: {
@@ -217,8 +218,8 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: "#003C98",
-		width: "80%",
-		left: 20,
+		// width: "100%",
+		marginHorizontal: "8%",
 		fontWeight: "bold",
 		fontSize: 16,
 		marginTop: 40,
@@ -229,9 +230,7 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
 		flex: 1,
-		//paddingTop: '10%',
-		paddingRight: "5%",
-		paddingLeft: "5%",
+		width: "100%",
 	},
 	backButton: {
 		resizeMode: "contain",
