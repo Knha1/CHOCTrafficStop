@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-	ImageBackground,
 	Text,
 	View,
 	KeyboardAvoidingView,
@@ -11,6 +10,11 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { firebase } from "../../firebase/config";
 
+/**
+ * Login for admin users
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AdminLoginScreen({ navigation }) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -79,7 +83,6 @@ function AdminLoginScreen({ navigation }) {
 						style={styles.button}
 						title="Login"
 						onPress={() => {
-							var valid = false;
 							if (username.length == 0 || password.length == 0) {
 								setMessage(
 									"Username and/or password are not filled in. Try again."
@@ -88,11 +91,11 @@ function AdminLoginScreen({ navigation }) {
 									"Username and/or password are not filled in. Try again."
 								);
 							} else {
-								// TODO: Replace w/ EXTRA secure sign in
 								var validUsername = false;
 								var validPassword = false;
 								var admin_id = 0;
 
+								// Check if any usernames match, then check if password matches
 								firebase
 									.database()
 									.ref()
@@ -111,7 +114,6 @@ function AdminLoginScreen({ navigation }) {
 										}
 									})
 									.then(() => {
-										// TODO: don't check for password is username is wrong
 										firebase
 											.database()
 											.ref()
@@ -131,7 +133,9 @@ function AdminLoginScreen({ navigation }) {
 												if (validUsername && validPassword) {
 													navigation.navigate("Admin Home");
 												} else {
-													setMessage("Invalid password or username");
+													setMessage(
+														"Invalid password or username. Try again."
+													);
 													console.log("Invalid password or username.");
 												}
 											});
