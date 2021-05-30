@@ -87,9 +87,6 @@ function AdminLoginScreen({ navigation }) {
 								setMessage(
 									"Username and/or password are not filled in. Try again."
 								);
-								console.log(
-									"Username and/or password are not filled in. Try again."
-								);
 							} else {
 								var validUsername = false;
 								var validPassword = false;
@@ -125,8 +122,6 @@ function AdminLoginScreen({ navigation }) {
 													if (password == snapshot.val().password) {
 														validPassword = true;
 													}
-												} else {
-													console.log("invalid password");
 												}
 											})
 											.finally(() => {
@@ -136,7 +131,6 @@ function AdminLoginScreen({ navigation }) {
 													setMessage(
 														"Invalid password or username. Try again."
 													);
-													console.log("Invalid password or username.");
 												}
 											});
 									});
