@@ -8,18 +8,21 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	ScrollView,
-	Picker,
 	TouchableWithoutFeedback,
 	Keyboard,
 	ImageBackground,
 } from "react-native";
-
-// TODO: Remove Picker import, replace with @react-native-community/picker
-
+import { firebase } from "../../firebase/config";
+import { Picker } from "@react-native-picker/picker";
+// ASSET IMPORTS
 import back from "../../assets/backArrowWhite.png";
 import bg from "../../assets/background.png";
-import { firebase } from "../../firebase/config";
 
+/**
+ * Allows an admin to add a new resource to the DB
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AddResourceScreen({ navigation }) {
 	// Defaulting org to Project Choice in case user doesn't select org
 	const [selectedOrganization, setSelectedOrganization] =
@@ -115,7 +118,7 @@ function AddResourceScreen({ navigation }) {
 								<Text style={styles.text3}>Organization</Text>
 								<Picker
 									selectedValue={selectedOrganization}
-									style={{ marginBottom: 28 }}
+									style={{ marginBottom: 28, width: "90%", marginLeft: "4%" }}
 									itemStyle={{ fontSize: 20 }}
 									onValueChange={(itemValue, itemIndex) =>
 										setSelectedOrganization(itemValue)
