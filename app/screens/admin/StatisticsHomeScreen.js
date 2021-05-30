@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	View,
@@ -8,15 +8,96 @@ import {
 	ImageBackground,
 	TouchableOpacity,
 	Image,
+	ActivityIndicator,
 } from "react-native";
-// import DropDownPicker from "react-native-dropdown-picker";
 
 import colors from "../../config/colors";
 import bg from "../../assets/background.png";
 import back from "../../assets/backArrowWhite.png";
-// import PureChart from 'react-native-pure-chart';
+import { firebase } from "../../firebase/config";
+import { readData } from "../../utils/DataHandler";
 
 function StatisticsHomeScreen({ navigation }) {
+	const monthNames = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December",
+	];
+	const curMonth = new Date().getMonth();
+	const curYear = new Date().getFullYear();
+	// State variable to show loading screen if resource details aren't loaded yet
+	const [isLoading, setLoading] = useState(true);
+	const [res1, setRes1] = useState("");
+	const [res2, setRes2] = useState("");
+	const [res3, setRes3] = useState("");
+	var raw_data = {};
+	var indexed_resources = {};
+
+	useEffect(() => {
+		firebase
+			.database()
+			.ref()
+			.child("data")
+			.get()
+			.then((snapshot) => {
+				if (snapshot.exists()) {
+					snapshot.forEach((datum) => {
+						// Ignore the 'num_data' counter in database
+						if (!Number.isInteger(datum.val())) {
+							const year = datum.val().year;
+							const month = datum.val().month - 1; // Date().getMonth() starts at 0 (not 1)
+							const resource_id = parseInt(datum.val().resource_id);
+
+							// Check if year and month match up
+							if (curYear == year && curMonth == month) {
+								if (raw_data[resource_id] == undefined) {
+									raw_data[resource_id] = 1;
+								} else {
+									raw_data[resource_id]++;
+								}
+							}
+						}
+					});
+
+					readData("resources").then((resource) => {
+						var resources = JSON.parse(resource);
+
+						// Index resources based on resource_id for faster retrieval
+						for (var r in resources) {
+							indexed_resources[resources[r]["resource_id"]] = resources[r];
+						}
+					});
+					// Sort by descending # of views
+					raw_data = Object.entries(raw_data).sort((a, b) => b[1] - a[1]);
+
+					for (var resIndex in raw_data) {
+						if (resIndex == 0) {
+							console.log(raw_data[resIndex]);
+						} else if (res == 1) {
+							console.log(raw_data[resIndex]);
+						} else if (res == 2) {
+							console.log(raw_data[resIndex]);
+						} else {
+							break;
+						}
+					}
+
+					setLoading(false);
+				} else {
+					console.log("'data' doesn't exist in database.");
+				}
+			});
+	}, [isLoading]);
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -31,36 +112,8 @@ function StatisticsHomeScreen({ navigation }) {
 				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
-				{/* <Text style={{
-						marginTop: "11%",
-						fontSize: 20,
-						alignSelf: "center",
-						color: "white",
-						position: 'absolute',
-					}}
-				>
-					Resources Accessed
-				</Text> */}
 
-				{/* <Text style = {{paddingTop: 10, fontSize:15 , alignSelf: 'center', padding: 40}}>Statistics Wheel here :-)</Text> */}
-				<View style={{ alignItems: "center" }}>
-					{/* <PureChart  data={[
-					{
-					value: 50,
-					label: 'resource1',
-					color: '#56E9CE',
-					}, {
-					value: 40,
-					label: 'resource2',
-					color: '#9B3DE5'
-					}, {
-					value: 25,
-					label: 'resource3',
-					color: '#2641CE'
-					}
-				
-				]} type='pie' /> */}
-				</View>
+				<View style={{ alignItems: "center" }}></View>
 
 				<View style={styles.base}>
 					<Text
@@ -84,11 +137,17 @@ function StatisticsHomeScreen({ navigation }) {
 							color: "#888888",
 						}}
 					>
-						From DATE-DATE
+						For {monthNames[curMonth]} {curYear}
 					</Text>
-					<Text style={styles.resourceText}>Resource 1</Text>
-					<Text style={styles.resourceText}>Resource 2</Text>
-					<Text style={styles.resourceText}>Resource 3</Text>
+					{isLoading ? (
+						<ActivityIndicator size="large" color="#0000ff" />
+					) : (
+						<View>
+							<Text style={styles.resourceText}>Resource 1</Text>
+							<Text style={styles.resourceText}>Resource 2</Text>
+							<Text style={styles.resourceText}>Resource 3</Text>
+						</View>
+					)}
 
 					<View
 						style={{
@@ -110,20 +169,6 @@ function StatisticsHomeScreen({ navigation }) {
 						>
 							<Text style={[styles.buttonText, { color: "#003C98" }]}>
 								Export Data
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							onPress={() => navigation.navigate("Statistics List")}
-							style={{
-								backgroundColor: "#0E4B9D",
-								alignSelf: "center",
-								borderRadius: 64,
-								padding: 15,
-								marginHorizontal: 10,
-							}}
-						>
-							<Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
-								More Details
 							</Text>
 						</TouchableOpacity>
 					</View>
