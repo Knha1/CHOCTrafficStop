@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {
-	ImageBackground,
-	SimpleSurvey,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
-	Icon,
 	TouchableHighlight,
 	Image,
-	ScrollView,
+	ImageBackground,
 	FlatList,
-	ActivityIndicator,
 } from "react-native";
 import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
-import logo from "../../assets/logo_nobg.png";
-import { RectButton } from "react-native-gesture-handler";
 import bg from "../../assets/background.png";
 
 function YesNoQuestionScreen({ route, navigation }) {
@@ -38,19 +30,11 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
-				onPress={() => {
-					if (answeredQuestions >= 1) {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "filled survey",
-						});
-					} else {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "empty survey",
-						});
-					}
-				}}
+				onPress={() =>
+					navigation.navigate("Resource List", {
+						tags: chosenTags,
+					})
+				}
 			>
 				<Text style={{ color: "#FFF" }}>SUBMIT SURVEY</Text>
 			</TouchableHighlight>
@@ -127,8 +111,10 @@ function YesNoQuestionScreen({ route, navigation }) {
 			.finally(() => setLoading(false));
 	}, [isLoading]);
 
+	//OTHER CODE TO USE
+
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container]}>
 			<ImageBackground
 				source={bg}
 				style={{
@@ -141,69 +127,64 @@ function YesNoQuestionScreen({ route, navigation }) {
 					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
 				<Text style={styles.topText}>{category_name} Survey</Text>
-				{/* <View style={styles.rectangle}>
-				<View style={progressBar()}></View>
-			</View> */}
+
 				<Text
 					style={styles.skipToResultsText}
 					onPress={() => {
-						if (answeredQuestions >= 1) {
-							navigation.navigate("Resource Results", {
-								tags: chosenTags,
-								prevScreen: "filled survey",
-							});
-						} else {
-							navigation.navigate("Resource Results", {
-								tags: chosenTags,
-								prevScreen: "empty survey",
-							});
-						}
+						console.log("Naving to results");
+						console.log(chosenTags);
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+						});
 					}}
 				>
 					Skip to Results? ({answeredQuestions} / {totalQuestions})
 				</Text>
+
 				<View
 					style={[
 						styles.base,
-						{ height: "70%", marginTop: 40, alignItems: "flex-start" },
+						{ height: "70%", marginTop: 40, alignItems: "center" },
 					]}
 				>
 					<View style={styles.bottomContainer}>
-						<FlatList
-							contentContainerStyle={{ paddingBottom: 100 }}
-							data={data}
-							keyExtractor={(item, index) => index.toString()}
-							ListFooterComponent={footer}
-							renderItem={({ item }) => {
-								return (
-									<View style={{ alignContent: "flex-start" }}>
-										<Text style={styles.text}>{item.text}</Text>
-										<RadioButtonRN
-											data={item.choices}
-											boxStyle={{ marginHorizontal: "10%" }}
-											selectedBtn={(e) => {
-												// finalTags[item.order] = e.tags;
+						<View>
+							<FlatList
+								contentContainerStyle={{ paddingBottom: 100 }}
+								data={data}
+								keyExtractor={(item, index) => index.toString()}
+								ListFooterComponent={footer}
+								renderItem={({ item }) => {
+									return (
+										<View style={{ alignContent: "flex-start" }}>
+											<Text style={styles.text}>{item.text}</Text>
+											<RadioButtonRN
+												data={item.choices}
+												boxStyle={{ marginHorizontal: "10%" }}
+												selectedBtn={(e) => {
+													// finalTags[item.order] = e.tags;
 
-												var tempChosen = chosenTags;
-												var answerCount = 0;
+													var tempChosen = chosenTags;
+													var answerCount = 0;
 
-												tempChosen[item.order - 1] = e.tags;
+													tempChosen[item.order - 1] = e.tags;
 
-												// Update answer count if temp value is overriden by actual tags
-												for (var ans in tempChosen) {
-													if (tempChosen[ans] != "none") {
-														answerCount++;
+													// Update answer count if temp value is overriden by actual tags
+													for (var ans in tempChosen) {
+														if (tempChosen[ans] != "none") {
+															answerCount++;
+														}
 													}
-												}
 
-												setChosenTags(tempChosen);
-												setAnsweredQuestions(answerCount);
-											}}
-										/>
-									</View>
-								);
-							}}
-						/>
+													setChosenTags(tempChosen);
+													setAnsweredQuestions(answerCount);
+												}}
+											/>
+										</View>
+									);
+								}}
+							/>
+						</View>
 					</View>
 				</View>
 			</ImageBackground>
@@ -221,8 +202,8 @@ const styles = StyleSheet.create({
 	skipToResultsText: {
 		color: "#CAEDFF",
 		fontSize: 16,
-		position: "absolute",
-		top: "15%",
+		// position: "absolute",
+		marginTop: "2%",
 		alignSelf: "center",
 	},
 	topText: {
@@ -237,8 +218,8 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: "#003C98",
-		width: "80%",
-		left: 20,
+		// width: "100%",
+		marginHorizontal: "8%",
 		fontWeight: "bold",
 		fontSize: 16,
 		marginTop: 40,
@@ -249,9 +230,7 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 30,
 		alignSelf: "stretch",
 		flex: 1,
-		//paddingTop: '10%',
-		paddingRight: "5%",
-		paddingLeft: "5%",
+		width: "100%",
 	},
 	backButton: {
 		resizeMode: "contain",
@@ -263,7 +242,7 @@ const styles = StyleSheet.create({
 		marginTop: "15%",
 	},
 	submitButton: {
-		marginTop: 50,
+		top: 50,
 		height: 45,
 		margin: 3,
 		width: 340,
