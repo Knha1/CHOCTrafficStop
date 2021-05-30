@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
-	ImageBackground,
-	SimpleSurvey,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
-	Icon,
 	TouchableHighlight,
 	Image,
-	ScrollView,
+	ImageBackground,
 	FlatList,
-	ActivityIndicator,
 } from "react-native";
 import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
-import logo from "../../assets/logo_nobg.png";
-import { RectButton } from "react-native-gesture-handler";
+import bg from "../../assets/background.png";
 
 function YesNoQuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
@@ -37,19 +30,11 @@ function YesNoQuestionScreen({ route, navigation }) {
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
 				style={styles.submitButton}
-				onPress={() => {
-					if (answeredQuestions >= 1) {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "filled survey",
-						});
-					} else {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "empty survey",
-						});
-					}
-				}}
+				onPress={() =>
+					navigation.navigate("Resource List", {
+						tags: chosenTags,
+					})
+				}
 			>
 				<Text style={{ color: "#FFF" }}>SUBMIT SURVEY</Text>
 			</TouchableHighlight>
@@ -126,95 +111,98 @@ function YesNoQuestionScreen({ route, navigation }) {
 			.finally(() => setLoading(false));
 	}, [isLoading]);
 
+	//OTHER CODE TO USE
+
 	return (
-		<View style={styles.container}>
-			<TouchableOpacity onPress={() => navigation.goBack()}>
-				<Image source={back} style={styles.backButton}></Image>
-			</TouchableOpacity>
-			<Text style={styles.topText}>{category_name} Survey</Text>
-			{/* <View style={styles.rectangle}>
-				<View style={progressBar()}></View>
-			</View> */}
-			<Text
-				style={styles.skipToResultsText}
-				onPress={() => {
-					if (answeredQuestions >= 1) {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "filled survey",
-						});
-					} else {
-						navigation.navigate("Resource Results", {
-							tags: chosenTags,
-							prevScreen: "empty survey",
-						});
-					}
+		<View style={[styles.container]}>
+			<ImageBackground
+				source={bg}
+				style={{
+					overflow: "hidden",
+					resizeMode: "stretch",
+					height: "100%",
 				}}
 			>
-				Skip to Results? ({answeredQuestions} / {totalQuestions})
-			</Text>
-			<View style={styles.bottomContainer}>
-				<FlatList
-					contentContainerStyle={{ paddingBottom: 100 }}
-					data={data}
-					keyExtractor={(item, index) => index.toString()}
-					ListFooterComponent={footer}
-					renderItem={({ item }) => {
-						return (
-							<View>
-								<Text style={styles.text}>{item.text}</Text>
-								<RadioButtonRN
-									data={item.choices}
-									boxStyle={{ marginHorizontal: "10%" }}
-									selectedBtn={(e) => {
-										// finalTags[item.order] = e.tags;
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={back} style={styles.backButton}></Image>
+				</TouchableOpacity>
+				<Text style={styles.topText}>{category_name} Survey</Text>
 
-										var tempChosen = chosenTags;
-										var answerCount = 0;
-
-										tempChosen[item.order - 1] = e.tags;
-
-										// Update answer count if temp value is overriden by actual tags
-										for (var ans in tempChosen) {
-											if (tempChosen[ans] != "none") {
-												answerCount++;
-											}
-										}
-
-										setChosenTags(tempChosen);
-										setAnsweredQuestions(answerCount);
-									}}
-								/>
-							</View>
-						);
+				<Text
+					style={styles.skipToResultsText}
+					onPress={() => {
+						console.log("Naving to results");
+						console.log(chosenTags);
+						navigation.navigate("Resource Results", {
+							tags: chosenTags,
+						});
 					}}
-				/>
-			</View>
+				>
+					Skip to Results? ({answeredQuestions} / {totalQuestions})
+				</Text>
+
+				<View
+					style={[
+						styles.base,
+						{ height: "70%", marginTop: 40, alignItems: "flex-start" },
+					]}
+				>
+					<View style={styles.bottomContainer}>
+						<View>
+							<FlatList
+								contentContainerStyle={{ paddingBottom: 100 }}
+								data={data}
+								keyExtractor={(item, index) => index.toString()}
+								ListFooterComponent={footer}
+								renderItem={({ item }) => {
+									return (
+										<View style={{ alignContent: "flex-start" }}>
+											<Text style={styles.text}>{item.text}</Text>
+											<RadioButtonRN
+												data={item.choices}
+												selectedBtn={(e) => {
+													// finalTags[item.order] = e.tags;
+
+													var tempChosen = chosenTags;
+													var answerCount = 0;
+
+													tempChosen[item.order - 1] = e.tags;
+
+													// Update answer count if temp value is overriden by actual tags
+													for (var ans in tempChosen) {
+														if (tempChosen[ans] != "none") {
+															answerCount++;
+														}
+													}
+
+													setChosenTags(tempChosen);
+													setAnsweredQuestions(answerCount);
+												}}
+											/>
+										</View>
+									);
+								}}
+							/>
+						</View>
+					</View>
+				</View>
+			</ImageBackground>
 		</View>
 	);
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#0066BB",
-		paddingTop: 50,
+	},
+	buttonSpacing: {
+		margin: 5,
 	},
 	skipToResultsText: {
 		color: "#CAEDFF",
 		fontSize: 16,
 		position: "absolute",
 		top: "15%",
-		marginBottom: 100,
-		alignSelf: "center",
-	},
-	rectangle: {
-		height: 4,
-		width: 320,
-		borderRadius: 10,
-		position: "absolute",
-		top: 115,
-		backgroundColor: "#FFF",
 		alignSelf: "center",
 	},
 	topText: {
@@ -223,44 +211,39 @@ var styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 12,
 		position: "absolute",
-		marginTop: 60,
+		marginTop: "15%",
+		width: 250,
+		textAlign: "center",
 	},
 	text: {
 		color: "#003C98",
 		width: "80%",
-		left: 40,
+		left: 20,
 		fontWeight: "bold",
 		fontSize: 16,
 		marginTop: 40,
 	},
-	button: {
-		top: 20,
-		height: 45,
-		margin: 3,
-		width: 280,
-		borderRadius: 64,
-		alignSelf: "center",
-		backgroundColor: "#F8F8F8",
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#D6D6D6",
-		borderWidth: 1,
-	},
-	bottomContainer: {
-		flex: 1,
-		alignSelf: "stretch",
-		backgroundColor: "#fff",
+	base: {
+		backgroundColor: "white",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		marginTop: "16%",
+		alignSelf: "stretch",
+		flex: 1,
+		//paddingTop: '10%',
+		paddingRight: "5%",
+		paddingLeft: "5%",
 	},
-	buttonText: {
-		color: "#000",
-		alignSelf: "center",
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "15%",
 	},
 	submitButton: {
-		// top: 50,
-		marginTop: 50,
+		top: 50,
 		height: 45,
 		margin: 3,
 		width: 340,
@@ -269,12 +252,6 @@ var styles = StyleSheet.create({
 		backgroundColor: "#0E4B9D",
 		alignItems: "center",
 		justifyContent: "center",
-	},
-	backButton: {
-		resizeMode: "contain",
-		width: 40,
-		height: 40,
-		alignSelf: "flex-start",
 	},
 });
 

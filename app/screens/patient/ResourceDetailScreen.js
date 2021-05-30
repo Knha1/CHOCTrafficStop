@@ -2,22 +2,14 @@ import React, { useEffect, useState } from "react";
 import {
 	ImageBackground,
 	Linking,
-	SimpleSurvey,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
-	Icon,
-	TouchableHighlight,
 	Image,
 	ActivityIndicator,
 } from "react-native";
 import backArrowWhite from "../../assets/backArrowWhite.png";
-
-import colors from "../../config/colors";
-import LinearGradient from "expo-linear-gradient";
 import bg from "../../assets/background.png";
 import { readData } from "../../utils/DataHandler";
 
@@ -51,127 +43,124 @@ function ResourceDetailScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.topText}>Resource Details</Text>
+		<View style={[styles.container]}>
+			<ImageBackground
+				source={bg}
+				style={{
+					overflow: "hidden",
+					resizeMode: "stretch",
+					height: "100%",
+				}}
+			>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Image source={backArrowWhite} style={styles.backButton}></Image>
+				</TouchableOpacity>
+				<View
+					style={[
+						styles.base,
+						{ height: "70%", padding: 20, alignItems: "flex-start" },
+					]}
+				>
+					{isLoading ? (
+						// If still loading
+						<ActivityIndicator size="small" color="#0000ff" />
+					) : (
+						// If done loading
 
-			<Image
-				style={styles.backArrow}
-				source={backArrowWhite}
-				onPress={() => navigation.navigate("Resource List")}
-				// TODO: Check if navigating back works
-			></Image>
-			{isLoading ? (
-				// If still loading
-				<ActivityIndicator size="small" color="#0000ff" />
-			) : (
-				// If done loading
+						<View style={styles.bottomContainer}>
+							<View>
+								<Text style={styles.categoryText}>{data["category"]}</Text>
+								<Text style={styles.text}>{data["name"]}</Text>
 
-				<View style={[styles.bottomContainer, { height: "70%", padding: 20 }]}>
-					<View>
-						<Text style={styles.categoryText}>{data["category"]}</Text>
-						<Text style={styles.text}>{data["name"]}</Text>
-
-						<Text style={styles.infoText}>
-							Organization: {data["organization"]}
-						</Text>
-						<Text style={styles.infoText}>
-							Availability: {data["availability"]}
-						</Text>
-						<Text style={styles.infoText}>
-							Phone Number: {data["phone_num"]}
-						</Text>
-						<Text style={styles.infoText}>Address: {data["address"]}</Text>
-						<Text
-							style={styles.infoText}
-							onPress={() => {
-								Linking.openURL(data["website"]);
-								// TODO: Check if URL opening works
-							}}
-						>
-							Website: {data["website"]}
-						</Text>
-						<Text style={styles.descriptionText}>{data["description"]}</Text>
-					</View>
+								<Text style={styles.infoText}>
+									Organization: {data["organization"]}
+								</Text>
+								<Text style={styles.infoText}>
+									Availability: {data["availability"]}
+								</Text>
+								<Text style={styles.infoText}>
+									Phone Number: {data["phone_num"]}
+								</Text>
+								<Text style={styles.infoText}>Address: {data["address"]}</Text>
+								<Text
+									style={{
+										color: "blue",
+										textDecorationLine: "underline",
+										top: 20,
+										marginTop: 5,
+										//left: 35,
+										fontSize: 16,
+										width: 300,
+									}}
+									onPress={() => {
+										Linking.openURL(data["website"]);
+										// TODO: Check if URL opening works
+									}}
+								>
+									Website: {data["website"]}
+								</Text>
+								<Text style={styles.descriptionText}>
+									{data["description"]}
+								</Text>
+							</View>
+						</View>
+					)}
 				</View>
-			)}
+			</ImageBackground>
 		</View>
 	);
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#0066BB",
-		alignItems: "center",
-		justifyContent: "flex-start",
-		paddingTop: 130,
 	},
-	backArrow: {
-		height: 34,
-		width: 34,
-		alignSelf: "flex-start",
-		left: 30,
-		top: "12%",
-		position: "absolute",
-	},
-	topText: {
-		fontSize: 22,
-		color: "white",
-		top: "12%",
-		alignSelf: "center",
-		position: "absolute",
+	buttonSpacing: {
+		margin: 5,
 	},
 	text: {
 		color: "#003C98",
 		top: 0,
-		left: 35,
+		//left: 35,
 		width: 300,
 		fontWeight: "bold",
 		fontSize: 24,
 	},
-	button: {
-		top: 55,
-		height: 45,
-		margin: 3,
-		width: 280,
-		borderRadius: 64,
-		alignSelf: "center",
-		backgroundColor: "#F8F8F8",
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#D6D6D6",
-		borderWidth: 1,
-	},
-	bottomContainer: {
-		flex: 1,
-		//height: '100%',
-		alignSelf: "stretch",
-		backgroundColor: "white",
+	base: {
+		backgroundColor: "#F1F2F2",
 		borderTopRightRadius: 30,
 		borderTopLeftRadius: 30,
-		paddingTop: 35,
+		alignSelf: "stretch",
+		flex: 1,
+		paddingTop: "10%",
+		paddingLeft: "10%",
 	},
-	buttonText: {
-		color: "#000",
-		alignSelf: "center",
+	backButton: {
+		resizeMode: "contain",
+		width: 34,
+		height: 34,
+		alignSelf: "flex-start",
+		marginBottom: "2%",
+		marginLeft: "4%",
+		marginTop: "11%",
 	},
 	infoText: {
 		color: "black",
 		top: 20,
 		marginTop: 5,
-		left: 35,
+		//left: 35,
 		fontSize: 16,
 		width: 300,
 	},
 	categoryText: {
 		fontSize: 16,
 		color: "black",
-		left: 35,
+		//left: 35,
 	},
 	descriptionText: {
 		fontSize: 16,
 		width: 300,
-		left: 35,
+		//left: 35,
 		top: 60,
 	},
 });
