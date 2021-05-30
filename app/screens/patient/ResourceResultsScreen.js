@@ -38,10 +38,6 @@ function ResourceResultsScreen({ route, navigation }) {
 	} else if (prevScreen == "youth services") {
 		titleText = "Youth Support Resources";
 		resultText = null;
-	} else {
-		if (prevScreen == "filledSurvey" && tags) {
-			storeData("previousTags", tags);
-		}
 	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
@@ -167,7 +163,10 @@ function ResourceResultsScreen({ route, navigation }) {
 						}
 					}
 				}
-				if (firstCatFound == false) {
+				if (prevScreen == "filled survey" && firstCatFound == true) {
+					console.log("HELLOOOOOOOOOOOOOOOOOOOOO");
+					storeData("previousTags", tags);
+				} else if (firstCatFound == false) {
 					setResultText("No results currently match your answers.");
 				}
 				setData(sections);
