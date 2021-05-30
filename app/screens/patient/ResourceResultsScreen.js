@@ -12,6 +12,7 @@ import {
 	ActivityIndicator,
 	TouchableHighlight,
 	Image,
+	Modal,
 } from "react-native";
 
 import colors from "../../config/colors";
@@ -24,9 +25,12 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 
 function ResourceResultsScreen({ route, navigation }) {
-	const [resultText, setResultText] = useState(
-		"Based on your survey results, here are some resources that might be helpful to you."
-	);
+	const [modalVisible, setModalVisible] = useState(false);
+	var resultText =
+		"Based on your survey results, here are some resources that might be helpful to you.";
+	// const [resultText, setResultText] = useState(
+	// 	"Based on your survey results, here are some resources that might be helpful to you."
+	// );
 	var filter = route.params;
 	var titleText = "Resources for you";
 	const tags = filter["tags"];
@@ -34,7 +38,7 @@ function ResourceResultsScreen({ route, navigation }) {
 	const prevScreen = filter["prevScreen"];
 	// Change result text if the survey was empty
 	if (prevScreen == "empty survey") {
-		setResultText("No answers recorded, showing all resource.");
+		resultText = "No answers recorded, showing all resources.";
 	} else if (prevScreen == "youth services") {
 		titleText = "Youth Support Resources";
 		resultText = null;
@@ -164,10 +168,9 @@ function ResourceResultsScreen({ route, navigation }) {
 					}
 				}
 				if (prevScreen == "filled survey" && firstCatFound == true) {
-					console.log("HELLOOOOOOOOOOOOOOOOOOOOO");
 					storeData("previousTags", tags);
 				} else if (firstCatFound == false) {
-					setResultText("No results currently match your answers.");
+					setModalVisible(true);
 				}
 				setData(sections);
 			})
@@ -190,6 +193,53 @@ function ResourceResultsScreen({ route, navigation }) {
 					</TouchableOpacity>
 					<Text style={styles.header}>{titleText}</Text>
 					<Text style={styles.subtext}>{resultText}</Text>
+
+					{/* Pop-up for no resources found */}
+					<Modal
+						animationType="none"
+						visible={modalVisible}
+						transparent={true}
+						onRequestClose={() => {
+							setModalVisible(!modalVisible);
+						}}
+					>
+						<View style={[styles.containerPopup]}>
+							<View style={[styles.popup, { flexDirection: "row" }]}>
+								<Text
+									style={{
+										textAlign: "center",
+										marginVertical: 10,
+										color: "white",
+										// fontWeight: "bold",
+										fontSize: 15,
+										marginLeft: "10%",
+									}}
+								>
+									No resources matched your responses.
+								</Text>
+
+								<TouchableOpacity
+									onPress={() => setModalVisible(!modalVisible)}
+									style={{
+										borderRadius: 20,
+										padding: 10,
+									}}
+								>
+									<Text
+										style={{
+											color: "white",
+											textAlign: "right",
+											fontSize: 24,
+											bottom: "75%",
+											marginLeft: 10,
+										}}
+									>
+										x
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</Modal>
 					<FlatList
 						ListHeaderComponent={header}
 						ListFooterComponent={footer}
@@ -373,6 +423,20 @@ const styles = StyleSheet.create({
 		marginBottom: "2%",
 		marginLeft: "4%",
 		marginTop: "11%",
+	},
+	containerPopup: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	popup: {
+		backgroundColor: "rgba(0,0,0,0.5)",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 10,
+		borderRadius: 20,
+		position: "absolute",
+		bottom: "5%",
 	},
 });
 
