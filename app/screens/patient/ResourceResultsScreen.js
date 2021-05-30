@@ -39,7 +39,9 @@ function ResourceResultsScreen({ route, navigation }) {
 		titleText = "Youth Support Resources";
 		resultText = null;
 	} else {
-		if (prevScreen == "filledSurvey" && tags) storeData("previousTags", tags);
+		if (prevScreen == "filledSurvey" && tags) {
+			storeData("previousTags", tags);
+		}
 	}
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
