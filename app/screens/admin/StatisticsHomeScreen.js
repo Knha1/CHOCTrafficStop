@@ -68,30 +68,40 @@ function StatisticsHomeScreen({ navigation }) {
 						}
 					});
 
-					readData("resources").then((resource) => {
-						var resources = JSON.parse(resource);
+					readData("resources")
+						.then((resource) => {
+							var resources = JSON.parse(resource);
 
-						// Index resources based on resource_id for faster retrieval
-						for (var r in resources) {
-							indexed_resources[resources[r]["resource_id"]] = resources[r];
-						}
-					});
-					// Sort by descending # of views
-					raw_data = Object.entries(raw_data).sort((a, b) => b[1] - a[1]);
+							// Index resources based on resource_id for faster retrieval
+							for (var r in resources) {
+								indexed_resources[resources[r]["resource_id"]] = resources[r];
+							}
+						})
+						.then(() => {
+							// Sort by descending # of views
+							raw_data = Object.entries(raw_data).sort((a, b) => b[1] - a[1]);
 
-					for (var resIndex in raw_data) {
-						if (resIndex == 0) {
-							console.log(raw_data[resIndex]);
-						} else if (res == 1) {
-							console.log(raw_data[resIndex]);
-						} else if (res == 2) {
-							console.log(raw_data[resIndex]);
-						} else {
-							break;
-						}
-					}
+							for (var resIndex in raw_data) {
+								var resource_id = raw_data[resIndex][0];
+								var infoString =
+									"(" +
+									raw_data[resIndex][1] +
+									" Views) " +
+									indexed_resources[resource_id]["name"];
 
-					setLoading(false);
+								if (resIndex == 0) {
+									setRes1(infoString);
+								} else if (resIndex == 1) {
+									setRes2(infoString);
+								} else if (resIndex == 2) {
+									setRes3(infoString);
+								} else {
+									break;
+								}
+							}
+
+							setLoading(false);
+						});
 				} else {
 					console.log("'data' doesn't exist in database.");
 				}
@@ -143,9 +153,9 @@ function StatisticsHomeScreen({ navigation }) {
 						<ActivityIndicator size="large" color="#0000ff" />
 					) : (
 						<View>
-							<Text style={styles.resourceText}>Resource 1</Text>
-							<Text style={styles.resourceText}>Resource 2</Text>
-							<Text style={styles.resourceText}>Resource 3</Text>
+							<Text style={styles.resourceText}>{res1}</Text>
+							<Text style={styles.resourceText}>{res2}</Text>
+							<Text style={styles.resourceText}>{res3}</Text>
 						</View>
 					)}
 
