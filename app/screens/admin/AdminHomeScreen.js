@@ -16,6 +16,11 @@ import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
 import exit from "../../assets/exitWhite.png";
 
+/**
+ * Admin home screen with options to navigate to other admin screen/functions
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AdminHomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [signoutModal, setSignoutModal] = useState(false);
