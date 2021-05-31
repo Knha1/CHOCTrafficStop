@@ -3,28 +3,28 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Button,
 	Modal,
 	ImageBackground,
 	TouchableOpacity,
 	Image,
-	TextInput,
-	KeyboardAvoidingView,
-	ScrollView,
 } from "react-native";
-
+import { storeData } from "../../utils/DataHandler.js";
+// ASSET IMPORTS
 import schedule from "../../assets/schedule1.png";
 import clipboard from "../../assets/clipboard1.png";
 import file from "../../assets/file.png";
 import bg from "../../assets/background.png";
 import exit from "../../assets/exitWhite.png";
-import cog from "../../assets/settings1.png";
-import charity from "../../assets/charity1.png";
-import { storeData, readData } from "../../utils/DataHandler.js";
 
+/**
+ * Admin home screen with options to navigate to other admin screen/functions
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AdminHomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [signoutModal, setSignoutModal] = useState(false);
+
 	return (
 		<View style={[styles.container]}>
 			<ImageBackground
@@ -40,6 +40,7 @@ function AdminHomeScreen({ navigation }) {
 					<Image source={exit} style={styles.signoutButton}></Image>
 				</TouchableOpacity>
 
+				{/* Sign-out confirmation pop-up */}
 				<Modal
 					animationType="none"
 					visible={signoutModal}
@@ -115,6 +116,7 @@ function AdminHomeScreen({ navigation }) {
 						</View>
 					</View>
 				</Modal>
+
 				<View
 					style={[
 						styles.base,

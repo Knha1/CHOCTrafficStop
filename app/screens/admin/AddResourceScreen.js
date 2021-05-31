@@ -3,29 +3,26 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Button,
-	Modal,
-	Linking,
 	Image,
 	TouchableOpacity,
-	SafeAreaView,
 	TextInput,
 	KeyboardAvoidingView,
 	ScrollView,
-	Picker,
 	TouchableWithoutFeedback,
 	Keyboard,
 	ImageBackground,
 } from "react-native";
-// import DropDownPicker from "react-native-dropdown-picker";
-// TODO: Remove Picker import, replace with @react-native-community/picker
-
-import colors from "../../config/colors";
-import back from "../../assets/backArrowWhite.png";
-import edit from "../../assets/close.png";
 import { firebase } from "../../firebase/config";
+import { Picker } from "@react-native-picker/picker";
+// ASSET IMPORTS
+import back from "../../assets/backArrowWhite.png";
 import bg from "../../assets/background.png";
 
+/**
+ * Allows an admin to add a new resource to the DB
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AddResourceScreen({ navigation }) {
 	// Defaulting org to Project Choice in case user doesn't select org
 	const [selectedOrganization, setSelectedOrganization] =
@@ -60,8 +57,6 @@ function AddResourceScreen({ navigation }) {
 						</TouchableOpacity>
 						<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 							<View style={styles.inner}>
-								{/* <Text style={styles.header}>Header</Text>
-          <TextInput placeholder="Username" style={styles.textInput} /> */}
 								<Text style={styles.text}>Add Resource</Text>
 
 								<Text style={styles.text3}>Title</Text>
@@ -123,7 +118,7 @@ function AddResourceScreen({ navigation }) {
 								<Text style={styles.text3}>Organization</Text>
 								<Picker
 									selectedValue={selectedOrganization}
-									style={{ marginBottom: 28 }}
+									style={{ marginBottom: 28, width: "90%", marginLeft: "4%" }}
 									itemStyle={{ fontSize: 20 }}
 									onValueChange={(itemValue, itemIndex) =>
 										setSelectedOrganization(itemValue)
@@ -151,13 +146,16 @@ function AddResourceScreen({ navigation }) {
 											Cancel
 										</Text>
 									</TouchableOpacity>
+
 									<TouchableOpacity
 										onPress={() => {
-											// TODO: Add checking to make sure specific fields have data
+											// Temporarily assigning tag to organization
 											var tagString = selectedOrganization
 												.toLowerCase()
 												.replace(" ", "-"); // Format to a tag
 											var tag = { 0: tagString };
+
+											// Generate new resource_id for new resource
 											var new_resource_id = null;
 											firebase
 												.database()
@@ -167,7 +165,6 @@ function AddResourceScreen({ navigation }) {
 												.get()
 												.then((snapshot) => {
 													if (snapshot.exists()) {
-														// Get the current resource_id and increment by 1 for new resource
 														new_resource_id = snapshot.val() + 1;
 													} else {
 														console.log(
@@ -176,6 +173,7 @@ function AddResourceScreen({ navigation }) {
 													}
 												});
 
+											// Add new resource to DB
 											firebase
 												.database()
 												.ref()
@@ -218,10 +216,6 @@ function AddResourceScreen({ navigation }) {
 														console.log("'resource' not found in database.");
 													}
 												});
-
-											// TODO: Display confirmation that resource has been added
-											// TODO: Redownload data from Firebase to refresh AsyncStorage
-
 											navigation.navigate("Admin Home");
 										}}
 										style={styles.saveButton}

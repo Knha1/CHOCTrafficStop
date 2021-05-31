@@ -1,39 +1,37 @@
 import React, { useState, useEffect } from "react";
 import {
 	ImageBackground,
-	SimpleSurvey,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
 	TouchableOpacity,
-	Icon,
 	TouchableHighlight,
 	Image,
-	ScrollView,
 	FlatList,
-	ActivityIndicator,
 } from "react-native";
-import back from "../../assets/backArrowWhite.png";
 import { readData } from "../../utils/DataHandler";
 import RadioButtonRN from "radio-buttons-react-native";
-import logo from "../../assets/logo_nobg.png";
-import { RectButton } from "react-native-gesture-handler";
+// ASSET IMPORTS
+import back from "../../assets/backArrowWhite.png";
 import bg from "../../assets/background.png";
 
-function YesNoQuestionScreen({ route, navigation }) {
+/**
+ * Displays survey questions resulting in tags to display resources on a separate screen
+ * @param {object} route - contains survey category to load specific questions
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
+function QuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
 	const [data, setData] = useState([]);
 	var category = route.params;
-	// var finalTags = [];
 	const category_name = category["category"];
 	const [chosenTags, setChosenTags] = useState([]); // Tags for the resource list
 	const [answeredQuestions, setAnsweredQuestions] = useState(0); // # of answered questions for progress bar
 	const [totalQuestions, setTotalQuestions] = useState(0); // # of total questions for progress abr
 
+	// Submit button
 	const footer = () => {
-		// TODO: fix footer, button isn't pressable
 		return (
 			<TouchableHighlight
 				underlayColor="#A6E1FF"
@@ -56,8 +54,6 @@ function YesNoQuestionScreen({ route, navigation }) {
 			</TouchableHighlight>
 		);
 	};
-
-	async function updateAnswers(qNum) {}
 
 	useEffect(() => {
 		readData("questions")
@@ -141,10 +137,9 @@ function YesNoQuestionScreen({ route, navigation }) {
 					<Image source={back} style={styles.backButton}></Image>
 				</TouchableOpacity>
 				<Text style={styles.topText}>{category_name} Survey</Text>
-				{/* <View style={styles.rectangle}>
-				<View style={progressBar()}></View>
-			</View> */}
+
 				<Text
+					// Skip to results text (same as submit survey button)
 					style={styles.skipToResultsText}
 					onPress={() => {
 						if (answeredQuestions >= 1) {
@@ -162,6 +157,7 @@ function YesNoQuestionScreen({ route, navigation }) {
 				>
 					Skip to Results? ({answeredQuestions} / {totalQuestions})
 				</Text>
+
 				<View
 					style={[
 						styles.base,
@@ -182,8 +178,6 @@ function YesNoQuestionScreen({ route, navigation }) {
 											data={item.choices}
 											boxStyle={{ marginHorizontal: "10%" }}
 											selectedBtn={(e) => {
-												// finalTags[item.order] = e.tags;
-
 												var tempChosen = chosenTags;
 												var answerCount = 0;
 
@@ -273,4 +267,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default YesNoQuestionScreen;
+export default QuestionScreen;

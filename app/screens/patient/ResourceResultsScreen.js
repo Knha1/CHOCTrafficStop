@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	ScrollView,
-	SafeAreaView,
 	StyleSheet,
-	SectionList,
 	FlatList,
 	TouchableOpacity,
 	View,
@@ -14,30 +11,33 @@ import {
 	Image,
 	Modal,
 } from "react-native";
-
-import colors from "../../config/colors";
+import { Linking } from "react-native";
 import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
+// ASSET IMPORTS
 import back from "../../assets/backArrowBlack.png";
-import { Linking } from "react-native";
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-	<Text style={[styles.title, textColor]}>{item.title}</Text>
-);
 
+/**
+ * Displays a list of all resources
+ * @param {object} route - Contains tags and screen name that was navigated from
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function ResourceResultsScreen({ route, navigation }) {
+	// State variable to show loading screen if resources aren't loaded yet
+	const [isLoading, setLoading] = useState(true);
+	// State variable to store data for resource list
+	const [data, setData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [hotlineModal, setHotlineModal] = useState(false);
+
 	var resultText =
 		"Based on your survey results, here are some resources that might be helpful to you.";
-	// const [resultText, setResultText] = useState(
-	// 	"Based on your survey results, here are some resources that might be helpful to you."
-	// );
 	var filter = route.params;
-	var titleText = "Resources for you";
 	const tags = filter["tags"];
-	console.log(tags);
 	const prevScreen = filter["prevScreen"];
 	var crisis = false;
+
 	// Change result text if the survey was empty
 	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resources.";
@@ -45,12 +45,9 @@ function ResourceResultsScreen({ route, navigation }) {
 		titleText = "Youth Support Resources";
 		resultText = null;
 	}
-	// State variable to show loading screen if resources aren't loaded yet
-	const [isLoading, setLoading] = useState(true);
-	// State variable to store data for resource list
-	const [data, setData] = useState([]);
-	var filterTags = [];
 
+	// Parsing tags for use in filtering resources
+	var filterTags = [];
 	for (var o in tags) {
 		// Goes through each answer's list of tags
 		if (tags[o] != null) {
@@ -61,6 +58,7 @@ function ResourceResultsScreen({ route, navigation }) {
 				}
 			}
 		}
+		// Set flag if suicide hotline needs to be displayed
 		if (filterTags.includes("suicide")) {
 			crisis = true;
 		}
@@ -68,17 +66,16 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	// Review and Edit Survey Answers
 	const header = () => {
-		// TODO: fix footer, button isn't pressable
 		if (prevScreen == "home" || prevScreen == "youth services") {
+			// Don't display "Review and Edit" button if navigating from youth services or home screen
 			return null;
 		} else if (crisis == true) {
+			// Display suicide hotline button if tag detected
 			return (
 				<View>
 					<TouchableOpacity
 						style={styles.button}
-						// onPress={() => navigation.navigate("Home")}
 						onPress={() => navigation.goBack()}
-						// TODO: Remove navigation to home -- temp for testing
 					>
 						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
@@ -110,9 +107,7 @@ function ResourceResultsScreen({ route, navigation }) {
 			return (
 				<TouchableOpacity
 					style={styles.button}
-					// onPress={() => navigation.navigate("Home")}
 					onPress={() => navigation.goBack()}
-					// TODO: Remove navigation to home -- temp for testing
 				>
 					<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 				</TouchableOpacity>
@@ -121,7 +116,6 @@ function ResourceResultsScreen({ route, navigation }) {
 	};
 
 	const footer = () => {
-		// TODO: fix footer, button isn't pressable
 		if (prevScreen == "filled survey" || prevScreen == "empty survey") {
 			return (
 				<TouchableHighlight
@@ -137,6 +131,7 @@ function ResourceResultsScreen({ route, navigation }) {
 		}
 	};
 
+	// Load in resources from local storage and sort them for display if tags match
 	useEffect(() => {
 		readData("resources")
 			.then((resources) => {
@@ -163,7 +158,6 @@ function ResourceResultsScreen({ route, navigation }) {
 					) {
 						for (var j = 0; j < resources[i].tags.length; j++) {
 							if (filterTags.includes(resources[i].tags[j])) {
-								// console.log("FOUND: " + resources[i].tags[j]);
 								validResource = true;
 							}
 						}
@@ -210,9 +204,6 @@ function ResourceResultsScreen({ route, navigation }) {
 				if (prevScreen == "filled survey" && firstCatFound == true) {
 					storeData("previousTags", tags);
 				} else if (firstCatFound == false) {
-					console.log("-------------");
-					console.log(filterTags);
-					console.log("-------------");
 					setModalVisible(true);
 				}
 				setData(sections);
@@ -222,231 +213,222 @@ function ResourceResultsScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
-		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
-		// TODO: Change nested FlatList + FlatList into SectionList
-		<View>
-			{isLoading ? (
-				// If still loading
-				<ActivityIndicator size="small" color="#0000ff" />
-			) : (
-				// If done loading
-				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
-					<Text style={styles.header}>{titleText}</Text>
-					<Text style={styles.subtext}>{resultText}</Text>
+		<ScrollView>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
+			<Text style={styles.header}>Resources for You</Text>
+			<Text style={styles.subtext}>{resultText}</Text>
 
-					<Modal
-						animationType="none"
-						visible={hotlineModal}
-						transparent={true}
-						onRequestClose={() => {
-							setHotlineModal(!hotlineModal);
-						}}
-					>
-						<View
-							style={[
-								styles.container,
-								{
-									backgroundColor: "rgba(0,0,0,0.5)",
-									justifyContent: "center",
-								},
-							]}
+			<Modal
+				animationType="none"
+				visible={hotlineModal}
+				transparent={true}
+				onRequestClose={() => {
+					setHotlineModal(!hotlineModal);
+				}}
+			>
+				<View
+					style={[
+						styles.container,
+						{
+							backgroundColor: "rgba(0,0,0,0.5)",
+							justifyContent: "center",
+						},
+					]}
+				>
+					<View style={styles.emergencyConfirm}>
+						<Text
+							style={{
+								textAlign: "center",
+								marginBottom: 10,
+								color: "#9C0000",
+								fontWeight: "bold",
+								fontSize: 24,
+							}}
 						>
-							<View style={styles.emergencyConfirm}>
-								<Text
-									style={{
-										textAlign: "center",
-										marginBottom: 10,
-										color: "#9C0000",
-										fontWeight: "bold",
-										fontSize: 24,
-									}}
-								>
-									Warning!
+							Warning!
+						</Text>
+						<Text
+							style={{
+								textAlign: "center",
+								marginBottom: 20,
+								marginHorizontal: "10%",
+							}}
+						>
+							Would you like to dial the suicide hotline?
+						</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-evenly",
+							}}
+						>
+							<TouchableOpacity
+								onPress={() => setHotlineModal(!hotlineModal)}
+								style={{
+									width: "40%",
+									backgroundColor: "#D9D9D9",
+									borderRadius: 20,
+									padding: 10,
+									textAlign: "center",
+								}}
+							>
+								<Text style={{ color: "black", textAlign: "center" }}>
+									Cancel
 								</Text>
-								<Text
-									style={{
-										textAlign: "center",
-										marginBottom: 20,
-										marginHorizontal: "10%",
-									}}
-								>
-									Would you like to dial the suicide hotline?
-								</Text>
-								<View
-									style={{
-										flexDirection: "row",
-										justifyContent: "space-evenly",
-									}}
-								>
-									<TouchableOpacity
-										onPress={() => setHotlineModal(!hotlineModal)}
-										style={{
-											width: "40%",
-											backgroundColor: "#D9D9D9",
-											borderRadius: 20,
-											padding: 10,
-											textAlign: "center",
-										}}
-									>
-										<Text style={{ color: "black", textAlign: "center" }}>
-											Cancel
-										</Text>
-									</TouchableOpacity>
-									<TouchableOpacity
-										onPress={() => Linking.openURL(`tel:${18002738255}`)}
-										style={{
-											backgroundColor: "#A32E2E",
-											width: "40%",
-											alignItems: "center",
-											borderRadius: 20,
-											padding: 10,
-										}}
-									>
-										<Text style={{ color: "white", textAlign: "center" }}>
-											Yes
-										</Text>
-									</TouchableOpacity>
-								</View>
-							</View>
+							</TouchableOpacity>
+							<TouchableOpacity
+								onPress={() => Linking.openURL(`tel:${18002738255}`)}
+								style={{
+									backgroundColor: "#A32E2E",
+									width: "40%",
+									alignItems: "center",
+									borderRadius: 20,
+									padding: 10,
+								}}
+							>
+								<Text style={{ color: "white", textAlign: "center" }}>Yes</Text>
+							</TouchableOpacity>
 						</View>
-					</Modal>
-					{/* Pop-up for no resources found */}
-					<Modal
-						animationType="none"
-						visible={modalVisible}
-						transparent={true}
-						onRequestClose={() => {
-							setModalVisible(!modalVisible);
-						}}
-					>
-						<View style={[styles.containerPopup]}>
-							<View style={[styles.popup, { flexDirection: "row" }]}>
-								<Text
-									style={{
-										textAlign: "center",
-										marginVertical: 10,
-										color: "white",
-										// fontWeight: "bold",
-										fontSize: 15,
-										marginLeft: "10%",
-									}}
-								>
-									No resources matched your responses.
-								</Text>
+					</View>
+				</View>
+			</Modal>
 
-								<TouchableOpacity
-									onPress={() => setModalVisible(!modalVisible)}
-									style={{
-										borderRadius: 20,
-										padding: 10,
-									}}
-								>
-									<Text
-										style={{
-											color: "white",
-											textAlign: "right",
-											fontSize: 24,
-											bottom: "75%",
-											marginLeft: 10,
-										}}
-									>
-										x
-									</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
-					</Modal>
-					<FlatList
-						ListHeaderComponent={header}
-						ListFooterComponent={footer}
-						data={data} // Loading in data from useState variable
-						keyExtractor={(item, index) => index.toString()}
-						renderItem={({ item }) => {
-							const color = "black";
-							const backgroundColor = "white";
-							return (
+			{/* Pop-up for no resources found */}
+			<Modal
+				animationType="none"
+				visible={modalVisible}
+				transparent={true}
+				onRequestClose={() => {
+					setModalVisible(!modalVisible);
+				}}
+			>
+				<View style={[styles.containerPopup]}>
+					<View style={[styles.popup, { flexDirection: "row" }]}>
+						<Text
+							style={{
+								textAlign: "center",
+								marginVertical: 10,
+								color: "white",
+								// fontWeight: "bold",
+								fontSize: 15,
+								marginLeft: "10%",
+							}}
+						>
+							No resources matched your responses.
+						</Text>
+
+						<TouchableOpacity
+							onPress={() => setModalVisible(!modalVisible)}
+							style={{
+								borderRadius: 20,
+								padding: 10,
+							}}
+						>
+							<Text
+								style={{
+									color: "white",
+									textAlign: "right",
+									fontSize: 24,
+									bottom: "75%",
+									marginLeft: 10,
+								}}
+							>
+								x
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Modal>
+			{isLoading ? (
+				// Display loading icon if not done loading resource list
+				<ActivityIndicator size="large" color="#0000ff" />
+			) : (
+				<FlatList
+					ListHeaderComponent={header}
+					ListFooterComponent={footer}
+					data={data} // Loading in data from useState variable
+					keyExtractor={(item, index) => index.toString()}
+					renderItem={({ item }) => {
+						return (
+							<View>
 								<View>
-									<View>
-										<Text style={styles.title}>{item.title}</Text>
-									</View>
-
-									<FlatList
-										data={item.innerData}
-										keyExtractor={(item, index) => index.toString()}
-										renderItem={({ item: innerData, index }) => (
-											<View style={styles.cards}>
-												<TouchableOpacity
-													style={styles.links}
-													onPress={() => {
-														// TODO: may conflict if multiple devices access and update num_data at the same time
-														firebase
-															.database()
-															.ref()
-															.child("data")
-															.child("num_data")
-															.get()
-															.then((snapshot) => {
-																if (snapshot.exists()) {
-																	var num_data = snapshot.val() + 1;
-
-																	const date = new Date();
-																	// Add 1 to month since getMonth() returns 0-11
-																	const month = date.getMonth() + 1;
-																	const year = date.getFullYear();
-
-																	readData("user_id").then((patient_id) => {
-																		readData("regCode").then((regCode) => {
-																			firebase
-																				.database()
-																				.ref()
-																				.child("data/" + num_data)
-																				.set({
-																					data_id: num_data,
-																					month: month,
-																					patient_id: parseInt(patient_id),
-																					resource_id: parseInt(
-																						innerData.resource_id
-																					),
-																					year: year,
-																				});
-																		});
-																	});
-
-																	// Update num_data count
-																	firebase
-																		.database()
-																		.ref()
-																		.child("data/num_data")
-																		.set(num_data);
-																} else {
-																	console.log(
-																		"No 'num_data' variable under 'data' found."
-																	);
-																}
-															});
-														navigation.navigate("Resource Details", {
-															resource_id: innerData.resource_id,
-														});
-													}}
-												>
-													<Text style={styles.resourceTitle}>
-														{innerData.name}
-													</Text>
-													<Text>{innerData.description}</Text>
-												</TouchableOpacity>
-											</View>
-										)}
-									/>
+									<Text style={styles.title}>{item.title}</Text>
 								</View>
-							);
-						}}
-					/>
-				</ScrollView>
+
+								<FlatList
+									data={item.innerData}
+									keyExtractor={(item, index) => index.toString()}
+									renderItem={({ item: innerData, index }) => (
+										<View style={styles.cards}>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() => {
+													firebase
+														.database()
+														.ref()
+														.child("data")
+														.child("num_data")
+														.get()
+														.then((snapshot) => {
+															if (snapshot.exists()) {
+																var num_data = snapshot.val() + 1;
+
+																const date = new Date();
+																// Add 1 to month since getMonth() returns 0-11
+																const month = date.getMonth() + 1;
+																const year = date.getFullYear();
+
+																readData("user_id").then((patient_id) => {
+																	readData("regCode").then((regCode) => {
+																		firebase
+																			.database()
+																			.ref()
+																			.child("data/" + num_data)
+																			.set({
+																				data_id: num_data,
+																				month: month,
+																				patient_id: parseInt(patient_id),
+																				resource_id: parseInt(
+																					innerData.resource_id
+																				),
+																				year: year,
+																			});
+																	});
+																});
+
+																// Update num_data count
+																firebase
+																	.database()
+																	.ref()
+																	.child("data/num_data")
+																	.set(num_data);
+															} else {
+																console.log(
+																	"No 'num_data' variable under 'data' found."
+																);
+															}
+														});
+													navigation.navigate("Resource Details", {
+														resource_id: innerData.resource_id,
+													});
+												}}
+											>
+												<Text style={styles.resourceTitle}>
+													{innerData.name}
+												</Text>
+												<Text>{innerData.description}</Text>
+											</TouchableOpacity>
+										</View>
+									)}
+								/>
+							</View>
+						);
+					}}
+				/>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
 

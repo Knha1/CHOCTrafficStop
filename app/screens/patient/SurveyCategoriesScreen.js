@@ -3,16 +3,13 @@ import {
 	ImageBackground,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
-	Button,
-	Alert,
 	Image,
 	TouchableOpacity,
 	ScrollView,
 } from "react-native";
-// import { Colors } from "react-native/Libraries/NewAppScreen";
-import colors from "../../config/colors";
+import { readData } from "../../utils/DataHandler.js";
+// ASSET IMPORTS
 import safetySecurity from "../../assets/SafetySecurityIcon.png";
 import relationshipsSupport from "../../assets/RelationshipSupportIcon.png";
 import mentalHealth from "../../assets/MentalHealthIcon.png";
@@ -21,28 +18,29 @@ import community from "../../assets/CommunityIcon.png";
 import bg from "../../assets/background.png";
 import back from "../../assets/backArrowBlack.png";
 
-import { storeData, readData } from "../../utils/DataHandler.js";
-
+/**
+ * Displays a list of categories of surveys to take
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function SurveyCategoriesScreen({ navigation }) {
 	const [text, setText] = useState("");
-	
+
 	return (
 		<ScrollView style={[styles.container]}>
 			<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Image source={back} style={styles.backButton}></Image>
-				</TouchableOpacity>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
+
 			<View
 				style={[
 					styles.base,
 					{
 						height: "100%",
-						// alignItems: "center",
 						justifyContent: "space-evenly",
-						
 					},
 				]}
 			>
-				{/* <Button title="Back" onPress={() => navigation.goBack()} /> */}
 				<ImageBackground
 					source={bg}
 					style={{
@@ -54,121 +52,122 @@ function SurveyCategoriesScreen({ navigation }) {
 						borderTopLeftRadius: 30,
 					}}
 				>
-						<Text
-							style={{
-								marginTop: "10%",
-								fontSize: 22,
-								alignSelf: "center",
-								textAlign: "center",
-								marginBottom: "1%",
-								color: "#F1F2F2",
-							}}
-						>
-							What resources do you need?
-						</Text>
-						<Text style={styles.subtext}>
-							Please select one of the following survey categories that best
-							describes the kind of resources you are looking for.
-						</Text>
-						<Text
-							style={[
-								styles.subtext,
-								{
-									textDecorationLine: "underline",
-									marginBottom: '5%'
-								},
-							]}
-							onPress={() => {
-								var filterTags = [];
-								readData("previousTags")
-									.then((value) => {
-										filterTags = JSON.parse(value);
-										console.log(filterTags);
-									})
-									.finally(() => {
-										console.log("navigating");
-										console.log(filterTags);
-										navigation.navigate("Resource Results", {
-											tags: filterTags,
-											prevScreen: "home",
-										});
+					<Text
+						style={{
+							marginTop: "10%",
+							fontSize: 22,
+							alignSelf: "center",
+							textAlign: "center",
+							marginBottom: "1%",
+							color: "#F1F2F2",
+						}}
+					>
+						What resources do you need?
+					</Text>
+					<Text style={styles.subtext}>
+						Please select one of the following survey categories that best
+						describes the kind of resources you are looking for.
+					</Text>
+					<Text
+						style={[
+							styles.subtext,
+							{
+								textDecorationLine: "underline",
+								marginBottom: "5%",
+							},
+						]}
+						onPress={() => {
+							// Load previous tags to direct user to previous survey results
+							var filterTags = [];
+							readData("previousTags")
+								.then((value) => {
+									filterTags = JSON.parse(value);
+									console.log(filterTags);
+								})
+								.finally(() => {
+									console.log("navigating");
+									console.log(filterTags);
+									navigation.navigate("Resource Results", {
+										tags: filterTags,
+										prevScreen: "home",
 									});
-							}}
+								});
+						}}
+					>
+						Or, you can see your past resources here.
+					</Text>
+
+					<View style={styles.row}>
+						<TouchableOpacity
+							onPress={() =>
+								navigation.navigate("Question", {
+									category: "Safety & Security",
+								})
+							}
+							style={[styles.card, { flexDirection: "column" }]}
 						>
-							Or, you can see your past resources here.
-						</Text>
+							<Image source={safetySecurity} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Safety and Security
+							</Text>
+						</TouchableOpacity>
 
-						<View style={styles.row}>
-							<TouchableOpacity
-								onPress={() =>
-									navigation.navigate("YesNo Question", {
-										category: "Safety & Security",
-									})
-								}
-								style={[styles.card, { flexDirection: "column" }]}
-							>
-								<Image source={safetySecurity} style={styles.icon} />
-								<Text style={{ alignSelf: "center", textAlign: "center" }}>
-									Safety and Security
-								</Text>
-							</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() =>
+								navigation.navigate("Question", {
+									category: "Relationships & Support",
+								})
+							}
+							style={styles.card}
+						>
+							<Image source={relationshipsSupport} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Relationships and Support
+							</Text>
+						</TouchableOpacity>
 
-							<TouchableOpacity
-								onPress={() =>
-									navigation.navigate("YesNo Question", {
-										category: "Relationships & Support",
-									})
-								}
-								style={styles.card}
-							>
-								<Image source={relationshipsSupport} style={styles.icon} />
-								<Text style={{ alignSelf: "center", textAlign: "center" }}>
-									Relationships and Support
-								</Text>
-							</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() =>
+								navigation.navigate("Question", {
+									category: "Mental Health",
+								})
+							}
+							style={styles.card}
+						>
+							<Image source={mentalHealth} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Mental Health
+							</Text>
+						</TouchableOpacity>
 
-							<TouchableOpacity
-								onPress={() =>
-									navigation.navigate("YesNo Question", {
-										category: "Mental Health",
-									})
-								}
-								style={styles.card}
-							>
-								<Image source={mentalHealth} style={styles.icon} />
-								<Text style={{ alignSelf: "center", textAlign: "center" }}>
-									Mental Health
-								</Text>
-							</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() =>
+								navigation.navigate("Question", {
+									category: "Physical Health & Wellbeing",
+								})
+							}
+							style={styles.card}
+						>
+							<Image source={physical} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Physical Health and Wellbeing
+							</Text>
+						</TouchableOpacity>
 
-							<TouchableOpacity
-								onPress={() =>
-									navigation.navigate("YesNo Question", {
-										category: "Physical Health & Wellbeing",
-									})
-								}
-								style={styles.card}
-							>
-								<Image source={physical} style={styles.icon} />
-								<Text style={{ alignSelf: "center", textAlign: "center" }}>
-									Physical Health and Wellbeing
-								</Text>
-							</TouchableOpacity>
-
-							<TouchableOpacity
-								onPress={() =>
-									navigation.navigate("YesNo Question", {
-										category: "Community",
-									})
-								}
-								style={[styles.card, { flexDirection: "column" }]}
-							>
-								<Image source={community} style={styles.icon} />
-								<Text style={{ alignSelf: "center", textAlign: "center" }}>
-									Community
-								</Text>
-							</TouchableOpacity>
-						</View>
+						<TouchableOpacity
+							onPress={() =>
+								navigation.navigate("Question", {
+									category: "Community",
+								})
+							}
+							style={[styles.card, { flexDirection: "column" }]}
+						>
+							<Image source={community} style={styles.icon} />
+							<Text style={{ alignSelf: "center", textAlign: "center" }}>
+								Community
+							</Text>
+						</TouchableOpacity>
+					</View>
 				</ImageBackground>
 			</View>
 		</ScrollView>
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
 		marginStart: 20,
 		marginVertical: "2%",
 		color: "#F1F2F2",
-		width: '90%'
+		width: "90%",
 	},
 	card: {
 		backgroundColor: "#F1F2F2",
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-start",
 		marginBottom: "2%",
 		marginLeft: "4%",
-		marginTop: '11%'
+		marginTop: "11%",
 	},
 	icon: {
 		resizeMode: "contain",
@@ -254,8 +253,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-evenly",
-		marginBottom: "30%"
-		
+		marginBottom: "30%",
 	},
 });
 

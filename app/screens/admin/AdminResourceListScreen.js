@@ -10,16 +10,16 @@ import {
 	ActivityIndicator,
 	Image,
 } from "react-native";
-
-import colors from "../../config/colors";
 import { storeData, readData } from "../../utils/DataHandler";
+// ASSET IMPORTS
 import { firebase } from "../../firebase/config";
 import back from "../../assets/backArrowBlack.png";
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-	<Text style={[styles.title, textColor]}>{item.title}</Text>
-);
-
+/**
+ * Displays current list of resources for admins to view and edit
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function AdminResourceListScreen({ navigation }) {
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
@@ -111,62 +111,58 @@ function AdminResourceListScreen({ navigation }) {
 	}, [isLoading]);
 
 	return (
-		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
-		// TODO: Change nested FlatList + FlatList into SectionList
-		<View>
-			{isLoading ? (
-				// If still loading
-				<ActivityIndicator size="small" color="#0000ff" />
-			) : (
-				// If done loading
-				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
-					<Text style={styles.header}>Patient Resources</Text>
-					<Text style={styles.subtext}>
-						Tap on a resource to edit its details.
-					</Text>
-					<FlatList
-						data={data} // Loading in data from useState variable
-						keyExtractor={(item, index) => index.toString()}
-						renderItem={({ item }) => {
-							const color = "black";
-							const backgroundColor = "white";
-							return (
-								<View>
-									<View>
-										<Text style={styles.title}>{item.title}</Text>
-									</View>
+		<ScrollView>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
+			<Text style={styles.header}>Resource List</Text>
+			<Text style={styles.subtext}>
+				Tap on a resource to view and edit its details.
+			</Text>
 
-									<FlatList
-										data={item.innerData}
-										keyExtractor={(item, index) => index.toString()}
-										renderItem={({ item: innerData, index }) => (
-											<View style={styles.cards}>
-												<TouchableOpacity
-													style={styles.links}
-													onPress={() =>
-														navigation.navigate("Edit Resource", {
-															resource_id: innerData.resource_id,
-														})
-													}
-												>
-													<Text style={styles.resourceTitle}>
-														{innerData.name}
-													</Text>
-													<Text>{innerData.description}</Text>
-												</TouchableOpacity>
-											</View>
-										)}
-									/>
+			{isLoading ? (
+				// Display loading icon if not done loading resource list
+				<ActivityIndicator size="large" color="#0000ff" />
+			) : (
+				<FlatList
+					data={data}
+					keyExtractor={(item, index) => index.toString()}
+					renderItem={({ item }) => {
+						const color = "black";
+						const backgroundColor = "white";
+						return (
+							<View>
+								<View>
+									<Text style={styles.title}>{item.title}</Text>
 								</View>
-							);
-						}}
-					/>
-				</ScrollView>
+
+								<FlatList
+									data={item.innerData}
+									keyExtractor={(item, index) => index.toString()}
+									renderItem={({ item: innerData, index }) => (
+										<View style={styles.cards}>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() =>
+													navigation.navigate("Edit Resource", {
+														resource_id: innerData.resource_id,
+													})
+												}
+											>
+												<Text style={styles.resourceTitle}>
+													{innerData.name}
+												</Text>
+												<Text>{innerData.description}</Text>
+											</TouchableOpacity>
+										</View>
+									)}
+								/>
+							</View>
+						);
+					}}
+				/>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
 

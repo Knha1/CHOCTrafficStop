@@ -3,30 +3,31 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Button,
 	Modal,
 	TouchableOpacity,
 	Image,
 	ImageBackground,
 } from "react-native";
-import colors from "../../config/colors";
+import { Linking } from "react-native";
+import { storeData, readData } from "../../utils/DataHandler.js";
+// ASSET IMPORTS
 import callCenter from "../../assets/call-center1.png";
 import charity from "../../assets/charity1.png";
 import schedule from "../../assets/schedule1.png";
 import bg from "../../assets/background.png";
-import cog from "../../assets/settings1.png";
-import logo from "../../assets/logo_nobg.png";
 import exit from "../../assets/exitWhite.png";
 import heart from "../../assets/heart.png";
 
-import { Linking } from "react-native";
-import { storeData, readData } from "../../utils/DataHandler.js";
-
+/**
+ * Patient home screen linking to resources, surveys, and 911 emergency calling
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function HomeScreen({ navigation }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [signoutModal, setSignoutModal] = useState(false);
-
-	const youthServicesTags = { 0: ["project-choice"], 1: ["waymakers"] };
+	// Hard-coded tags for displaying youth support services
+	const YOUTH_SERVICES_TAGS = { 0: ["project-choice"], 1: ["waymakers"] };
 
 	return (
 		<View style={[styles.container]}>
@@ -42,6 +43,7 @@ function HomeScreen({ navigation }) {
 					<Image source={exit} style={styles.signoutButton}></Image>
 				</TouchableOpacity>
 
+				{/* Sign-out confirmation pop-up */}
 				<Modal
 					animationType="none"
 					visible={signoutModal}
@@ -125,7 +127,7 @@ function HomeScreen({ navigation }) {
 					<TouchableOpacity
 						onPress={() =>
 							navigation.navigate("Resource Results", {
-								tags: youthServicesTags,
+								tags: YOUTH_SERVICES_TAGS,
 								prevScreen: "youth services",
 							})
 						}
@@ -220,6 +222,7 @@ function HomeScreen({ navigation }) {
 					</TouchableOpacity>
 				</View>
 
+				{/* Pop-up confirmation to call 911 */}
 				<Modal
 					animationType="none"
 					visible={modalVisible}

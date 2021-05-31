@@ -9,10 +9,17 @@ import {
 	Image,
 	ActivityIndicator,
 } from "react-native";
+import { readData } from "../../utils/DataHandler";
+// ASSET IMPORTS
 import backArrowWhite from "../../assets/backArrowWhite.png";
 import bg from "../../assets/background.png";
-import { readData } from "../../utils/DataHandler";
 
+/**
+ * Displays details (address, website etc.) for a specific resource
+ * @param {object} route - Contains resource_id to load resource details from
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function ResourceDetailScreen({ route, navigation }) {
 	var resource = route.params;
 	const resource_id = resource["resource_id"];
@@ -21,6 +28,7 @@ function ResourceDetailScreen({ route, navigation }) {
 	// State variable to store data for resource details
 	const [data, setData] = useState([]);
 
+	// Load in details for the specified resource from local storage
 	useEffect(() => {
 		readData("resources")
 			.then((resources) => {
@@ -63,10 +71,9 @@ function ResourceDetailScreen({ route, navigation }) {
 				>
 					{isLoading ? (
 						// If still loading
-						<ActivityIndicator size="small" color="#0000ff" />
+						<ActivityIndicator size="large" color="#0000ff" />
 					) : (
 						// If done loading
-
 						<View style={styles.bottomContainer}>
 							<View>
 								<Text style={styles.categoryText}>{data["category"]}</Text>
@@ -94,7 +101,6 @@ function ResourceDetailScreen({ route, navigation }) {
 									}}
 									onPress={() => {
 										Linking.openURL(data["website"]);
-										// TODO: Check if URL opening works
 									}}
 								>
 									Website: {data["website"]}
