@@ -213,229 +213,222 @@ function ResourceResultsScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
-		<View>
-			{isLoading ? (
-				// If still loading
-				<ActivityIndicator size="small" color="#0000ff" />
-			) : (
-				// If done loading
-				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
-					<Text style={styles.header}>Resources for You</Text>
-					<Text style={styles.subtext}>{resultText}</Text>
+		<ScrollView>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
+			<Text style={styles.header}>Resources for You</Text>
+			<Text style={styles.subtext}>{resultText}</Text>
 
-					<Modal
-						animationType="none"
-						visible={hotlineModal}
-						transparent={true}
-						onRequestClose={() => {
-							setHotlineModal(!hotlineModal);
-						}}
-					>
-						<View
-							style={[
-								styles.container,
-								{
-									backgroundColor: "rgba(0,0,0,0.5)",
-									justifyContent: "center",
-								},
-							]}
+			<Modal
+				animationType="none"
+				visible={hotlineModal}
+				transparent={true}
+				onRequestClose={() => {
+					setHotlineModal(!hotlineModal);
+				}}
+			>
+				<View
+					style={[
+						styles.container,
+						{
+							backgroundColor: "rgba(0,0,0,0.5)",
+							justifyContent: "center",
+						},
+					]}
+				>
+					<View style={styles.emergencyConfirm}>
+						<Text
+							style={{
+								textAlign: "center",
+								marginBottom: 10,
+								color: "#9C0000",
+								fontWeight: "bold",
+								fontSize: 24,
+							}}
 						>
-							<View style={styles.emergencyConfirm}>
-								<Text
-									style={{
-										textAlign: "center",
-										marginBottom: 10,
-										color: "#9C0000",
-										fontWeight: "bold",
-										fontSize: 24,
-									}}
-								>
-									Warning!
+							Warning!
+						</Text>
+						<Text
+							style={{
+								textAlign: "center",
+								marginBottom: 20,
+								marginHorizontal: "10%",
+							}}
+						>
+							Would you like to dial the suicide hotline?
+						</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-evenly",
+							}}
+						>
+							<TouchableOpacity
+								onPress={() => setHotlineModal(!hotlineModal)}
+								style={{
+									width: "40%",
+									backgroundColor: "#D9D9D9",
+									borderRadius: 20,
+									padding: 10,
+									textAlign: "center",
+								}}
+							>
+								<Text style={{ color: "black", textAlign: "center" }}>
+									Cancel
 								</Text>
-								<Text
-									style={{
-										textAlign: "center",
-										marginBottom: 20,
-										marginHorizontal: "10%",
-									}}
-								>
-									Would you like to dial the suicide hotline?
-								</Text>
-								<View
-									style={{
-										flexDirection: "row",
-										justifyContent: "space-evenly",
-									}}
-								>
-									<TouchableOpacity
-										onPress={() => setHotlineModal(!hotlineModal)}
-										style={{
-											width: "40%",
-											backgroundColor: "#D9D9D9",
-											borderRadius: 20,
-											padding: 10,
-											textAlign: "center",
-										}}
-									>
-										<Text style={{ color: "black", textAlign: "center" }}>
-											Cancel
-										</Text>
-									</TouchableOpacity>
-									<TouchableOpacity
-										onPress={() => Linking.openURL(`tel:${18002738255}`)}
-										style={{
-											backgroundColor: "#A32E2E",
-											width: "40%",
-											alignItems: "center",
-											borderRadius: 20,
-											padding: 10,
-										}}
-									>
-										<Text style={{ color: "white", textAlign: "center" }}>
-											Yes
-										</Text>
-									</TouchableOpacity>
-								</View>
-							</View>
+							</TouchableOpacity>
+							<TouchableOpacity
+								onPress={() => Linking.openURL(`tel:${18002738255}`)}
+								style={{
+									backgroundColor: "#A32E2E",
+									width: "40%",
+									alignItems: "center",
+									borderRadius: 20,
+									padding: 10,
+								}}
+							>
+								<Text style={{ color: "white", textAlign: "center" }}>Yes</Text>
+							</TouchableOpacity>
 						</View>
-					</Modal>
-					{/* Pop-up for no resources found */}
-					<Modal
-						animationType="none"
-						visible={modalVisible}
-						transparent={true}
-						onRequestClose={() => {
-							setModalVisible(!modalVisible);
-						}}
-					>
-						<View style={[styles.containerPopup]}>
-							<View style={[styles.popup, { flexDirection: "row" }]}>
-								<Text
-									style={{
-										textAlign: "center",
-										marginVertical: 10,
-										color: "white",
-										// fontWeight: "bold",
-										fontSize: 15,
-										marginLeft: "10%",
-									}}
-								>
-									No resources matched your responses.
-								</Text>
+					</View>
+				</View>
+			</Modal>
 
-								<TouchableOpacity
-									onPress={() => setModalVisible(!modalVisible)}
-									style={{
-										borderRadius: 20,
-										padding: 10,
-									}}
-								>
-									<Text
-										style={{
-											color: "white",
-											textAlign: "right",
-											fontSize: 24,
-											bottom: "75%",
-											marginLeft: 10,
-										}}
-									>
-										x
-									</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
-					</Modal>
-					<FlatList
-						ListHeaderComponent={header}
-						ListFooterComponent={footer}
-						data={data} // Loading in data from useState variable
-						keyExtractor={(item, index) => index.toString()}
-						renderItem={({ item }) => {
-							const color = "black";
-							const backgroundColor = "white";
-							return (
+			{/* Pop-up for no resources found */}
+			<Modal
+				animationType="none"
+				visible={modalVisible}
+				transparent={true}
+				onRequestClose={() => {
+					setModalVisible(!modalVisible);
+				}}
+			>
+				<View style={[styles.containerPopup]}>
+					<View style={[styles.popup, { flexDirection: "row" }]}>
+						<Text
+							style={{
+								textAlign: "center",
+								marginVertical: 10,
+								color: "white",
+								// fontWeight: "bold",
+								fontSize: 15,
+								marginLeft: "10%",
+							}}
+						>
+							No resources matched your responses.
+						</Text>
+
+						<TouchableOpacity
+							onPress={() => setModalVisible(!modalVisible)}
+							style={{
+								borderRadius: 20,
+								padding: 10,
+							}}
+						>
+							<Text
+								style={{
+									color: "white",
+									textAlign: "right",
+									fontSize: 24,
+									bottom: "75%",
+									marginLeft: 10,
+								}}
+							>
+								x
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Modal>
+			{isLoading ? (
+				// Display loading icon if not done loading resource list
+				<ActivityIndicator size="large" color="#0000ff" />
+			) : (
+				<FlatList
+					ListHeaderComponent={header}
+					ListFooterComponent={footer}
+					data={data} // Loading in data from useState variable
+					keyExtractor={(item, index) => index.toString()}
+					renderItem={({ item }) => {
+						return (
+							<View>
 								<View>
-									<View>
-										<Text style={styles.title}>{item.title}</Text>
-									</View>
-
-									<FlatList
-										data={item.innerData}
-										keyExtractor={(item, index) => index.toString()}
-										renderItem={({ item: innerData, index }) => (
-											<View style={styles.cards}>
-												<TouchableOpacity
-													style={styles.links}
-													onPress={() => {
-														// TODO: may conflict if multiple devices access and update num_data at the same time
-														firebase
-															.database()
-															.ref()
-															.child("data")
-															.child("num_data")
-															.get()
-															.then((snapshot) => {
-																if (snapshot.exists()) {
-																	var num_data = snapshot.val() + 1;
-
-																	const date = new Date();
-																	// Add 1 to month since getMonth() returns 0-11
-																	const month = date.getMonth() + 1;
-																	const year = date.getFullYear();
-
-																	readData("user_id").then((patient_id) => {
-																		readData("regCode").then((regCode) => {
-																			firebase
-																				.database()
-																				.ref()
-																				.child("data/" + num_data)
-																				.set({
-																					data_id: num_data,
-																					month: month,
-																					patient_id: parseInt(patient_id),
-																					resource_id: parseInt(
-																						innerData.resource_id
-																					),
-																					year: year,
-																				});
-																		});
-																	});
-
-																	// Update num_data count
-																	firebase
-																		.database()
-																		.ref()
-																		.child("data/num_data")
-																		.set(num_data);
-																} else {
-																	console.log(
-																		"No 'num_data' variable under 'data' found."
-																	);
-																}
-															});
-														navigation.navigate("Resource Details", {
-															resource_id: innerData.resource_id,
-														});
-													}}
-												>
-													<Text style={styles.resourceTitle}>
-														{innerData.name}
-													</Text>
-													<Text>{innerData.description}</Text>
-												</TouchableOpacity>
-											</View>
-										)}
-									/>
+									<Text style={styles.title}>{item.title}</Text>
 								</View>
-							);
-						}}
-					/>
-				</ScrollView>
+
+								<FlatList
+									data={item.innerData}
+									keyExtractor={(item, index) => index.toString()}
+									renderItem={({ item: innerData, index }) => (
+										<View style={styles.cards}>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() => {
+													firebase
+														.database()
+														.ref()
+														.child("data")
+														.child("num_data")
+														.get()
+														.then((snapshot) => {
+															if (snapshot.exists()) {
+																var num_data = snapshot.val() + 1;
+
+																const date = new Date();
+																// Add 1 to month since getMonth() returns 0-11
+																const month = date.getMonth() + 1;
+																const year = date.getFullYear();
+
+																readData("user_id").then((patient_id) => {
+																	readData("regCode").then((regCode) => {
+																		firebase
+																			.database()
+																			.ref()
+																			.child("data/" + num_data)
+																			.set({
+																				data_id: num_data,
+																				month: month,
+																				patient_id: parseInt(patient_id),
+																				resource_id: parseInt(
+																					innerData.resource_id
+																				),
+																				year: year,
+																			});
+																	});
+																});
+
+																// Update num_data count
+																firebase
+																	.database()
+																	.ref()
+																	.child("data/num_data")
+																	.set(num_data);
+															} else {
+																console.log(
+																	"No 'num_data' variable under 'data' found."
+																);
+															}
+														});
+													navigation.navigate("Resource Details", {
+														resource_id: innerData.resource_id,
+													});
+												}}
+											>
+												<Text style={styles.resourceTitle}>
+													{innerData.name}
+												</Text>
+												<Text>{innerData.description}</Text>
+											</TouchableOpacity>
+										</View>
+									)}
+								/>
+							</View>
+						);
+					}}
+				/>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
 
