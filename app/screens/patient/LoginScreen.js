@@ -26,8 +26,6 @@ function LoginScreen({ navigation }) {
 				var loggedIn = value;
 				if (loggedIn == "User") {
 					navigation.navigate("Home");
-				} else if (loggedIn == "Admin") {
-					navigation.navigate("Admin Home");
 				}
 			},
 			function (err) {
