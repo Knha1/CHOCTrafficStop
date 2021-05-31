@@ -1,47 +1,37 @@
-import "react-native-gesture-handler";
-import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState, useEffect } from "react";
-import {
-	ImageBackground,
-	Button,
-	StyleSheet,
-	TouchableOpacity,
-	Text,
-	TextInput,
-	View,
-	Image,
-	ActivityIndicator,
-} from "react-native";
-import logo from "../../assets/Yoga_Leaf.png";
-import { NavigationContainer } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { readData } from "../../utils/DataHandler.js";
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { processFontFamily } from "expo-font";
-import { LinearGradient } from "expo-linear-gradient";
-import { storeData, readData } from "../../utils/DataHandler.js";
+import "react-native-gesture-handler";
+// ASSET IMPORTS
+import logo from "../../assets/Yoga_Leaf.png";
 
-function WelcomeScreen({ navigation, props }) {
-	const [isLoading, setLoading] = useState(true);
-
+/**
+ * Splash screen for app
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
+function WelcomeScreen({ navigation }) {
+	// Auto-navigates the user to home screen if they've used the app before
 	useEffect(() => {
-		readData("log")
-			.then(
-				function (value) {
-					var loggedIn = value;
+		readData("log").then(
+			function (value) {
+				var loggedIn = value;
 
-					if (loggedIn == "User") {
-						navigation.navigate("Home");
-					} else if (loggedIn == "Admin") {
-						navigation.navigate("Admin Home");
-					}
-				},
-				function (err) {
-					console.log(err);
+				if (loggedIn == "User") {
+					navigation.navigate("Home");
+				} else if (loggedIn == "Admin") {
+					navigation.navigate("Admin Home");
 				}
-			)
-			.finally(() => setLoading(false));
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
 	}, []);
 
 	return (
