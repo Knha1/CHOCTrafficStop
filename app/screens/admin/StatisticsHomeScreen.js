@@ -3,20 +3,22 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Button,
-	Modal,
 	ImageBackground,
 	TouchableOpacity,
 	Image,
 	ActivityIndicator,
 } from "react-native";
-
-import colors from "../../config/colors";
-import bg from "../../assets/background.png";
-import back from "../../assets/backArrowWhite.png";
 import { firebase } from "../../firebase/config";
 import { readData } from "../../utils/DataHandler";
+// ASSET IMPORTS
+import bg from "../../assets/background.png";
+import back from "../../assets/backArrowWhite.png";
 
+/**
+ * Displays top 3 most viewed resources for the current month/year
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function StatisticsHomeScreen({ navigation }) {
 	const monthNames = [
 		"January",
@@ -149,7 +151,9 @@ function StatisticsHomeScreen({ navigation }) {
 					>
 						For {monthNames[curMonth]} {curYear}
 					</Text>
+
 					{isLoading ? (
+						// Display loading icon if not done loading top 3 viewed resources
 						<ActivityIndicator size="large" color="#0000ff" />
 					) : (
 						<View>
