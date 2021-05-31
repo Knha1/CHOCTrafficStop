@@ -28,6 +28,6 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": "2021-05-30 | Technical cleanup, added app icon"
+    "description": "2021-05-30 | Removed admin auto-skip login for security"
   }
 }
