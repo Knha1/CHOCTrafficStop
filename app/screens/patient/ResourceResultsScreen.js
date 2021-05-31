@@ -16,6 +16,7 @@ import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
 // ASSET IMPORTS
 import back from "../../assets/backArrowBlack.png";
+import { set } from "react-native-reanimated";
 
 /**
  * Displays a list of all resources
@@ -30,21 +31,15 @@ function ResourceResultsScreen({ route, navigation }) {
 	const [data, setData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [hotlineModal, setHotlineModal] = useState(false);
+	const [resultTitle, setresultTitle] = useState("Resources for You");
+	const [resultText, setresultText] = useState(
+		"Based on your survey results, here are some resources that might be helpful to you."
+	);
 
-	var resultText =
-		"Based on your survey results, here are some resources that might be helpful to you.";
 	var filter = route.params;
 	const tags = filter["tags"];
 	const prevScreen = filter["prevScreen"];
 	var crisis = false;
-
-	// Change result text if the survey was empty
-	if (prevScreen == "empty survey") {
-		resultText = "No answers recorded, showing all resources.";
-	} else if (prevScreen == "youth services") {
-		titleText = "Youth Support Resources";
-		resultText = null;
-	}
 
 	// Parsing tags for use in filtering resources
 	var filterTags = [];
@@ -133,6 +128,14 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	// Load in resources from local storage and sort them for display if tags match
 	useEffect(() => {
+		// Change result text if the survey was empty
+		if (prevScreen == "empty survey") {
+			setresultText("No answers recorded, showing all resources.");
+		} else if (prevScreen == "youth services") {
+			setresultTitle("Youth Support Resources");
+			setresultText("");
+		}
+
 		readData("resources")
 			.then((resources) => {
 				// Load 'resources' from AsyncStorage
@@ -217,7 +220,7 @@ function ResourceResultsScreen({ route, navigation }) {
 			<TouchableOpacity onPress={() => navigation.goBack()}>
 				<Image source={back} style={styles.backButton}></Image>
 			</TouchableOpacity>
-			<Text style={styles.header}>Resources for You</Text>
+			<Text style={styles.header}>{resultTitle}</Text>
 			<Text style={styles.subtext}>{resultText}</Text>
 
 			<Modal
