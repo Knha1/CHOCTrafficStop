@@ -100,7 +100,7 @@ function SurveyCategoriesScreen({ navigation }) {
 					<View style={styles.row}>
 						<TouchableOpacity
 							onPress={() =>
-								navigation.navigate("YesNo Question", {
+								navigation.navigate("Question", {
 									category: "Safety & Security",
 								})
 							}
@@ -114,7 +114,7 @@ function SurveyCategoriesScreen({ navigation }) {
 
 						<TouchableOpacity
 							onPress={() =>
-								navigation.navigate("YesNo Question", {
+								navigation.navigate("Question", {
 									category: "Relationships & Support",
 								})
 							}
@@ -128,7 +128,7 @@ function SurveyCategoriesScreen({ navigation }) {
 
 						<TouchableOpacity
 							onPress={() =>
-								navigation.navigate("YesNo Question", {
+								navigation.navigate("Question", {
 									category: "Mental Health",
 								})
 							}
@@ -142,7 +142,7 @@ function SurveyCategoriesScreen({ navigation }) {
 
 						<TouchableOpacity
 							onPress={() =>
-								navigation.navigate("YesNo Question", {
+								navigation.navigate("Question", {
 									category: "Physical Health & Wellbeing",
 								})
 							}
@@ -156,7 +156,7 @@ function SurveyCategoriesScreen({ navigation }) {
 
 						<TouchableOpacity
 							onPress={() =>
-								navigation.navigate("YesNo Question", {
+								navigation.navigate("Question", {
 									category: "Community",
 								})
 							}

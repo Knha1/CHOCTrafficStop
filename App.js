@@ -12,7 +12,7 @@ import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
 import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
 import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
 import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
-import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
+import QuestionScreen from "./app/screens/patient/QuestionScreen";
 // SCREEN IMPORTS -- ADMIN
 import AddResourceScreen from "./app/screens/admin/AddResourceScreen";
 import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
@@ -119,6 +119,12 @@ export default function App() {
 				/>
 
 				<Stack.Screen
+					name="Question"
+					component={QuestionScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
 					name="Resource Details"
 					component={ResourceDetailScreen}
 					options={{ headerShown: false }}
@@ -146,12 +152,6 @@ export default function App() {
 				<Stack.Screen
 					name="Survey Categories"
 					component={SurveyCategoriesScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="YesNo Question"
-					component={YesNoQuestionScreen}
 					options={{ headerShown: false }}
 				/>
 

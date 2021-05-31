@@ -21,7 +21,7 @@ import bg from "../../assets/background.png";
  * @param {object} navigation - @react-navigation prop
  * @returns - screen components
  */
-function YesNoQuestionScreen({ route, navigation }) {
+function QuestionScreen({ route, navigation }) {
 	const [isLoading, setLoading] = React.useState(true);
 	const [data, setData] = useState([]);
 	var category = route.params;
@@ -267,4 +267,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default YesNoQuestionScreen;
+export default QuestionScreen;
