@@ -161,11 +161,8 @@ function HomeScreen({ navigation }) {
 							readData("previousTags")
 								.then((value) => {
 									filterTags = JSON.parse(value);
-									console.log(filterTags);
 								})
 								.finally(() => {
-									console.log("navigating");
-									console.log(filterTags);
 									navigation.navigate("Resource Results", {
 										tags: filterTags,
 										prevScreen: "home",
