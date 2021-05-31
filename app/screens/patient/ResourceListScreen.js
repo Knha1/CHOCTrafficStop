@@ -1,33 +1,31 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	ScrollView,
-	SafeAreaView,
 	StyleSheet,
-	SectionList,
 	FlatList,
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
 	Image,
 } from "react-native";
-
-import colors from "../../config/colors";
-import back from "../../assets/backArrowBlack.png";
-import { readData, storeData } from "../../utils/DataHandler";
+import { readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
+// ASSET IMPORTS
+import back from "../../assets/backArrowBlack.png";
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-	<Text style={[styles.title, textColor]}>{item.title}</Text>
-);
-
+/**
+ * Displays a list of all resources
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function ResourceListScreen({ navigation }) {
 	// State variable to show loading screen if resources aren't loaded yet
 	const [isLoading, setLoading] = useState(true);
 	// State variable to store data for resource list
 	const [data, setData] = useState([]);
 
+	// Load in resources from local storage and sort them for display
 	useEffect(() => {
 		readData("resources")
 			.then((resources) => {
@@ -79,106 +77,103 @@ function ResourceListScreen({ navigation }) {
 	}, [isLoading]);
 
 	return (
-		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
-		// TODO: Change nested FlatList + FlatList into SectionList
-		<View>
+		<ScrollView>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Image source={back} style={styles.backButton}></Image>
+			</TouchableOpacity>
+
+			<Text style={styles.header}>All Resources</Text>
+			<Text style={styles.subtext}>
+				Tap on a resource to view more details.
+			</Text>
+
 			{isLoading ? (
-				// If still loading
-				<ActivityIndicator size="small" color="#0000ff" />
+				// Display loading icon if not done loading resource list
+				<ActivityIndicator size="large" color="#0000ff" />
 			) : (
-				// If done loading
-				<ScrollView>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Image source={back} style={styles.backButton}></Image>
-					</TouchableOpacity>
-					<Text style={styles.header}>All Resources</Text>
-					<FlatList
-						data={data} // Loading in data from useState variable
-						keyExtractor={(item, index) => index.toString()}
-						renderItem={({ item }) => {
-							const color = "black";
-							const backgroundColor = "white";
-							return (
+				<FlatList
+					data={data}
+					keyExtractor={(item, index) => index.toString()}
+					renderItem={({ item }) => {
+						return (
+							<View>
 								<View>
-									<View>
-										<Text style={styles.title}>{item.title}</Text>
-									</View>
-
-									<FlatList
-										data={item.innerData}
-										keyExtractor={(item, index) => index.toString()}
-										renderItem={({ item: innerData, index }) => (
-											<View style={styles.cards}>
-												<TouchableOpacity
-													style={styles.links}
-													onPress={() => {
-														// TODO: may conflict if multiple devices access and update num_data at the same time
-														firebase
-															.database()
-															.ref()
-															.child("data")
-															.child("num_data")
-															.get()
-															.then((snapshot) => {
-																if (snapshot.exists()) {
-																	var num_data = snapshot.val() + 1;
-
-																	const date = new Date();
-																	// Add 1 to month since getMonth() returns 0-11
-																	const month = date.getMonth() + 1;
-																	const year = date.getFullYear();
-
-																	readData("user_id").then((patient_id) => {
-																		readData("regCode").then((regCode) => {
-																			firebase
-																				.database()
-																				.ref()
-																				.child("data/" + num_data)
-																				.set({
-																					data_id: num_data,
-																					month: month,
-																					patient_id: parseInt(patient_id),
-																					resource_id: parseInt(
-																						innerData.resource_id
-																					),
-																					year: year,
-																				});
-																		});
-																	});
-
-																	// Update num_data count
-																	firebase
-																		.database()
-																		.ref()
-																		.child("data/num_data")
-																		.set(num_data);
-																} else {
-																	console.log(
-																		"No 'num_data' variable under 'data' found."
-																	);
-																}
-															});
-
-														navigation.navigate("Resource Details", {
-															resource_id: innerData.resource_id,
-														});
-													}}
-												>
-													<Text style={styles.resourceTitle}>
-														{innerData.name}
-													</Text>
-													<Text>{innerData.description}</Text>
-												</TouchableOpacity>
-											</View>
-										)}
-									/>
+									<Text style={styles.title}>{item.title}</Text>
 								</View>
-							);
-						}}
-					/>
-				</ScrollView>
+
+								<FlatList
+									data={item.innerData}
+									keyExtractor={(item, index) => index.toString()}
+									renderItem={({ item: innerData, index }) => (
+										<View style={styles.cards}>
+											<TouchableOpacity
+												style={styles.links}
+												onPress={() => {
+													firebase
+														.database()
+														.ref()
+														.child("data")
+														.child("num_data")
+														.get()
+														.then((snapshot) => {
+															if (snapshot.exists()) {
+																var num_data = snapshot.val() + 1;
+
+																const date = new Date();
+																// Add 1 to month since getMonth() returns 0-11
+																const month = date.getMonth() + 1;
+																const year = date.getFullYear();
+
+																readData("user_id").then((patient_id) => {
+																	readData("regCode").then((regCode) => {
+																		firebase
+																			.database()
+																			.ref()
+																			.child("data/" + num_data)
+																			.set({
+																				data_id: num_data,
+																				month: month,
+																				patient_id: parseInt(patient_id),
+																				resource_id: parseInt(
+																					innerData.resource_id
+																				),
+																				year: year,
+																			});
+																	});
+																});
+
+																// Update num_data count
+																firebase
+																	.database()
+																	.ref()
+																	.child("data/num_data")
+																	.set(num_data);
+															} else {
+																console.log(
+																	"No 'num_data' variable under 'data' found."
+																);
+															}
+														});
+
+													navigation.navigate("Resource Details", {
+														resource_id: innerData.resource_id,
+													});
+												}}
+											>
+												<Text style={styles.resourceTitle}>
+													{innerData.name}
+												</Text>
+												<Text>{innerData.description}</Text>
+											</TouchableOpacity>
+										</View>
+									)}
+								/>
+							</View>
+						);
+					}}
+				/>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
 
