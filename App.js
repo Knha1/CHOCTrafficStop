@@ -5,27 +5,22 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { firebase } from "./app/firebase/config";
 import { storeData } from "./app/utils/DataHandler";
 // SCREEN IMPORTS -- PATIENT
-import LoginScreen from "./app/screens/patient/LoginScreen";
-import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
-import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
 import HomeScreen from "./app/screens/patient/HomeScreen";
-// import SettingsScreen from "./app/screens/patient/SettingsScreen";
+import LoginScreen from "./app/screens/patient/LoginScreen";
 import ResourceDetailScreen from "./app/screens/patient/ResourceDetailScreen";
-import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
-import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
-// import YouthServicesScreen from "./app/screens/patient/YouthServicesScreen";
+import ResourceListScreen from "./app/screens/patient/ResourceListScreen";
 import ResourceResultsScreen from "./app/screens/patient/ResourceResultsScreen";
+import SurveyCategoriesScreen from "./app/screens/patient/SurveyCategoriesScreen";
+import WelcomeScreen from "./app/screens/patient/WelcomeScreen";
+import YesNoQuestionScreen from "./app/screens/patient/YesNoQuestionScreen";
 // SCREEN IMPORTS -- ADMIN
-import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
-import ExportDataScreen from "./app/screens/admin/ExportDataScreen";
-import ViewResourceScreen from "./app/screens/admin/ViewResourceScreen";
-import StatisticsDetailsScreen from "./app/screens/admin/StatisticsDetailsScreen";
 import AddResourceScreen from "./app/screens/admin/AddResourceScreen";
-import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
-import StatisticsResourceListScreen from "./app/screens/admin/StatisticsResourceListScreen";
-import AdminResourceListScreen from "./app/screens/admin/AdminResourceListScreen";
+import AdminHomeScreen from "./app/screens/admin/AdminHomeScreen";
 import AdminLoginScreen from "./app/screens/admin/AdminLoginScreen";
+import AdminResourceListScreen from "./app/screens/admin/AdminResourceListScreen";
 import EditResourceScreen from "./app/screens/admin/EditResourceScreen";
+import ExportDataScreen from "./app/screens/admin/ExportDataScreen";
+import StatisticsHomeScreen from "./app/screens/admin/StatisticsHomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -141,18 +136,24 @@ export default function App() {
 					options={{ headerShown: false }}
 				/>
 
-				<Stack.Screen
-					name="YesNo Question"
-					component={YesNoQuestionScreen}
-					options={{ headerShown: false }}
-				/>
-
 				{/* <Stack.Screen
 					// CURRENTLY UNUSED
 					name="Settings"
 					component={SettingsScreen}
 					options={{ headerShown: false }}
 				/> */}
+
+				<Stack.Screen
+					name="Survey Categories"
+					component={SurveyCategoriesScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
+					name="YesNo Question"
+					component={YesNoQuestionScreen}
+					options={{ headerShown: false }}
+				/>
 
 				{/* <Stack.Screen
 					// CURRENTLY UNUSED
@@ -169,50 +170,8 @@ export default function App() {
 				/>
 
 				<Stack.Screen
-					name="Survey Categories"
-					component={SurveyCategoriesScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
 					name="Admin Home"
 					component={AdminHomeScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Export Data"
-					component={ExportDataScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="View Resource"
-					component={ViewResourceScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Statistics Details"
-					component={StatisticsDetailsScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Statistics Home"
-					component={StatisticsHomeScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Statistics List"
-					component={StatisticsResourceListScreen}
-					options={{ headerShown: false }}
-				/>
-
-				<Stack.Screen
-					name="Admin Resource List"
-					component={AdminResourceListScreen}
 					options={{ headerShown: false }}
 				/>
 
@@ -223,10 +182,49 @@ export default function App() {
 				/>
 
 				<Stack.Screen
+					name="Admin Resource List"
+					component={AdminResourceListScreen}
+					options={{ headerShown: false }}
+				/>
+
+				<Stack.Screen
 					name="Edit Resource"
 					component={EditResourceScreen}
 					options={{ headerShown: false }}
 				/>
+
+				<Stack.Screen
+					name="Export Data"
+					component={ExportDataScreen}
+					options={{ headerShown: false }}
+				/>
+
+				{/* <Stack.Screen
+					// CURRENTLY UNUSED
+					name="Statistics Details"
+					component={StatisticsDetailsScreen}
+					options={{ headerShown: false }}
+				/> */}
+
+				<Stack.Screen
+					name="Statistics Home"
+					component={StatisticsHomeScreen}
+					options={{ headerShown: false }}
+				/>
+
+				{/* <Stack.Screen
+					// CURRENTLY UNUSED
+					name="Statistics List"
+					component={StatisticsResourceListScreen}
+					options={{ headerShown: false }}
+				/> */}
+
+				{/* <Stack.Screen
+					// CURRENTLY UNUSED
+					name="View Resource"
+					component={ViewResourceScreen}
+					options={{ headerShown: false }}
+				/> */}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
