@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	ScrollView,
-	SafeAreaView,
 	StyleSheet,
-	SectionList,
 	FlatList,
 	TouchableOpacity,
 	View,
@@ -14,30 +11,33 @@ import {
 	Image,
 	Modal,
 } from "react-native";
-
-import colors from "../../config/colors";
+import { Linking } from "react-native";
 import { storeData, readData } from "../../utils/DataHandler";
 import { firebase } from "../../firebase/config";
+// ASSET IMPORTS
 import back from "../../assets/backArrowBlack.png";
-import { Linking } from "react-native";
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-	<Text style={[styles.title, textColor]}>{item.title}</Text>
-);
 
+/**
+ * Displays a list of all resources
+ * @param {object} route - Contains tags and screen name that was navigated from
+ * @param {object} navigation - @react-navigation prop
+ * @returns - screen components
+ */
 function ResourceResultsScreen({ route, navigation }) {
+	// State variable to show loading screen if resources aren't loaded yet
+	const [isLoading, setLoading] = useState(true);
+	// State variable to store data for resource list
+	const [data, setData] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [hotlineModal, setHotlineModal] = useState(false);
+
 	var resultText =
 		"Based on your survey results, here are some resources that might be helpful to you.";
-	// const [resultText, setResultText] = useState(
-	// 	"Based on your survey results, here are some resources that might be helpful to you."
-	// );
 	var filter = route.params;
-	var titleText = "Resources for you";
 	const tags = filter["tags"];
-	console.log(tags);
 	const prevScreen = filter["prevScreen"];
 	var crisis = false;
+
 	// Change result text if the survey was empty
 	if (prevScreen == "empty survey") {
 		resultText = "No answers recorded, showing all resources.";
@@ -45,12 +45,9 @@ function ResourceResultsScreen({ route, navigation }) {
 		titleText = "Youth Support Resources";
 		resultText = null;
 	}
-	// State variable to show loading screen if resources aren't loaded yet
-	const [isLoading, setLoading] = useState(true);
-	// State variable to store data for resource list
-	const [data, setData] = useState([]);
-	var filterTags = [];
 
+	// Parsing tags for use in filtering resources
+	var filterTags = [];
 	for (var o in tags) {
 		// Goes through each answer's list of tags
 		if (tags[o] != null) {
@@ -61,6 +58,7 @@ function ResourceResultsScreen({ route, navigation }) {
 				}
 			}
 		}
+		// Set flag if suicide hotline needs to be displayed
 		if (filterTags.includes("suicide")) {
 			crisis = true;
 		}
@@ -68,17 +66,16 @@ function ResourceResultsScreen({ route, navigation }) {
 
 	// Review and Edit Survey Answers
 	const header = () => {
-		// TODO: fix footer, button isn't pressable
 		if (prevScreen == "home" || prevScreen == "youth services") {
+			// Don't display "Review and Edit" button if navigating from youth services or home screen
 			return null;
 		} else if (crisis == true) {
+			// Display suicide hotline button if tag detected
 			return (
 				<View>
 					<TouchableOpacity
 						style={styles.button}
-						// onPress={() => navigation.navigate("Home")}
 						onPress={() => navigation.goBack()}
-						// TODO: Remove navigation to home -- temp for testing
 					>
 						<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 					</TouchableOpacity>
@@ -110,9 +107,7 @@ function ResourceResultsScreen({ route, navigation }) {
 			return (
 				<TouchableOpacity
 					style={styles.button}
-					// onPress={() => navigation.navigate("Home")}
 					onPress={() => navigation.goBack()}
-					// TODO: Remove navigation to home -- temp for testing
 				>
 					<Text style={{ color: "white" }}>Review and Edit My Answers</Text>
 				</TouchableOpacity>
@@ -121,7 +116,6 @@ function ResourceResultsScreen({ route, navigation }) {
 	};
 
 	const footer = () => {
-		// TODO: fix footer, button isn't pressable
 		if (prevScreen == "filled survey" || prevScreen == "empty survey") {
 			return (
 				<TouchableHighlight
@@ -137,6 +131,7 @@ function ResourceResultsScreen({ route, navigation }) {
 		}
 	};
 
+	// Load in resources from local storage and sort them for display if tags match
 	useEffect(() => {
 		readData("resources")
 			.then((resources) => {
@@ -163,7 +158,6 @@ function ResourceResultsScreen({ route, navigation }) {
 					) {
 						for (var j = 0; j < resources[i].tags.length; j++) {
 							if (filterTags.includes(resources[i].tags[j])) {
-								// console.log("FOUND: " + resources[i].tags[j]);
 								validResource = true;
 							}
 						}
@@ -210,9 +204,6 @@ function ResourceResultsScreen({ route, navigation }) {
 				if (prevScreen == "filled survey" && firstCatFound == true) {
 					storeData("previousTags", tags);
 				} else if (firstCatFound == false) {
-					console.log("-------------");
-					console.log(filterTags);
-					console.log("-------------");
 					setModalVisible(true);
 				}
 				setData(sections);
@@ -222,8 +213,6 @@ function ResourceResultsScreen({ route, navigation }) {
 	}, [isLoading]);
 
 	return (
-		// TODO: Fix nesting of ScrollView and FlatList --> later performance issues
-		// TODO: Change nested FlatList + FlatList into SectionList
 		<View>
 			{isLoading ? (
 				// If still loading
@@ -234,7 +223,7 @@ function ResourceResultsScreen({ route, navigation }) {
 					<TouchableOpacity onPress={() => navigation.goBack()}>
 						<Image source={back} style={styles.backButton}></Image>
 					</TouchableOpacity>
-					<Text style={styles.header}>{titleText}</Text>
+					<Text style={styles.header}>Resources for You</Text>
 					<Text style={styles.subtext}>{resultText}</Text>
 
 					<Modal
