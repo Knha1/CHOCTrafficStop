@@ -1,0 +1,658 @@
+{
+  "admin" : [ null, {
+    "admin_id" : 1,
+    "password" : "trafficstop",
+    "username" : "CHOCAdmin"
+  } ],
+  "data" : {
+    "num_data" : 0
+  },
+  "patient" : {
+    "num_patients" : 0
+  },
+  "question" : [ null, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Safety & Security",
+    "order" : "1",
+    "question_id" : "1",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " waymakers" ] ],
+    "text" : "Do you have a safe place to stay?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Safety & Security",
+    "order" : "2",
+    "question_id" : "2",
+    "tags" : [ null, [ "waymakers", " project-choice" ], [ "N/A" ] ],
+    "text" : "Do you need safety planning?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Relationships & Support",
+    "order" : "1",
+    "question_id" : "3",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " healthy-relationships" ] ],
+    "text" : "Do you have friends or family that support you?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Relationships & Support",
+    "order" : "2",
+    "question_id" : "4",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have a community support system / agency?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Mental Health",
+    "order" : "1",
+    "question_id" : "5",
+    "tags" : [ null, [ "suicide", " project-choice" ], [ "N/A" ] ],
+    "text" : "Are you in crisis or distress where you feel like hurting yourself?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Crisis", "Surviving", "OK", "Good", "Great" ],
+    "category" : "Mental Health",
+    "order" : "2",
+    "question_id" : "6",
+    "tags" : [ null, [ "project-choice" ], [ "project-choice" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ] ],
+    "text" : "What is your level of stress?",
+    "type" : "Likert"
+  }, {
+    "answer_choices" : [ null, "Crisis", "Surviving", "OK", "Good", "Great" ],
+    "category" : "Mental Health",
+    "order" : "3",
+    "question_id" : "7",
+    "tags" : [ null, [ "project-choice" ], [ "project-choice" ], [ "coping", "mindfulness", "mental-health", "relaxation", "meditate", "stress", "emotional-health", "mindful-exercises" ], [ "coping", "mindfulness", "mental-health", "relaxation", "meditate", "stress", "emotional-health", "mindful-exercises" ], [ "coping", "mindfulness", "mental-health", "relaxation", "meditate", "stress", "emotional-health", "mindful-exercises" ] ],
+    "text" : "How are you feeling in general?",
+    "type" : "Likert"
+  }, {
+    "answer_choices" : [ null, "Crisis", "Surviving", "OK", "Good", "Great" ],
+    "category" : "Mental Health",
+    "order" : "4",
+    "question_id" : "8",
+    "tags" : [ null, [ "project-choice" ], [ "project-choice" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ], [ "coping", " mindfulness", " mental-health", " relaxation", " meditate", " stress", " emotional-health", " mindful-exercises" ] ],
+    "text" : "How are you feeling emotionally?",
+    "type" : "Likert"
+  }, {
+    "answer_choices" : [ null, "Very Bad", "Bad", "OK", "Good", "Very Good" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "1",
+    "question_id" : "9",
+    "tags" : [ null, [ "project-choice" ], [ "project-choice" ], [ "physical-wellbeing" ], [ "physical-wellbeing" ], [ "physical-wellbeing" ] ],
+    "text" : "How are you feeling physically?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "2",
+    "question_id" : "10",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " 211oc" ] ],
+    "text" : "Do you have access to food and water on a regular basis?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "3",
+    "question_id" : "11",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " 211oc" ] ],
+    "text" : "Are you eating?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "4",
+    "question_id" : "12",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " 211oc" ] ],
+    "text" : "Do you have enough food for today?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "5",
+    "question_id" : "13",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " 211oc" ] ],
+    "text" : "Do you have enough food for the next 3 days?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "6",
+    "question_id" : "14",
+    "tags" : [ null, [ "project-choice", " 211oc" ], [ "N/A" ] ],
+    "text" : "Have you worried about where you would eat or get food within the last week?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "7",
+    "question_id" : "15",
+    "tags" : [ null, [ "project-choice", " 211oc" ], [ "N/A" ] ],
+    "text" : "Have you worried if you would have enough food or money to buy more within the past 12 months?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "8",
+    "question_id" : "16",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you know where you can go to get food or other resources?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "9",
+    "question_id" : "17",
+    "tags" : [ null, [ "N/A" ], [ "yoga", " physical-wellbeing", " nutrition" ] ],
+    "text" : "Are you exercising?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Rarely (None or 1-3 times/month)", "Sometimes (1-2 times/week)", "Often (3-5 times/week)", "Almost (6-7 times/week)", "Always (Everyday)" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "10",
+    "question_id" : "18",
+    "tags" : [ null, [ "better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ] ],
+    "text" : "Do you have trouble falling asleep?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Rarely (None or 1-3 times/month)", "Sometimes (1-2 times/week)", "Often (3-5 times/week)", "Almost (6-7 times/week)", "Always (Everyday)" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "11",
+    "question_id" : "19",
+    "tags" : [ null, [ "better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ] ],
+    "text" : "Do you wake up while sleeping?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Rarely (None or 1-3 times/month)", "Sometimes (1-2 times/week)", "Often (3-5 times/week)", "Almost (6-7 times/week)", "Always (Everyday)" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "12",
+    "question_id" : "20",
+    "tags" : [ null, [ "better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ] ],
+    "text" : "When you wake up while sleeping, do you have trouble falling back asleep?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Rarely (None or 1-3 times/month)", "Sometimes (1-2 times/week)", "Often (3-5 times/week)", "Almost (6-7 times/week)", "Always (Everyday)" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "13",
+    "question_id" : "21",
+    "tags" : [ null, [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "better-sleep" ] ],
+    "text" : "Do you sleep 7-8 hours a night?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Rarely (None or 1-3 times/month)", "Sometimes (1-2 times/week)", "Often (3-5 times/week)", "Almost (6-7 times/week)", "Always (Everyday)" ],
+    "category" : "Physical Health & Wellbeing",
+    "order" : "14",
+    "question_id" : "22",
+    "tags" : [ null, [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "sleep", " trouble-sleeping", " better-sleep" ], [ "better-sleep" ] ],
+    "text" : "Do you feel rested in the morning when you wake up?",
+    "type" : "Likert (Modified)"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "1",
+    "question_id" : "23",
+    "tags" : [ null, [ "N/A" ], [ "project-choice", " 211oc" ] ],
+    "text" : "Do you have transportation?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "2",
+    "question_id" : "24",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have clean clothes?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "3",
+    "question_id" : "25",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have a shower?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "4",
+    "question_id" : "26",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have hygiene items?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "5",
+    "question_id" : "27",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have internet access?",
+    "type" : "Yes/No"
+  }, {
+    "answer_choices" : [ null, "Yes", "No" ],
+    "category" : "Community",
+    "order" : "6",
+    "question_id" : "28",
+    "tags" : [ null, [ "N/A" ], [ "project-choice" ] ],
+    "text" : "Do you have connections to support people and services?",
+    "type" : "Yes/No"
+  } ],
+  "reg_codes" : [ null, "GUEST", "CHOC1" ],
+  "resource" : {
+    "1" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Develop plans to get the support you need",
+      "email" : "",
+      "name" : "Individual Case Management",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "1",
+      "tags" : [ "project-choice", "case-managment" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "2" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Create a safety plan",
+      "email" : "",
+      "name" : "Safety Planning",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "2",
+      "tags" : [ "project-choice", "safety" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "3" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Support for substance abuse and your overall health",
+      "email" : "",
+      "name" : "Medical, Mental Health & Substance Use Support",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "3",
+      "tags" : [ "project-choice", "health-services" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "4" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Affordable housing resources",
+      "email" : "",
+      "name" : "Housing Referrals",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "4",
+      "tags" : [ "project-choice", "housing" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "5" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Find education and employment opportunities",
+      "email" : "",
+      "name" : "Education & Employment Assistance",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "5",
+      "tags" : [ "project-choice", "consultation", "employment", "education" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "6" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Receive support in court",
+      "email" : "",
+      "name" : "Court Support & Advocacy",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "6",
+      "tags" : [ "project-choice", "court-advocacy" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "7" : {
+      "address" : "1575 E. 17th Street Santa Ana CA 92705",
+      "availability" : "Monday - Friday (12:00PM - 8:00PM) Saturday (12:00PM - 4:00PM)",
+      "category" : "Safety & Security",
+      "description" : "Community resources in Orange County",
+      "email" : "",
+      "name" : "Linkages to Community Resources",
+      "organization" : "Project Choice",
+      "phone_num" : "714-619-0258",
+      "resource_id" : "7",
+      "tags" : [ "project-choice", "community-connection" ],
+      "website" : "https://www.orangewood4you.org/sex_trafficking_csec_services/project-choice/"
+    },
+    "8" : {
+      "address" : "1221 East Dyer Road, Suite 120 Santa Ana, CA 92705",
+      "availability" : "24/7 Youth Shelter and Victim Assistance",
+      "category" : "Safety & Security",
+      "description" : "Victim assistance",
+      "email" : "info@waymakersoc.org",
+      "name" : "Waymakers: victim assistance programs",
+      "organization" : "Waymakers",
+      "phone_num" : "714-714-0780",
+      "resource_id" : "8",
+      "tags" : [ "waymakers", "victim-services" ],
+      "website" : "https://waymakersoc.org/"
+    },
+    "9" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "Importance of sleep",
+      "email" : "",
+      "name" : "Getting Enough Sleep",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "9",
+      "tags" : [ "choc", "sleep" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/how-much-sleep.html"
+    },
+    "10" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "5 tips for sleep",
+      "email" : "",
+      "name" : "5 Ideas for Better Sleep",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "10",
+      "tags" : [ "choc", "better-sleep" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/tips-sleep.html"
+    },
+    "11" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "Common sleeping problems",
+      "email" : "",
+      "name" : "Common Sleep Problems",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "11",
+      "tags" : [ "choc", "trouble-sleeping" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/sleep.html"
+    },
+    "12" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "How to fall asleep at night",
+      "email" : "",
+      "name" : "Counteracting Restlessness",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "12",
+      "tags" : [ "choc", "sleep" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/sleepless.html"
+    },
+    "13" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "Tips for eliminating bad dreams",
+      "email" : "",
+      "name" : "Preventing Nightmares",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "13",
+      "tags" : [ "choc", "sleep" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/expert-nightmares.html"
+    },
+    "14" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Sleep",
+      "description" : "Blue light's effects on sleep",
+      "email" : "",
+      "name" : "Negative Effects of Blue Light Screens",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "14",
+      "tags" : [ "choc", "better-sleep" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/blue-light.html"
+    },
+    "15" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Relationships",
+      "description" : "Teens talk about health",
+      "email" : "",
+      "name" : "Understanding Other Teens",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "15",
+      "tags" : [ "choc", "healthy-relationships" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/teens-talk-health-vd.html"
+    },
+    "16" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Relationships",
+      "description" : "Advice on healthy relationships",
+      "email" : "",
+      "name" : "Healthy Relationships",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "16",
+      "tags" : [ "choc", "healthy-relationships" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/healthy-relationship.html"
+    },
+    "17" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Relationships",
+      "description" : "Identify traits of an abusive relationship",
+      "email" : "",
+      "name" : "Abusive Relationships",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "17",
+      "tags" : [ "choc", "healthy-relationships" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/abuse.html"
+    },
+    "18" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Relationships",
+      "description" : "How to ask for help",
+      "email" : "",
+      "name" : "Asking for Help",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "18",
+      "tags" : [ "choc", "consultation" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/help-obstacles.html"
+    },
+    "19" : {
+      "address" : "1201 W La Veta Ave ",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Coping",
+      "description" : "Dealing with a health condition",
+      "email" : "N/A",
+      "name" : "Understanding & Managing your Health",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "19",
+      "tags" : [ "choc" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/deal-chronic-illness.html"
+    },
+    "20" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Mindfulness",
+      "description" : "How mindfulness works",
+      "email" : "",
+      "name" : "How to Be Mindful",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "20",
+      "tags" : [ "choc", "mindfulness" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/mindfulness.html"
+    },
+    "21" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Mindfulness",
+      "description" : "Exercises to practice mindfulness",
+      "email" : "",
+      "name" : "Mindfulness Exercises",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "21",
+      "tags" : [ "choc", "mindful-exercises" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/mindful-exercises.html"
+    },
+    "22" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Resources on how to be your best self",
+      "email" : "",
+      "name" : "Be Your Best Self",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "22",
+      "tags" : [ "choc", "mental-health" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/center/best-self-center.html"
+    },
+    "23" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Relaxation exercises",
+      "email" : "",
+      "name" : "Relaxation and Breathing",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "23",
+      "tags" : [ "choc", "relaxation" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/relax-breathing.html"
+    },
+    "24" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Meditation tips",
+      "email" : "",
+      "name" : "Meditations",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "24",
+      "tags" : [ "choc", "meditate" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/relax-meditation.html"
+    },
+    "25" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Tips on how to deal with stress and anxiety",
+      "email" : "",
+      "name" : "Stress and Coping",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "25",
+      "tags" : [ "choc", "stress", "coping" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/center/stress-center.html"
+    },
+    "26" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Examples of positive emotions",
+      "email" : "",
+      "name" : "Positive Emotions",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "26",
+      "tags" : [ "choc", "emotional-health" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/positive-worksheet.html"
+    },
+    "27" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Yoga poses to keep you refreshed",
+      "email" : "",
+      "name" : "Yoga",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "27",
+      "tags" : [ "choc", "yoga" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/yoga-home.html"
+    },
+    "28" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Health / Wellness",
+      "description" : "Maintain your physical wellbeing with exercise",
+      "email" : "",
+      "name" : "Exercise and Fitness",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "28",
+      "tags" : [ "choc", "physical-wellbeing" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/nutrition-fitness-center/fitness"
+    },
+    "29" : {
+      "address" : "1201 W La Veta Ave  Orange, CA 92868",
+      "availability" : "24/7 (Online Resource)",
+      "category" : "Food / Fitness",
+      "description" : "Tips for healthy habits on eating and exercise",
+      "email" : "",
+      "name" : "Healthy Relationships with Food & Exercise",
+      "organization" : "CHOC",
+      "phone_num" : "714-997-3000",
+      "resource_id" : "29",
+      "tags" : [ "choc", "nutrition" ],
+      "website" : "https://kidshealth.org/CHOC/en/teens/food-fitness"
+    },
+    "30" : {
+      "address" : "N/A",
+      "availability" : "N/A",
+      "category" : "Food / Fitness",
+      "description" : "Free food pantries in Orange County",
+      "email" : "N/A",
+      "name" : "Food Pantries in Orange County",
+      "organization" : "211OC",
+      "phone_num" : "N/A",
+      "resource_id" : "30",
+      "tags" : [ "211oc", "food" ],
+      "website" : "https://www.211oc.org/food/groceries.html"
+    },
+    "31" : {
+      "address" : "1221 East Dyer Road, Suite 120 Santa Ana, CA 92705",
+      "availability" : "24/7 (General Phone Line) Mon-Fri (Court Advocacy) 24/7 (Rape Crisis)",
+      "category" : "Victim Services",
+      "description" : "Victim assistance and safety planning",
+      "email" : "",
+      "name" : "Victim Services",
+      "organization" : "Waymakers",
+      "phone_num" : "714-714-0780 (24/7 Phone Line) 949-250-0488 (Court Advocacy) 714-957-2737 (Rape Crisis)",
+      "resource_id" : "31",
+      "tags" : [ "waymakers", "safety planning", "victim-services" ],
+      "website" : "https://waymakersoc.org/"
+    },
+    "32" : {
+      "address" : "",
+      "availability" : "24/7 (Phone Line)",
+      "category" : "Safety & Security",
+      "description" : "24/7 National Suicide Phone Hotline",
+      "email" : "",
+      "name" : "Suicide Hotline",
+      "organization" : "National Suicide Prevention Lifeline",
+      "phone_num" : "1-800-273-8255",
+      "resource_id" : "32",
+      "tags" : [ "suicide" ],
+      "website" : "https://suicidepreventionlifeline.org/"
+    },
+    "num_resources" : 32
+  }
+}
